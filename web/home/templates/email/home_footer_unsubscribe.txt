@@ -1,0 +1,3 @@
+Nuestro equipo de {{company}} te ha enviado este correo electrónico.
+Si no quieres recibir más correos de nuestro equipo, puedes <a href="{{site_root}}{% url 'unsubscribe' %}">Cancelar la Suscripción</a>
+{{company}}, Cayetano Silva 170 Código Postal 5003 Córdoba, Argentina.

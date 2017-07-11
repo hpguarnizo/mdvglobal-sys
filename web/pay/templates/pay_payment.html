@@ -1,0 +1,317 @@
+{% load staticfiles %}
+{% load google_analytics %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Add Your favicon here -->
+    <link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
+
+    <title>{%block title %}Titulo{%endblock%}</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'common/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Animation CSS -->
+    <link href="{% static 'inspinia2/css/animate.css' %}" rel="stylesheet">
+
+    <link href="{% static 'common/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'inspinia2/css/plugins/toastr/toastr.min.css' %}" rel="stylesheet">
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="{% static 'inspinia2/js/html5shiv.min.js' %}"></script>
+    <script src="{% static 'inspinia2/js/respond.min.js' %}"></script>
+    <![endif]-->
+
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'pay/css/style.css' %}" rel="stylesheet">
+    {% google_analytics %}
+</head>
+<body>
+<div class="container">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        Formas de pago
+                    </div>
+                    <div class="ibox-content">
+                        <div class="panel-group payments-method" id="accordion">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="pull-right">
+                                        <i class="fa fa-cc-paypal text-success"></i>
+                                    </div>
+                                    <h5 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">PayPal</a>
+                                    </h5>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <h2>Detalle</h2>
+                                                <strong>Producto:</strong>{%block producto_pay %}{%endblock%}<br/>
+                                                <strong>precio:</strong><span class="text-navy">{%block precio_pay %} {%endblock%}</span>
+                                                <p class="m-t">
+                                                    {%block description_pay %} {%endblock%}
+                                                </p>
+                                                <a class="btn btn-success">
+                                                    <i class="fa fa-cc-paypal">
+                                                        Pagar via PayPal
+                                                    </i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                     </div>
+                                </div>
+                            </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" >
+                                <div class="pull-right">
+                                    <img src="https://imgmp.mlstatic.com/org-img/banners/ar/medios/online/575X40.jpg" title="MercadoPago - Medios de pago" alt="MercadoPago - Medios de pago" width="575" height="40" class="img-responsive"/>
+                                </div>
+                                <h5 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Tarjeta de Credito</a>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse in">
+                                <div class="panel-body">
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h2>Detalle</h2>
+                                            <strong>Producto:</strong> {%block producto %}Suscripción Anual{%endblock%}<br/>
+                                            <strong>Precio:</strong> <span class="text-navy">{%block precio %}$97.00 USD{%endblock%}</span>
+
+                                            <p class="m-t">
+                                                {%block descripcion%}{%endblock%}
+                                            </p>
+                                            <p >
+                                                <small>
+                                                    El monto sera convertido y cobrado en ARS (Pesos Argentinos) de acuerdo a la cotización del día.
+                                                </small>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-8">
+
+                                            <form role="form" id="pay" name="pay" method="post" action="">
+                                                {% csrf_token %}
+                                                {% include "home_form_errors.html" %}
+                                                {% if code %}
+                                                    <div class="alert alert-danger alert-dismissable">
+                                                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                                        {{description}} <a class="alert-link" href="#">{{code}}</a>.
+                                                    </div>
+                                                {% endif %}
+
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="form-group">
+                                                            <label>NUMERO DE TARJETA</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" id="cardNumber" data-checkout="cardNumber" placeholder="4509953566233704" required maxlength="16"/>
+                                                                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-7 col-md-7">
+                                                        <div class="form-group">
+                                                            <label>FECHA DE VENCIMIENTO</label></br>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <input type="text" id="cardExpirationMonth" data-checkout="cardExpirationMonth" placeholder="12" maxlength="2" class="form-control"/>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <input type="text" id="cardExpirationYear" data-checkout="cardExpirationYear" placeholder="2019" maxlength="4" class="form-control"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-5 col-md-5 pull-right">
+                                                        <div class="form-group">
+                                                            <label>CODIGO DE SEGURIDAD</label>
+                                                            <input type="text" class="form-control" maxlength="3" id="securityCode" data-checkout="securityCode" placeholder="123" required/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12">
+                                                        <div class="form-group">
+                                                            <label>NOMBRE EN LA TARJETA</label>
+                                                            <input type="text" class="form-control"  maxlength="255"  id="cardholderName" data-checkout="cardholderName" placeholder="GASTON ZARATE" required/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-7 col-md-7">
+                                                        <div class="form-group">
+                                                            <label>NUMERO DE DOCUMENTO</label></br>
+                                                            <input type="text" id="docNumber" data-checkout="docNumber" placeholder="12345678" maxlength="20"  class="form-control"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-5 col-md-5 pull-right">
+                                                        <div class="form-group">
+                                                            <label>TIPO DE DOCUMENTO</label>
+                                                             <select id="docType" data-checkout="docType" class="form-control"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row hidden-xs hidden-lg hidden-sm hidden-md">
+                                                    <div class="col-xs-12 col-md-12">
+                                                        <div class="form-group">
+                                                            <label>EMAIL</label>
+                                                            <input id="email" class="form-control" name="email" value="{{user.email}}" type="email" placeholder="Su email"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-7 col-sm-3 col-md-3">
+                                                        <button class="btn btn-primary" type="submit"><i class="fa fa-lock"></i> COMPRAR</button>
+                                                    </div>
+                                                    <div class="col-xs-5 col-sm-9 col-md-9">
+                                                        <img src="{% static 'pay/img/pay_protegida.png' %}" alt="Compra Protegida"  style="width: 42px; height:42px;">
+                                                        <small>Pago protegido con mercado pago</small>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Mainly scripts -->
+    <script src="{% static 'inspinia2/js/jquery-2.1.1.js' %}"></script>
+    <script src="{% static 'common/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'inspinia2/js/plugins/metisMenu/jquery.metisMenu.js' %} "></script>
+    <script src="{% static 'inspinia2/js/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+
+    <!-- Custom and plugin javascript -->
+    <script src="{% static 'inspinia2/js/inspinia.js' %}"></script>
+    <script src="{% static 'inspinia2/js/plugins/pace/pace.min.js' %}"></script>
+    <script src="{% static 'inspinia2/js/plugins/wow/wow.min.js' %}"></script>
+
+    <!--Mercado Pago-->
+    <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+
+<script>
+    Mercadopago.setPublishableKey("{{PUBLIC_KEY_MP}}");
+    Mercadopago.getIdentificationTypes();
+</script>
+<script>
+function addEvent(el, eventName, handler){
+    if (el.addEventListener) {
+           el.addEventListener(eventName, handler);
+    } else {
+        el.attachEvent('on' + eventName, function(){
+          handler.call(el);
+        });
+    }
+};
+
+function getBin() {
+    var ccNumber = document.querySelector('input[data-checkout="cardNumber"]');
+    return ccNumber.value.replace(/[ .-]/g, '').slice(0, 6);
+};
+
+function guessingPaymentMethod(event) {
+    var bin = getBin();
+
+    if (event.type == "keyup") {
+        if (bin.length >= 6) {
+            Mercadopago.getPaymentMethod({
+                "bin": bin
+            }, setPaymentMethodInfo);
+        }
+    } else {
+        setTimeout(function() {
+            if (bin.length >= 6) {
+                Mercadopago.getPaymentMethod({
+                    "bin": bin
+                }, setPaymentMethodInfo);
+            }
+        }, 100);
+    }
+};
+
+function setPaymentMethodInfo(status, response) {
+    if (status == 200) {
+        // do somethings ex: show logo of the payment method
+        var form = document.querySelector('#pay');
+
+        if (document.querySelector("input[name=paymentMethodId]") == null) {
+            var paymentMethod = document.createElement('input');
+            paymentMethod.setAttribute('name', "paymentMethodId");
+            paymentMethod.setAttribute('type', "hidden");
+            paymentMethod.setAttribute('value', response[0].id);
+
+            form.appendChild(paymentMethod);
+        } else {
+            document.querySelector("input[name=paymentMethodId]").value = response[0].id;
+        }
+    }
+};
+
+addEvent(document.querySelector('input[data-checkout="cardNumber"]'), 'keyup', guessingPaymentMethod);
+addEvent(document.querySelector('input[data-checkout="cardNumber"]'), 'change', guessingPaymentMethod);
+</script>
+<script>
+doSubmit = false;
+addEvent(document.querySelector('#pay'),'submit',doPay);
+function doPay(event){
+    event.preventDefault();
+    if(!doSubmit){
+        var $form = document.querySelector('#pay');
+
+        Mercadopago.createToken($form, sdkResponseHandler); // The function "sdkResponseHandler" is defined below
+
+        return false;
+    }
+};
+</script>
+<script>
+function sdkResponseHandler(status, response) {
+    if (status != 200 && status != 201) {
+        alert("Verifique la informacion ingresada");
+    }else{
+
+        var form = document.querySelector('#pay');
+
+        var card = document.createElement('input');
+        card.setAttribute('name',"token");
+        card.setAttribute('type',"hidden");
+        card.setAttribute('value',response.id);
+        form.appendChild(card);
+        doSubmit=true;
+        form.submit();
+    }
+};
+</script>
+</body>
+</html>

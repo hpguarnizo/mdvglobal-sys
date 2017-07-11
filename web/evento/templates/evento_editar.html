@@ -1,0 +1,47 @@
+{% extends 'evento_nuevo.html' %}
+
+{%block here%}
+Editar Evento
+{%endblock%}
+
+{%block list_here%}
+<li><a href="{% url 'evento_todos' %}">Eventos</a></li>
+<li class="active">Editar Evento</li>
+{%endblock%}
+
+{% block campos_no_edit %}
+{%endblock%}
+{% block campos_no_edit2 %}
+{%endblock%}
+
+{%block btn%}
+Editar Evento
+{%endblock%}
+
+{%block action %}.?evento_id={{evento.id}}{%endblock%}
+
+{%block texto_ayuda_cupo%}
+{% if evento.get_aistentes%}
+    El cupo minimo es {{evento.get_asistentes}}
+{%endif%}
+{%endblock%}
+
+{%block javascript_custom%}
+<script>
+    $(document).ready(function(){
+    	precioVa();
+    	$("#cupo_id").prop("min",{{evento.get_asistentes}});
+
+        function precioVa(){
+            if({{evento.get_tipo.id}}==2){
+            	$("#precio_id").prop("required",true);
+            }else{
+            	$("#precio")).addClass("sr-only");
+            }
+
+        }
+    });
+</script>
+{%endblock%}
+
+

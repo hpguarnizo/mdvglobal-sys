@@ -1,0 +1,19 @@
+¡FELICIDADES! AHORA TU CUENTA ES PREMIUM
+
+Hola, {{name}}:
+
+¿Sabes algo? Nos encantan las personas que toman acción para obtener los resultados que esperan obtener en su negocio.
+Tu Cuenta Premium te permite acceder a muchos beneficios, funciones y características de Codipay, las cuales están reservadas solo para personas como tú.
+
+Accede Ahora Mismo y comienza a diseñar experiencias atractivas, únicas y memorables para tus clientes.
+
+Haz clic en el siguiente enlace para acceder a tu panel de control:
+
+<a href="{{url}}">Acceder Ahora</a>
+
+Recuerda que si necesitas ayuda para crecer tu negocio, puedes ponerte en contacto con nosotros. Nuestro equipo está dispuesto a servirte: Contactar
+
+Saludos,
+Equipo de Felicidad de Codipay.
+
+{% include 'email/home_footer_unsubscribe.txt' %}

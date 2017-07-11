@@ -1,0 +1,67 @@
+{% extends 'home_login.html'%}
+
+{% block title %}Completa tus datos{% endblock %}
+
+{% block titulo %}Completa tus datos{% endblock %}
+
+{%block redes_sociales %}
+{%endblock%}
+
+
+{%block form%}
+    <form method="post" action=".">
+        {% csrf_token %}
+        {% include "home_form_errors.html" %}
+        <div class="form-group">
+            {{form.nombre}}
+        </div>
+        <div class="form-group">
+            {{form.email}}
+        </div>
+        <div class="form-group">
+            <select class="form-control b-r-xl" name="pais" id="id_pais">
+                <option value='' selected='selected'>-Selecciona tu Pais-</option>
+                {%for c in countrys%}
+                    <option value="{{c.id}}">{{c.name}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="form-group">
+            {{form.provincia}}
+        </div>
+        {% if evento.get_tipo.es_pago%}
+            <button type="submit" class="login-btn">Comprar Entrada</button>
+        {%else%}
+            <button type="submit" class="login-btn">Obtener Entrada</button>
+        {%endif%}
+    </form>
+
+<script>
+    $(document).ready(function(){
+        $("#id_pais").on("change",get_provincias);
+        get_provincias();
+
+        function get_provincias(){
+            let id_pais = $('select[name=pais]').val();
+            if(id_pais){
+                $("#id_provincia").html("");
+                let request = $.ajax({
+                    type: "GET",
+                    url: "{% url 'get_regions' %}",
+                    data:{
+                        "id_country" : id_pais
+                    },
+                });
+                request.done(function(response){
+                    $("#id_provincia").html(response.regions);
+                    $("#id_provincia").trigger("change");
+                })
+            }else{
+                 $("#id_provincia").html("<option value='' selected='selected'>-Selecciona tu Region-</option>");
+                 $("#id_provincia").trigger("change");
+            }
+        };
+
+    });
+</script>
+{%endblock%}

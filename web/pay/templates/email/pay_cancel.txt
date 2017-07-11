@@ -1,0 +1,14 @@
+¡ESTAMOS REALMENTE TRISTES POR TU PARTIDA!
+
+Hola, {{name}}:
+
+Cuando iniciamos Codiplay, lo hicimos con una profunda y sincera necesidad de poder ayudar a otros a resolver aquellos problemas a los cuales también nosotros como emprendedores nos enfrentamos día a día; de tal forma que cuando alguien de la familia decide marcharse, entendemos que lo más probable es que no estamos haciendo bien nuestro trabajo y de verdad que lo lamentamos.
+“Nombre”, Quiero que sepas que entendemos que no continues con nosotros en éste momento, pero antes de que te vayas me gustaría saber qué hicimos mal o que podemos mejorar desde tu perspectiva… Tu opinión es muy importante para nosotros. Comprenderemos también si no tienes el tiempo para responder a este mail; siéntete libre de no hacerlo.
+
+Esperamos volver a saber de ti muy pronto,
+
+Saludos,
+Samir Angulo
+CEO & Co-Fundador en Codipay.
+
+{% include 'email/home_footer_unsubscribe.txt' %}

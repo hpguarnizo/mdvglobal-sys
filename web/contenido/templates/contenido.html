@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contenido</title>
+</head>
+<body>
+<form action="." method="GET">
+    <input type="text" name="q" placeholder="Buscar contenido">
+    <button>Buscar</button>
+</form>
+<h2>Categorias</h2>
+{%for cat in categorias %}
+<p><a href="">{{cat}}</a></p>
+{%endfor%}
+
+<h2>Tipos</h2>
+{%for tipo in tipos%}
+<p><a href="">{{tipo}}</a></p>
+{%endfor%}
+
+{%for cont in contenido%}
+<ul>
+    <li>{{cont.get_nombre}}</li>
+    <li>{{cont.get_acceso}}</li>
+    <li><a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}"><button>Ver</button></a></li>
+</ul>
+{%endfor%}
+
+
+</body>
+</html>

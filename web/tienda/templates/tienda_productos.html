@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda</title>
+</head>
+<body>
+<form action="." method="GET">
+    <input type="text" name="q" placeholder="Buscar Producto...">
+    <button type="submit">Buscar</button>
+</form>
+<h2>Categorias</h2>
+{%for cat in categorias %}
+<p><a href="">{{cat}}</a></p>
+{%endfor%}
+
+<h2>Tipos</h2>
+{%for tipo in tipos%}
+<p><a href="">{{tipo}}</a></p>
+{%endfor%}
+
+{%for tipo in tipos%}
+    <ul>
+    {%for producto in tipo.mas_vendidos%}
+        <li>{{producto.get_nombre}} - ${{producto.get_precio}}
+            <a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><button>Ver mas</button></a>
+        </li>
+    {%endfor%}
+    </ul>
+{%endfor%}
+
+<ol>
+{%for producto in productos%}
+    <li>{{producto.get_nombre}} - ${{producto.get_precio}}
+            <a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><button>Ver mas</button></a>
+    </li>
+
+{%endfor%}
+</ol>
+
+</body>
+</html>

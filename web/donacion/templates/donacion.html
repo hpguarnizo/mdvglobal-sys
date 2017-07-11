@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Donacion</title>
+</head>
+<body>
+    <h1>{{donacion.get_titulo}}</h1>
+    <p>{{donacion.get_descripcion}}</p>
+    <img src="{{donacion.get_imagen}}" alt="{{donacion.get_titulo}}">
+    <form action="." method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn">Donar!</button>
+    </form>
+</body>
+</html>

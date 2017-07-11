@@ -1,0 +1,39 @@
+{% load staticfiles %}
+{% load google_analytics %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Codipay | Error 500</title>
+
+    <link href="{% static 'common/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'common/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'inspinia2/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'inspinia2/css/style.css' %}" rel="stylesheet">
+    <!--Favicon-->
+    <link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
+    {% google_analytics %}
+</head>
+
+<body class="gray-bg">
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>500</h1>
+        <h3 class="font-bold">Error Interno</h3>
+
+        <div class="error-desc">
+            El servidor encontro algo inesperado que no permite completar el pedido. Nos disculpamos.<br/>
+            Puedes volver a la pagina de inicio: <br/><a href="{% url 'login_page' %}" class="btn btn-primary m-t">Volver</a>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="{% static 'common/js/jquery-3.0.0.min.js' %}"></script>
+    <script src="{% static 'common/js/bootstrap.min.js' %}"></script>
+    {% load google_analytics %}
+</body>
+
+</html>

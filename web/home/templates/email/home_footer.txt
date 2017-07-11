@@ -1,0 +1,2 @@
+Nuestro equipo de {{company}} te ha enviado este correo electrónico.
+{{company}}, Cayetano Silva 170 Código Postal 5003 Córdoba, Argentina.

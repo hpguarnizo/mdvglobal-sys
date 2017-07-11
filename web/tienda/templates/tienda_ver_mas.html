@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{producto.get_nombre}}</title>
+</head>
+<body>
+<ul>
+    <li>{{producto.get_nombre}}</li>
+    <li>{{producto.get_descripcion}}</li>
+    <li>{{producto.get_categoria}}</li>
+    <li>{{producto.get_tipo}}</li>
+    {% if producto.get_tipo.es_libro_fisico %}
+    <li>{{producto.get_stock}}</li>
+    {%endif%}
+</ul>
+
+<a href="{% url 'tienda_agregar_carrito' producto_id=producto.id %}"><button>Agregar a carrito</button></a>
+</body>
+</html>

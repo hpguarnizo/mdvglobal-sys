@@ -1,0 +1,21 @@
+{%extends 'pay_payment.html'%}
+
+{%block title %}Comprar Entrada{%endblock%}
+
+{%block producto %}
+{%block producto_pay %}
+{{donacion.get_titulo}}
+{%endblock%}
+{%endblock%}
+
+{%block precio %}
+{%block precio_pay %}
+${{cantidad}} ARS
+{%endblock%}
+{%endblock%}
+
+{%block descripcion%}
+{%block descripcion_pay%}
+{{donacion.get_descripcion}}
+{%endblock%}
+{%endblock%}

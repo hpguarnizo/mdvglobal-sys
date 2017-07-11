@@ -1,0 +1,216 @@
+{% extends 'home_index.html' %}
+{% load staticfiles %}
+
+{% block head %}
+    {{block.super}}
+    <link href="{% static 'inspinia2/css/plugins/dataTables/datatables.min.css' %}" rel="stylesheet">
+   <!-- Sweet Alert -->
+    <link href="{% static 'inspinia2/css/plugins/sweetalert/sweetalert.css' %}" rel="stylesheet">
+
+{% endblock%}
+
+{%block here%}
+    Eventos
+{%endblock%}
+
+{%block list_here %}
+<li class="active">Eventos</li>
+{%endblock%}
+
+{%block eventos%}
+active
+{%endblock%}
+
+{%block contenido%}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="row">
+                    <div class="col-xs-3 col-md-1 col-md-offset-8 text-center">
+                        <small>Nuevo</small>
+                    </div>
+                    <div class="col-xs-3 col-md-1  text-center">
+                        <small>Editar</small>
+                    </div>
+                    <div class="col-xs-3 col-md-1  text-center">
+                        <small>Eliminar</small>
+                    </div>
+                    <div class="col-xs-3 col-md-1  text-center">
+                        <small>Entradas</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 col-md-1 col-md-offset-8 text-center">
+                        <a href="{% url 'evento_nuevo' %}">
+                            <button class="btn btn-success">
+                                <i class="fa fa-plus fa-2x"></i>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-xs-3 col-md-1  text-center">
+                        <button class="btn btn-success" id="edit">
+                            <i class="fa fa-edit fa-2x"></i>
+                        </button>
+                    </div>
+                    <div class="col-xs-3 col-md-1  text-center">
+                        <button class="btn btn-success" id="eliminar">
+                            <i class="fa fa-times fa-2x"></i>
+                        </button>
+                    </div>
+                    <div class="col-xs-3 col-md-1  text-center">
+                        <button class="btn btn-success" id="entradas">
+                            <i class="fa fa-ticket fa-2x"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nombre</th>
+                            <th>Fecha</th>
+                            <th>Cupo</th>
+                            <th>Asistentes</th>
+                            <th>Precio</th>
+                            <th>Categoria</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%for evento in eventos %}
+                        <tr class="gradeX">
+                            <td><input type="radio" name="evento_id" id="{{evento.id}}"></td>
+                            <td>{{evento.get_nombre}}</td>
+                            <td>{{evento.get_fecha}}</td>
+                            <td>{{evento.get_cupo}}</td>
+                            <td>{{evento.get_asistentes}}</td>
+                            <td>{{evento.get_precio}}</td>
+                            <td>{{evento.get_categoria}}</td>
+                            <td>{{evento.get_tipo}}</td>
+                            <td>{{evento.get_estado}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th></th>
+                            <th>Nombre</th>
+                            <th>Fecha</th>
+                            <th>Cupo</th>
+                            <th>Asistentes</th>
+                            <th>Precio</th>
+                            <th>Categoria</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                        </tr>
+                        </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
+
+{% block javascript_custom %}
+    <script src="{% static 'inspinia2/js/plugins/sweetalert/sweetalert.min.js' %}"></script>
+    <script src="{% static 'inspinia2/js/plugins/dataTables/datatables.min.js' %}"></script>
+        <!-- Page-Level Scripts -->
+    <script>
+        $(document).ready(function(){
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy'},
+                    {extend: 'csv'},
+                    {extend: 'excel', title: 'ExampleFile'},
+                    {extend: 'pdf', title: 'ExampleFile'},
+
+                    {extend: 'print',
+                     customize: function (win){
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                    }
+                    }
+                ]
+
+            });
+
+        });
+
+        $("#edit").click(function(){
+            id = getId();
+            if(id){
+                location.href = "{% url 'evento_editar' %}?evento_id=" + id;
+            }else{
+                swal({
+                    title: "Debe seleccionar un evento",
+                    text: "Seleccione el evento que desea editar."
+                });
+            }
+        });
+
+        $("#eliminar").click(function(){
+            id = getId();
+            if(id){
+              swal({
+                title: "Solo se eliminará si:",
+                text: "1- Es Gratis \n 2-Es pago y nadie pago la entrada",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Si, borralo!",
+                cancelButtonText: "Cancelar!",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+            }, function (isConfirm) {
+                if(isConfirm){
+                    borrarEvento(id);
+                }else{
+                    swal("Cancelado", "Su evento no se ha borrado :)", "error");
+                }
+            });
+            }else{
+                swal({
+                    title: "Debe seleccionar un evento",
+                    text: "Seleccione el evento que desea eliminar."
+                });
+            }
+        })
+
+        function borrarEvento(id){
+                let request = $.ajax({
+                    type: "GET",
+                    url: "{%url 'evento_borrar' %}",
+                    data:{
+                        "evento_id": id
+                    },
+                });
+                request.done(function(response){
+                    if(response.borrado==="true"){
+                        let i = $('#'+id).parent().parent().remove();
+                        swal("Eliminado", "Su servicio se ha borrado correctamente", "success");
+                    }else{
+                        swal("Error", "Su evento no se ha borrado", "error");
+                    }
+                })
+        }
+
+        function getId(){
+            return $("input[name=evento_id]:checked").attr("id"); 
+        }
+
+    </script>
+
+{% endblock %}

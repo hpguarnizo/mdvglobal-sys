@@ -1,0 +1,22 @@
+¡BIENVENIDO A CODIPAY!
+
+Hola:
+
+Gracias por suscribirte en a las actualizaciones de Codipay. ¡Estamos encantados de poder darte la bienvenida!
+Cada vez son más las personas que emprenden junto a nosotros el emocionante viaje al crecimiento exponencial de sus negocios;
+sabemos sin embargo que no es fácil lograrlo solos, sin el apoyo de un equipo de expertos que ya lo hayan hecho antes y conozcan
+el camino para llegar allí. Por ésta razón queremos ponernos a tu disposición para acompañarte en el viaje y agregar valor a través
+de nuestra experiencia.
+¿Te gustaría crecer tu negocio vendiendo a través de las Redes Sociales? Prueba Gratis nuestra increible herramienta durante 14 días. No
+ necesitas tarjeta de crédito.
+<a href="{{url_panel}}">INICIAR AHORA</a>
+No dudes en ponerte en contacto con nosotros escribiéndonos a soporte@codipay.co en cualquier momento en que consideres necesaria nuestra ayuda.
+ Nuestro equipo sabe cómo hacer que las cosas sucedan y está disponible siempre para ti y tu negocio.
+
+Saludos,
+Equipo de Felicidad de Codipay.
+
+PD: Queremos hacerte saber que estaremos en contacto frecuente contigo para compartirte todo lo que sabemos y continuamos aprendiendo acerca de fidelización de clientes, estrategias digitales y crecimiento de negocios.
+
+
+{% include 'email/blog_footer_unsubscribe.txt' %}

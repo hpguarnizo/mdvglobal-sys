@@ -1,0 +1,18 @@
+{% extends "home_login.html" %}
+
+{% block head %} {{ block.super}} {% endblock %}
+
+{% block title %}Verificar Correo{% endblock %}
+
+{% block titulo %}Por favor verifica tu correo{% endblock %}
+
+{% block redes_sociales %}{% endblock %}
+
+{% block error_form %}{% endblock %}
+
+{% block form %}
+    <p>Hemos enviado un correo a <br><strong>{{email}}</strong></p>
+    <p>Es necesario que lo verifiques para ver tus turnos online.</p>
+    <a href="{% url 'login_page' %}"><button class="login-btn">INGRESAR</button></a>
+
+{% endblock %}

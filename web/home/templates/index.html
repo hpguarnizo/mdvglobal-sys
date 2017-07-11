@@ -1,0 +1,39 @@
+{% load static from staticfiles %}
+{% load google_analytics %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    
+    <!-- Open Graph -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <title>{{company}}</title>
+    
+    <!--Favicon-->
+    <link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
+
+    <link href="{% static 'inspinia2/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'inspinia2/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    {% load google_analytics %}
+</head>
+<body>
+<a href="{% url 'login_page' %}">Loguerse</a>
+<a href="{% url 'signup_page' %}">Registrarse</a>
+<a href="{% url 'evento_lista' %}">Entradas</a>
+<a href="{% url 'donacion_mas' %}">Donacion</a>
+<a href="{% url 'tienda_productos' %}">Tienda</a>
+<a href="{% url 'contenido_mostrar' %}">Contenido</a>
+<a href="">Blog</a>
+
+
+
+
+
+<script src="{% static 'inspinia2/js/jquery-2.1.1.js' %}"></script>
+<script src="{% static 'inspinia2/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

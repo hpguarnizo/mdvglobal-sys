@@ -1,0 +1,408 @@
+{% load staticfiles %}
+{% load google_analytics %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Crece tu negocio usando la red social más grande del mundo. En este post aprenderás algunos tips prácticos que podrás usar para atraer más clientes.">
+    <meta name="Keywords" content="atraer mas clientes">
+    <link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
+
+
+    <title>Cómo atraer más clientes desde Facebook | Codipay</title>
+
+
+
+    <link href="https://fonts.googleapis.com/css?family=Mada" rel="stylesheet">
+
+    
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'common/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="{% static 'blog/css/clean-blog.min.css' %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static 'common/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <link href="{% static 'common/css/bootstrap-social.css' %}" rel="stylesheet">
+    <meta property="og:title" content="Cómo atraer más clientes desde Facebook" />
+    <meta property="og:image" content="{{site_root}}{% static 'blog/img/Como_atraer_mas_clientes_a_traves_de_facebook_codipay_share.jpg' %}" />
+    <meta property="og:description" content="Crece tu negocio usando la red social más grande del mundo." />
+    <meta property="og:url" content="{{site_root}}{% url 'blog_post_atraer' %}" />
+
+    <link href="{{site_root}}{% static 'blog/img/Como_atraer_mas_clientes_a_traves_de_facebook_codipay_share.jpg' %}" rel="image_src" />
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@Codipay_co">
+    <meta name="twitter:title" content="Cómo atraer más clientes desde Facebook">
+    <meta name="twitter:description" content="Crece tu negocio usando la red social más grande del mundo.">
+    <meta name="twitter:image" content="{{site_root}}{% static 'blog/img/Como_atraer_mas_clientes_a_traves_de_facebook_codipay_share.jpg' %}">
+
+{% google_analytics %}
+
+</head>
+
+<body>
+
+
+{% include 'blog_script_social_networks.html' %}
+
+{% if form.errors %}
+<script>
+    alert("{% include 'blog_form_errors.txt' %}");
+</script>
+{% endif %}
+
+
+{% if exist %}
+<script>
+    alert("El email ya se encuentra registrado");
+</script>
+{% endif %}
+
+{% if suscripto %}
+    <script>
+        alert("Gracias por suscribirse. Verifique su email para confirmar la suscripción.");
+    </script>
+{% endif %}
+
+<style>
+
+    ul:not(.nav) li, ol li{
+
+        margin-top: 20px;
+
+    }
+
+    a{
+        color: #1ab394;
+    }
+
+    .email{
+        height: 52px;
+        width: 100% !important;
+    }
+
+    .form-inline .form-group{
+        width:100%;
+    }
+
+    .btn{
+        width: 100%;
+    }
+
+    form{
+        margin-bottom: 100px;
+    }
+
+    img{
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .red{
+        margin-top:10px;
+    }
+
+    .post-heading{
+        padding-bottom:90px !important;
+    }
+
+    .fa-circle-twitter{
+        color:#55acee;
+    }
+
+    .fa-circle-facebook{
+        color:#3b5998;
+    }
+
+</style>
+    <!-- Navigation -->
+    {% include 'blog_navbar.html' %}
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('{% static 'blog/img/Como_atraer_mas_clientes_a_traves_de_facebook_codipay.jpg' %}')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Cómo atraer más clientes desde Facebook</h1>
+                        <h2 class="subheading">Crece tu negocio usando la red social más grande del mundo.</h2>
+                        <span class="meta">Posteado por <a href="https://twitter.com/SamirAnguloOK" target="_blank">Samir Angulo</a> el dia 21 de febrero de 2017</span>
+                       
+                            <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                    <div class="addthis_inline_share_toolbox" style="margin-top: 20px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>Atraer más clientes a tu negocio podría cambiarlo todo, y lo sabes. Seguramente te has preguntado si facebook realmente podría funcionar para ayudarte a través más clientes y mejores. La respuesta es ¡Absolutamente sí!, Sólo que no es suficiente con tener una página en la red social más poderosa del mundo, es necesario tener una buena estrategia y tomar acción para ejecutarla.
+                    </p><p>En éste post te compartiré algunos tips prácticos que puedes empezar a usar hoy mismo, y que seguramente te ayudarán a mejorar tus resultados.</p>
+
+                    <p>Lo primero que debes comprender es que a las personas les gusta comprar pero no les gusta que les vendan, muchos menos a través de las redes sociales. Así que es importante que tengas clara la estrategia: En primera instancia necesitas crear valor para tus potenciales clientes, la venta será una consecuencia de ello.</p>
+
+                    <h2 class="section-heading">Cómo atraer más clientes</h2>
+                    <h3>Identifica tu público objetivo</h3>
+
+                    <p>Es muy importante que definas quien es tu cliente, ya que todas tus acciones deben estar centradas en resolver un problema o suplir una necesidad a tu cliente.</p>
+
+                    <p>Estos son algunos de los datos importantes que debes conocer acerca de tu cliente ideal. Es importante que sepas que puede variar en función de tu productos/servicios u objetivos de negocios:</p>
+
+                   <ul>
+                      <li><b>Información sociodemográfica:</b> edad, sexo, localización, clase social, poder adquisitivo.</li>
+                      <li><b>Datos Personales:</b> estado civil, situación familiar.</li>
+                      <li><b>Información Profesional:</b> profesión, empresa, puesto actual, carrera laboral</li>
+                      <li><b>¿Cuáles son sus retos más grandes?:</b> ¿Necesita tener más tiempo libre? ¿Quiere lucir mejor?</li>
+                      <li><b>Identifica sus conductas y de hábitos de compra:</b> motivaciones, preocupaciones, influencia de otros, ¿qué páginas consulta?, ¿qué suele comprar?, ¿qué formatos publicitarios prefiere? Vídeo, Imágenes, Texto, etc.</li>
+                      <li><b>Personalidad:</b> ¿Cómo es?, ¿qué argumentos necesitas para convencerle? (emocionales o racionales)</li>
+                      <li><b>Contextuales:</b> ¿Cómo usa facebook? ¿Cuáles son sus intereses dentro de la red social?</li>
+                      
+                    </ul>
+
+                    <p>Con toda esta información, ya puedes definir una estrategia y avanzar hacia tus objetivos. A continuación de comparto algunas de las acciones que puedes y deberías estar tomando ahora mismo para atraer más clientes a tu negocio a través de facebook.</p>
+
+                     <img class="img-responsive" src="{% static 'blog/img/Como_atraer_mas_clientes_a_traves_de_facebook_codipay_1.jpg' %}" alt="Como atraer mas clientes a traves de facebook imagen">
+
+                    <h2 class="section-heading">Tips</h2>
+
+                    <ul>
+                        <li>No intentes vender directamente a través de facebook, primero debes crear una relación con tu audiencia. Comparte contenidos que sean interesantes apara tu audiencia.</li>
+
+                        <li>Crea anuncios de Facebook Ads: No es suficiente con que publiques en tu página, ya que facebook a optimizado su algoritmo para reducir el alcance orgánico de tus publicaciones, lo cual quiere decir que hay un 50% menos de personas viendo tus publicaciones. Te recomiendo invertir inicialmente unos 5 dólares diarios en tus campañas de facebook para que puedas medir resultados, optimizar tu estrategia y escalarla poco a poco.</li>
+
+                        <li>Si ya tienes una base de datos de tus clientes, debes subirla a facebook. Una vez hecho esto, puedes crear promociones diseñadas especialmente para aquellas personas que se encuentran en tu base de datos, de esta forma puedes generar una segunda venta a quienes ya conocen tus productos y/o servicios.</li>
+
+                        <li>Segmenta tus campañas con la mayor precisión posible: No uses la opción de promover publicación, tampoco uses las opciones predeterminadas de facebook para publicar anuncios. Ve al administrador de anuncios y utiliza la segmentación avanzada para que puedas alcanzar de forma precisa a tu público objetivo.</li>
+
+                        <li>Crea anuncios visuales y atractivos: Usar imágenes de buena calidad en tus anuncios te ayudará a obtener mejores resultados. Las imágenes luminosas funcionan mejor que las imágenes con tonos oscuros.</li>
+
+                        <li>Nunca olvides dejar claro a tu audiencia lo que tú quieres que ellos hagan. Incluye una llamada a la acción en tus anuncios (Comprar, Ver producto, Más información, etc.) Prueba una y otra vez, con el paso del tiempo tus métricas te dirán cuales funcionan mejor.</li>
+
+                        <li>No sólo son importantes las imágenes de tus anuncios, los textos también lo son. Crea textos que cautiven la atención de tu audiencia meta.</li>
+
+                    </ul>
+
+                    <h3 class="section-heading">Debes tener en cuenta</h3>
+
+                    <ul>
+                        <li>
+                            Comunicar de forma uniforme los colores corporativos de tu marca a través del tiempo, eso te dará reconocimiento de marca y posicionará mejor tu negocio en la memoria de tu público objetivo.
+                        </li>
+
+                        <li>
+                            Comparte concursos y promociones para conseguir nuevos seguidores y para fidelizar a quienes ya siguen tu marca. <a href="{% url 'index' %}" target="_blank">Codipay</a> es una fantástica herramienta que puede ayudarte a obtener resultados increíbles, no sólo para captar la atención de tus clientes, sino también para atraer más clientes desde facebook hacia tu negocio físico.
+                        </li>
+
+                        <li>
+                            
+                            Ten una identidad y se constante en transmitirla. Las personas no quieren tratar con una simple marca, quieren relacionarse con otras personas, así que se natural y ten una voz propia.
+
+                        </li>
+
+                        <li>
+                            Nuevamente, comparte contenido de valor para tu audiencia. Recursos, tutoriales, consejos, etc. Resuelve problemas, satisface necesidades y habrás hecho gran parte de la venta. Conviértete en una voz con autoridad dentro de tu industria por medio de resolver problemas a tus clientes.
+                        </li>
+
+
+                    </ul>
+
+                     <img class="img-responsive" src="{% static 'blog/img/Como_atraer_mas_clientes_a_traves_de_facebook_codipay_2.jpg' %}" alt="Como atraer mas clientes a traves de facebook imagen2">
+
+                    <h2 class="section-heading">Algunas otras recomendaciones importantes</h2>
+
+                    <ul>
+                        <li>
+                            No sólo debes tener una página de facebook, también debes tener una página de destino a la cual llevar a tus clientes para tomar sus datos (Nombre e Email) y continuar tu proceso de ventas por medio de una relación mucho más directa.
+                        </li>
+
+                        <li>
+                            Usa vídeos en tus anuncios, comparte vídeos creativos en tus publicaciones, transmite en vivo si tienes algo importante que comunicar a tu audiencia. ¡Cuida la calidad, sobre todo la calidad del sonido de tus vídeos!
+                        </li>
+
+                        <li>
+                            Trata de incluir un link de destino en cada publicación para llevar a tus clientes de facebook hacia tu propio terreno.
+                        </li>
+                        <li>
+                            No etiquetes a otras personas que estén intrínsecamente relacionadas con lo que estás publicando. ¡Todos odiamos el spam!
+                        </li>
+                        <li>
+                            Colabora con otras marcas e influencers de tu industria. Asegúrate de que no son tus competidores, sino una marca que comparte tus mismos valores.
+                        </li>
+                        <li>
+                        Si tienes un negocio físico, no olvides estar en facebook place.
+                        </li>
+                    </ul>
+
+                     <img class="img-responsive" src="{% static 'blog/img/Como_atraer_mas_clientes_a_traves_de_facebook_codipay_3.jpg' %}" alt="Como atraer mas clientes a traves de facebook imagen3">
+
+                    <h2 class="section-heading">Aún hay más</h2>
+
+                    <ul>
+                        <li>
+                            Haz preguntas a tu audiencia e interactúa con ella. No te limites a postear promociones y descuentos cada día; por favor, no lo hagas si realmente quieres vender… Recuerda que a la gente le gusta comprar pero no le gusta que le vendan.En este sentido, podrías
+                        </li>
+
+                        <li>
+                            <b>Saca provecho del Retargeting:</b> Esta es una de las estrategias más poderosa para conseguir que tus clientes terminen comprando tus productos y/o servicios. ¿Has notado que visitas una página web, y de repente hay anuncios de esa misma página siguiéndote por todos lados, con una promoción específica del producto que más te interesó cuando visitaste este sitio web? Eso es precisamente el retargeting. Crea campañas específicas para personas que visitaron tu sitio web pero salieron de ella sin comprar, o peor aún, sin ni siquiera compartir contigo sus datos (Nombre e email). Esto lo haces agregando en tu sitio un pixel de retargeting que te proporciona Facebook.
+                        </li>
+
+                        <li>
+                            Busca diferentes grupos de Facebook que puedan ser de interés para tus clientes potenciales. Participada de la conversación en ellos, agrega valor compartiendo tu conocimiento acerca de tu sector, pero sin convertirte en spam. Con el paso del tiempo irás ganando autoridad entre la audiencia y vendrán a ti.
+
+                        </li>
+                        <li>
+                            Presta mucha atención el copy. El texto de venta de anuncios en Facebook (y en cualquier otro lugar), puede marcar una gran diferencia entre el éxito y fracaso de tus campañas. Te recomiendo ver <a href="http://www.marketingandweb.es/marketing/guia-copywriting-para-vender-mas-por-internet/" target="_blank">La guía definitiva de copywriting para vender más por internet</a>, compartida en el blog de <a href="http://www.marketingandweb.es/" target="_blank">Miguel Florido</a>.
+                        </li>
+                        <li>
+                            Algo muy importante en lo que debes trabajar, es en diseñar un proceso de venta efectivo. Inicialmente no tiene que ser algo muy complejo, debe ser sencillo de ejecutar y claro.
+                                <ol>
+                                    <blockquote><li><b>Primer paso:</b> Encuentra la forma de obtener los datos de tus clientes, me refiero a su nombre y correo electrónico. Necesitas crear una base de datos propia para que puedas pasar al segundo paso.
+                                    </li></blockquote>
+                                    <blockquote><li><b>Segundo paso:</b> Una vez tengas los datos de tus prospectos o clientes potenciales, usa esos datos para cultivar la relación con ellos. No hay nada más efectivo que el email marketing para que puedas lograrlo. Envía contenido que sea relevante para tu audiencia; si tienes una tienda de ropa podrías enviar por ejemplo, algunos tips de moda, descuentos especiales, etc. En el blog de <a href="http://vilmanunez.com/category/newsletter/" target="_blank">Vilma Nuñez</a> encontrarás mucha información que puede ser de gran valor para diseñar y ejecutar una correcta estrategia de email marketing.</li></blockquote>
+                                    <blockquote><li><b>Tercer paso:</b> ¡Vende! Una vez cultivada la relación, tus clientes potenciales estarán preparados para la venta.</li></blockquote>
+                                </ol>
+
+                        </li>
+                        <li>
+                        <b>Mide y optimiza.</b> Facebook Insights es una buena herramienta que te permite ver el comportamiento de tus acciones en la red social. Con ella podrás analizar qué has hecho y bien y qué no. Mejora y escala todo aquello en lo que tengas éxito, y replantea aquello que no te funciona. Existen además otras muy buenas herramientas con las que puedes hacer esto con mayor profundidad y precisión, como Google Analytics, Mix Panel, Piwik, Kiss Metrics, entre otras. El <a href="http://brunovd.com/estudio-de-analitica-web-y-conversion/" target="_blank">Estudio de Analítica Web y Conversión</a> de <a href="http://brunovd.com/" target="_blank">Bruno Vázques</a> es un excelente recurso en el que podrás aprender a medir tus acciones en internet.
+
+                        </li>
+
+                        <li>Por último, ingresa ahora mismo a <a href="{% url 'index' %}" target="_blank"><b>Codipay</b></a> y descubre cómo puede ayudarte a atraer más clientes desde Facebook. Empieza a crecer tu negocio ahora mismo. <a href="{% url 'index' %}" target="_blank">Saber más.</a></li>
+                    </ul>
+
+                    <img class="img-responsive" src="{% static 'blog/img/Como_atraer_mas_clientes_a_traves_de_facebook_codipay_4.jpg' %}" alt="Como atraer mas clientes a traves de facebook imagen4">
+
+                    <p><a href="{% url 'index' %}" target="_blank"><b>Codipay</b></a> puede ayudarte enormemente a atraer más clientes en facebook y llevarlos hasta tu negocio físico. <a href="{% url 'index' %}" target="_blank">Saber más</a>. </p>
+ 
+                    
+                    
+                    
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <div class="loginColumns animated fadeInDown">
+                <div class="row" style="background-color: #222;font-family:'Mada',sans-serif;padding-bottom: 10px;">
+
+                    <div class='col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1' >
+                        <div class="ibox-content">
+                            <form method="post" class="m-t form-inline" action="{% url 'blog_post_atraer' %}">
+                                {% csrf_token %}
+                                <p class="text-muted text-center" style="color: #FFF; font-size: 1.3em;">
+                                <small>Actualizaciones</small>
+                                </p>
+
+                                 <p class="text-muted text-center" style="color: #fff; font-size: 0.9em; margin-top: -10px;">
+                                    <small>
+                                    ¿Te gustaría recibir todos nuestros consejos sobre marketing online, comercio </br> electrónico, social media, negocios y más?</small>
+                                </p>
+
+                                    <div class="col-md-7 col-sm-7">
+                                        <div class="form-group">
+                                            {{ form.email }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5">
+                                        <button type="submit" class="btn" style="background-color: #1ab394; color: #FFF;">Si, quiero</button>
+                                    </div>
+
+
+                              </form>
+                              <p class="text-center " style="color: #fff; font-size: 0.8em;">
+                                    <small>Te puedes dar de baja en cualquier momento.</small>
+                              </p>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+        </div>
+
+
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p class="text-center" style="margin:0"><small>Compartir</small></p>
+                    <div class="addthis_inline_share_toolbox text-center" style="margin-top: 20px;"></div>
+                    <!-- <ul class="list-inline text-center">
+                        <li>
+                            <a target="popup" onClick="window.open(this.href, this.target, 'width=350,height=420'); return false;" href="https://twitter.com/share?text=Cómo atraer más clientes desde Facebook&url=https://www.codipay.co/blog/como-atraer-mas-clientes-desde-facebook/&via=Codipay_co">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x fa-circle-twitter"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="popup" onClick="window.open(this.href, this.target, 'width=350,height=420'); return false;"
+       href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.codipay.co%2Fblog%2Fcomo-atraer-mas-clientes-desde-facebook%2F&amp;src=sdkpreparse">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x fa-circle-facebook"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                     
+                    </ul> -->
+                    <p class="copyright text-muted">Copyright &copy; {{company}} 2017</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery -->
+    <script src="{% static 'common/js/jquery-3.0.0.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'common/js/bootstrap.min.js' %}"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="{% static 'blog/js/jqBootstrapValidation.js' %}"></script>
+    <script src="{% static 'blog/js/contact_me.js' %}"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="{% static 'blog/js/clean-blog.min.js' %}"></script><!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58b1fceccb0e64c7"></script>
+
+
+</body>
+
+</html>

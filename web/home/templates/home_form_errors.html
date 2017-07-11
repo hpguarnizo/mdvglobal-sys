@@ -1,0 +1,8 @@
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+        <span style=" color:red; font-size: 1.1rem;">{{field.name}} - {{error}}</span>
+        {% endfor %}
+    {% endfor %}
+
+{% endif %}

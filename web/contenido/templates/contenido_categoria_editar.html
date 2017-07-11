@@ -1,0 +1,15 @@
+{%extends 'contenido_categoria_nuevo.html' %}
+
+{%block here%}
+Editar Categoria
+{%endblock%}
+
+{%block list_here%}
+<li>Contenido</li>
+<li><a href="{%url 'contenido_categoria_lista' %}">Categorias</a></li>
+<li class="active">Editar Categoria</li>
+{%endblock%}
+
+{%block form%}.?categoria_id={{categoria.id}}{%endblock%}
+
+{%block btn %}Guardar{%endblock%}

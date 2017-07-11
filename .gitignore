@@ -1,0 +1,7 @@
+web/.idea/workspace.xml
+/db/pgdata/
+~*
+*~
+*.pyc
+*.env
+web/staticfiles/

@@ -1,0 +1,6 @@
+Se ha creado un nuevo evento:
+{{nombre}}
+Puedes registrarte haciendo click aqui:
+{{url}}
+
+{% include 'email/home_footer_unsubscribe.txt' %}

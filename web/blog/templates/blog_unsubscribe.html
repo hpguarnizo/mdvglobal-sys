@@ -1,0 +1,41 @@
+{% load staticfiles %}
+{% load google_analytics %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blog {{company}}| Unsubscribe</title>
+
+    <link href="{% static 'common/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'common/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+
+    <link href="{% static 'inspinia/css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'inspinia/css/style.css' %}" rel="stylesheet">
+{% google_analytics %}
+</head>
+
+<body class="gray-bg">
+
+
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>:'(</h1>
+        <h3 class="font-bold">Se ha desubscripto correctamente de las notificaciones del blog de {{company}}</h3>
+
+        <div class="error-desc">
+            El email {{email}} fue correctamente desubscripto. <br/>
+            Si te arrepientes de esta desición puedes volver a suscribirte en: <br/><a href="{% url 'blog' %}" class="btn btn-primary m-t">Blog</a>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="{% static 'common/js/jquery-3.0.0.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'common/js/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>

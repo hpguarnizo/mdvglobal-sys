@@ -1,0 +1,184 @@
+{% load staticfiles %}
+{% load google_analytics %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Conseguir más clientes en las redes sociales, es un gran desafío que podría estar haciendo crecer tu negocio ahora mismo si lo haces correctamente.">
+    <meta name="Keywords" content="Cómo conseguir más clientes">
+    <link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
+    <title>Aprende cómo conseguir más clientes en las redes sociales | Codipay</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'common/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="{% static 'blog/css/clean-blog.min.css' %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static 'common/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link href="{% static 'common/css/bootstrap-social.css' %}" rel="stylesheet">
+    
+    <meta property="og:title" content="Aprende cómo conseguir más clientes en las redes sociales" />
+    <meta property="og:description" content="Conseguir más clientes en las redes sociales, es un gran desafío que podría estar haciendo crecer tu negocio ahora mismo si lo haces correctamente." />
+    <meta property="og:image" content="{{site_root}}{% static 'img/Como_Conseguir_Mas_Clientes_Blog_Codipay_share_home.png' %}" />
+    <meta property="og:url" content="{{site_root}}{% url 'blog' %}" />
+    <link href="{{site_root}}{% static 'img/Como_atraer_mas_clientes_a_traves_de_facebook_codipay_share.png' %}" rel="image_src" />
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@Codipay_co">
+    <meta name="twitter:title" content="Aprende cómo conseguir más clientes en las redes sociales">
+    <meta name="twitter:description" content="Conseguir más clientes en las redes sociales, es un gran desafío que podría estar haciendo crecer tu negocio ahora mismo si lo haces correctamente.">
+    <meta name="twitter:image" content="{{site_root}}{% static 'img/Como_Conseguir_Mas_Clientes_Blog_Codipay_share_home.png' %}">
+
+
+
+{% google_analytics %}
+</head>
+
+<body>
+    {% include 'blog_script_social_networks.html' %}
+    {% include 'blog_navbar.html' %}
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('{% static 'blog/img/Como_Conseguir_Mas_Clientes_Blog_Codipay.jpg' %}')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Cómo conseguir más clientes</h1>
+                        <hr class="small">
+                        <span class="subheading">Aprende cómo hacerlo y comienza a crecer tu negocio ahora mismo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-preview">
+                    <a href="{% url 'blog_post_atraer' %}">
+                        <h2 class="post-title">
+                            Cómo atraer más clientes desde Facebook
+                        </h2>
+                        <h3 class="post-subtitle">
+                            Crece tu negocio usando la red social más grande del mundo. En éste post aprenderás algunos tips prácticos que podrás usar para atraer más clientes.
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posteado por <a href="https://twitter.com/SamirAnguloOK" target="_blank">Samir Angulo</a> el dia 21 de febrero de 2017</p>
+                </div>
+                <hr>
+                <!-- 
+<div class="post-preview">
+                    <a href="post_base(noused).html">
+                        <h2 class="post-title">
+                            I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.
+                        </h2>
+                    </a>
+                    <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on September 18, 2014</p>
+                </div>
+                <hr>
+                <div class="post-preview">
+                    <a href="post_base(noused).html">
+                        <h2 class="post-title">
+                            Science has not yet mastered prophecy
+                        </h2>
+                        <h3 class="post-subtitle">
+                            We predict too much for the next year and yet far too little for the next ten.
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on August 24, 2014</p>
+                </div>
+                <hr>
+                <div class="post-preview">
+                    <a href="post_base(noused).html">
+                        <h2 class="post-title">
+                            Failure is not an option
+                        </h2>
+                        <h3 class="post-subtitle">
+                            Many say exploration is part of our destiny, but it’s actually our duty to future generations.
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posted by <a href="#">Start Bootstrap</a> on July 8, 2014</p>
+                </div>
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="next">
+                        <a href="{% url 'blog_post_atraer' %}">Ver más&rarr;</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+     <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                   <div class="addthis_inline_share_toolbox text-center" style="margin-top: 20px;"></div>
+                    <!-- <ul class="list-inline text-center">
+                        <li>
+                            <a target="popup" onClick="window.open(this.href, this.target, 'width=350,height=420'); return false;" href="https://twitter.com/share?text=Aprende cómo conseguir más clientes en las redes sociales&url=https://www.codipay.co/blog">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="popup" onClick="window.open(this.href, this.target, 'width=350,height=420'); return false;"
+       href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.codipay.co%2Fblog%2F&amp;src=sdkpreparse">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                     
+                    </ul> -->
+                    <p class="copyright text-muted">Copyright &copy; {{company}} 2017</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="{% static 'common/js/jquery-3.0.0.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'common/js/bootstrap.min.js' %}"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="{% static 'blog/js/jqBootstrapValidation.js' %}"></script>
+    <script src="{% static 'blog/js/contact_me.js' %}"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="{% static 'blog/js/clean-blog.min.js' %}"></script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58b1fceccb0e64c7"></script>
+    
+
+</body>
+
+</html>

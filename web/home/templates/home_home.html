@@ -1,0 +1,81 @@
+{% extends 'home_index.html' %}
+
+{%block here %}
+Home
+{%endblock%}
+
+{%block list_here %}
+{%endblock%}
+
+{%block contenido%}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-xs-12">
+             <div class="row">
+                 <div class="col-xs-12 col-md-6 col-md-offset-3">
+                     <a href="{% url 'evento_todos' %}">
+                         <div class=" widget style1 yellow-bg ">
+                            <div class="row vertical-align">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shield fa-3x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <h2 class="font-bold">Eventos</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+             </div>
+            <div class="row">
+                 <div class="col-xs-12 col-md-6 col-md-offset-3">
+                     <a href="{% url 'donacion_ver' %}">
+                         <div class=" widget style1 blue-bg ">
+                            <div class="row vertical-align">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-archive fa-3x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <h2 class="font-bold">Donaciones</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+             </div>
+            <div class="row">
+                 <div class="col-xs-12 col-md-6 col-md-offset-3">
+                     <a href="{% url 'tienda_productos_lista' %}">
+                         <div class=" widget style1 red-bg ">
+                            <div class="row vertical-align">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shopping-cart fa-3x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <h2 class="font-bold">Tienda</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+             </div>
+            <div class="row">
+                 <div class="col-xs-12 col-md-6 col-md-offset-3">
+                     <a href="{% url 'contenido_lista' %}">
+                         <div class=" widget style1 navy-bg ">
+                            <div class="row vertical-align">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-file fa-3x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <h2 class="font-bold">Contenido</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

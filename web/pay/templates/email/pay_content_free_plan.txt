@@ -1,0 +1,22 @@
+LA FÓRMULA DEL ÉXITO PARA TU NEGOCIO: ¡MIDE, OPTIMIZA Y ESCALA!
+
+Hola, {{name}}:
+
+¿Sabes? Si algo he aprendido durante todos estos años emprendiendo y haciendo crecer negocios alrededor del mundo, es que no existen fórmulas mágicas para el éxito. Sin embargo, sí existen algunos pasos fundamentales que pueden conducirnos al él, de una forma mucho más rápida e inteligente.
+MIDE:
+Si quieres tener éxito en un mundo de negocios con entornos cada vez más complejos, debes desarrollar una mentalidad enfocada al crecimiento y obsesionarte con tus métricas. Mide todas tus acciones en busca del crecimiento de tu producto, servicio y empresa. Necesitas poder evaluar todas las acciones de acuerdo a su impacto potencial en el crecimiento de tu negocio.
+OPTIMIZA
+Realiza mejoras orientadas por datos para potenciar el crecimiento de tu negocio, y hazlo de forma continua. ¡Entiende tus productos, servicios y procesos como algo que nunca está terminado! Tus clientes esperan recibir de ti lo mejor cada día, por lo tanto, aquello que hiciste bien en el pasado o que hagas bien hoy, no necesariamente funcionará de la mejor forma el mes siguiente. Trabaja cada día para entregar mejores soluciones a tus clientes actuales y potenciales, y no olvides que seguramente tu competencia estará haciendo lo mismo para obtener una mayor cuota de tu mercado.
+ESCALA
+Entender cómo los usuarios utilizan tu producto, o cómo los servicios que les ofreces mejoran sus vidas, te ayudará a encontrar tu “Product Market Fit”, es ese punto en el que tu solución encaja perfectamente en un mercado específico. Cuando llegas a éste punto estás preparado para escalar, que es básicamente reproducir lo que hiciste bien durante los puntos 1 y 2, pero a una escala mucho mayor.
+Te recomiendo que tomes acción e  <a href="www.codipay.co{% url 'codeqr_promotion_all' %}">Ingresar Ahora Mismo</a>  a tu panel de control de codipay y <a href="www.codipay.co{% url 'pay_plans' %}">mejorá tu cuenta</a> para tener acceso a todas las métricas o estadísticas que te ayudarán a construir el éxito de tu negocio, de una forma mucho más rápida e inteligente.
+Puedes mejorar tu cuenta ahora mismo haciendo clic en el siguiente enlace:
+<a href="www.codipay.co{% url 'pay_plans' %}"➔ Mejorar Cuenta</a>
+
+Saludos,
+Samir Angulo
+CEO & Co-Fundador de Codipay.
+
+PD: Crea experiencias que la gente ame y que valga la pena compartir con otros.
+
+{% include 'email/home_footer_unsubscribe.txt' %}

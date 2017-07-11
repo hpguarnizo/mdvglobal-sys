@@ -1,0 +1,7 @@
+{{contact.get_title}}
+
+{{contact.get_motive}}
+
+{{contact.get_description}}
+
+<img src="{{contact.get_image_url}}">

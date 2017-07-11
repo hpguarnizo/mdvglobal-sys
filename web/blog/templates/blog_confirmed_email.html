@@ -1,0 +1,42 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blog {{company}} | Subscripto</title>
+
+    <link href="{% static 'common/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'common/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+
+    <link href="{% static 'inspinia/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'common/css/style.css' %}" rel="stylesheet">
+
+
+</head>
+
+<body class="gray-bg">
+
+
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>Bien!</h1>
+         <img src="{% static 'blog/img/Vender_mas_a_traves_de_las_redes_sociales_1.png' %}" alt="laptop" class="img-responsive"/>
+         <h3 class="font-bold">Haz completado correctamente tu suscripción a las notificaciones de {{company}}</h3>
+
+        <div class="error-desc">
+            <p>¿Te gustaria empezar a vender a través de las Redes Sociales? Prueba nuestra increible herramienta de forma
+            gratuita por 14 dias. No necesitas tarjeta de crédito.</p>
+            <p><a href="{% url 'signup_page_trial' %}" class="btn btn-primary m-t">Iniciar Ahora</a></p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="{% static 'common/js/jquery-3.0.0.min.js' %}"></script>
+    <script src="{% static 'common/js/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>

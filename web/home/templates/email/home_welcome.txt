@@ -1,0 +1,17 @@
+¡BIENVENIDO A {{company}}!
+
+Hola, {{name}}:
+
+Gracias por regístrate en {{company}}. ¡Estamos encantados de poder darte la bienvenida!
+Cada vez son más las personas que registran sus turnos online junto a nosotros.
+
+Accede al panel de administracion de tus turnos ahora mismo haciendo click en el siguiente enlace:
+<a href="{{url_panel}}">INICIAR AHORA</a>
+No dudes en ponerte en contacto con nosotros escribiéndonos a soporte@autoturno.com en cualquier momento en que consideres
+necesaria nuestra ayuda. Nuestro equipo sabe cómo hacer que las cosas sucedan y está disponible siempre para ti y tu negocio.
+
+Saludos,
+Equipo de Felicidad de {{company}}.
+
+
+{% include 'email/home_footer_unsubscribe.txt' %}

@@ -1,0 +1,15 @@
+¡CONFIRMA TU CORREO ELECTRÓNICO!
+
+Hola, {{name}}:
+
+Gracias por regístrate en {{company}}.
+Está todo listo para que accedas a tu cuenta y empieces a recibir turnos online.
+Has elegido el camino correcto para hacerlo. Para empezar, por favor confirma tu correo electrónico.
+Para confirmar, por favor haz click en el siguiente enlace:
+<a href="{{url}}">Confirmar Correo Electrónico</a>
+
+Saludos,
+Equipo de Felicidad de {{company}}.
+
+
+{% include 'email/home_footer_unsubscribe.txt' %}

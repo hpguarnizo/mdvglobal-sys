@@ -1,0 +1,17 @@
+ ¡AQUELLO QUE NO MIDES NO LO PUEDES MEJORAR!
+
+Hola, {{name}}:
+
+Ha pasado casi una semana desde que iniciaste tu suscripción gratuita en Codipay.
+Me gustaría saber que tanto has crecido tu negocio en ésta primera semana. ¿Estás midiendo el crecimiento de tu negocio? Si tu respuesta es no, entonces necesitas empezar a hacerlo ahora mismo… ¡Recuerda siempre que el éxito ama la velocidad! Si por el contrario, tu respuesta es sí, déjanos saber qué acciones has tomado para crecer tu potenciar tu crecimiento.
+De acuerdo a las métricas que has obtenido en estos primeros 7 días, podemos darte algunos tips que pueden ayudarte a optimizar aquello que no has hecho de la mejor forma, y a escalar aquello en lo cual tuviste éxito.
+Si deseas tener acceso a las estadísticas de tus campañas de crecimiento en Codipay y aún no has mejorado tu cuenta, puedes hacerlo ingresando a tu panel de control ahora mismo a través del siguiente enlace:
+<a href="www.codipay.co[% url 'pay_plans' %}➔ Mejorar Cuenta</a>
+
+Saludos,
+Samir Angulo
+Co-Fundador y CEO de Codipay.
+
+PD: Crea experiencias que la gente ame y que valga la pena compartir con otros.
+
+{% include 'email/home_footer_unsubscribe.txt' %}

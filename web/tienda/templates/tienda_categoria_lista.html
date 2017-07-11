@@ -1,0 +1,178 @@
+{% extends 'home_index.html' %}
+{% load staticfiles %}
+
+{% block head %}
+    {{block.super}}
+   <!-- Sweet Alert -->
+    <link href="{% static 'inspinia2/css/plugins/sweetalert/sweetalert.css' %}" rel="stylesheet">
+
+{% endblock%}
+
+
+{%block tienda%}
+active
+{%endblock%}
+
+{%block tienda_in%}
+in
+{%endblock%}
+
+
+{%block productos%}
+active
+{%endblock%}
+
+{%block productos_categoria%}
+active
+{%endblock%}
+
+{%block here%}
+Categorias
+{%endblock%}
+
+{%block list_here%}
+<li>Tienda</li>
+<li>Producto</li>
+<li class="active">Categorias</li>
+{%endblock%}
+
+
+
+{%block contenido%}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="row">
+                    <div class="col-xs-3 col-md-1 col-md-offset-8 text-center">
+                        <small>Nuevo</small>
+                    </div>
+                    <div class="col-xs-3 col-md-1  text-center">
+                        <small>Editar</small>
+                    </div>
+                    <div class="col-xs-3 col-md-1  text-center">
+                        <small>Eliminar</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 col-md-1 col-md-offset-8 text-center">
+                        <a href="{% url 'tienda_categoria_nuevo' %}">
+                            <button class="btn btn-success">
+                                <i class="fa fa-plus fa-2x"></i>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-xs-3 col-md-1  text-center">
+                        <button class="btn btn-success" id="edit">
+                            <i class="fa fa-edit fa-2x"></i>
+                        </button>
+                    </div>
+                    <div class="col-xs-3 col-md-1  text-center">
+                        <button class="btn btn-success" id="eliminar">
+                            <i class="fa fa-times fa-2x"></i>
+                        </button>
+                    </div>
+                </div>
+            <div class="ibox-content">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        {% for tipo in tipos %}
+                        <th>{{tipo}}</th>
+                        {%endfor%}
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%for categoria in categorias%}
+                    <tr>
+                            <td><input type="radio" name="categoria_id" id="{{categoria.id}}"></td>
+                            <td>{{categoria}}</td>
+                            {%for num in categoria.get_tipos %}
+                            <td>{{num}}</td>
+                            {%endfor%}
+                    </tr>
+                    {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{%endblock%}
+
+{%block javascript_custom %}
+<script src="{% static 'inspinia2/js/plugins/sweetalert/sweetalert.min.js' %}"></script>
+
+<script>
+    $(document).ready(function(){
+        $("#edit").click(function(){
+            id = getId();
+            if(id){
+                location.href = "{% url 'tienda_categoria_editar' %}?categoria_id=" + id;
+            }else{
+                swal({
+                    title: "Debe seleccionar un evento",
+                    text: "Seleccione el evento que desea editar."
+                });
+            }
+        });
+
+        $("#eliminar").click(function(){
+            id = getId();
+            if(id){
+              swal({
+                title: "Solo se eliminará si:",
+                text: "Ningun producto pertenece a esta categoria",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Si, borralo!",
+                cancelButtonText: "Cancelar!",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+            }, function (isConfirm) {
+                if(isConfirm){
+                    borrarCategoria(id);
+                }else{
+                    swal("Cancelado", "La categoria no se ha borrado :)", "error");
+                }
+            });
+            }else{
+                swal({
+                    title: "Debe seleccionar una categoria",
+                    text: "Seleccione la categoria que desea eliminar."
+                });
+            }
+        })
+
+        function borrarCategoria(id){
+                let request = $.ajax({
+                    type: "GET",
+                    url: "{%url 'categoria_borrar' %}",
+                    data:{
+                        "categoria_id": id
+                    },
+                });
+                request.done(function(response){
+                    if(response.borrado==="true"){
+                        let i = $('#'+id).parent().parent().remove();
+
+                        swal("Eliminado", "La categoria se ha borrado correctamente", "success");
+
+                    }else{
+                        swal("Error", "La categoria no se ha borrado", "error");
+                    }
+                })
+        }
+
+        function getId(){
+            return $("input[name=categoria_id]:checked").attr("id");
+        }
+
+    });
+</script>
+{%endblock%}

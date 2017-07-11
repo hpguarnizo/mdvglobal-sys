@@ -1,0 +1,14 @@
+¡CONFIRMA TU CORREO ELECTRÓNICO!
+
+Hola, {{name}}, por favor confirma tu correo electrónico.
+Gracias por suscribirte a las notificaciones de Codipay. Para empezar, por favor confirma tu correo electrónico.
+Para confirmar, por favor haz click en el siguiente enlace:
+<a href="{{url}}">Confirmar Correo Electrónico</a>
+
+Después de hacer click en el enlace recibirás inmediatamente un correo electrónico en el que confirmaremos tu solicitud y la activación de tu suscripción.
+
+Saludos,
+Equipo de Felicidad de Codipay.
+
+
+{% include 'email/blog_footer_unsubscribe.txt' %}

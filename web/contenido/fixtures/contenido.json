@@ -1,0 +1,22 @@
+[
+  {
+    "model":"contenido.tipocontenido",
+    "fields":{
+      "nombre":"Audio"
+    },
+    "pk":1
+  },
+  {
+    "model":"contenido.tipocontenido",
+    "fields":{
+      "nombre":"Video"
+    },
+    "pk":2
+  },{
+    "model":"contenido.tipocontenido",
+    "fields":{
+      "nombre":"Documento"
+    },
+    "pk":3
+  }
+]

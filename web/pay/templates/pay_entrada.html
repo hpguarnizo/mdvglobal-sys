@@ -1,0 +1,22 @@
+{%extends 'pay_payment.html'%}
+
+{%block title %}Comprar Entrada{%endblock%}
+
+{%block producto %}
+{%block producto_pay %}
+{{entrada.get_evento.get_nombre}}
+{%endblock%}
+{%endblock%}
+
+{%block precio %}
+{%block precio_pay %}
+${{entrada.get_evento.get_precio}} ARS
+{%endblock%}
+{%endblock%}
+
+{%block descripcion%}
+{%block descripcion_pay%}
+Este evento es {{entrada.get_evento.get_categoria}} y se realizara el {{entrada.get_evento.get_fecha}}
+{%endblock%}
+{%endblock%}
+

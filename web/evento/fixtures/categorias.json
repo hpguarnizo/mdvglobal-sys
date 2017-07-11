@@ -1,0 +1,16 @@
+[
+  {
+    "model":"evento.categoria",
+    "fields":{
+      "nombre":"Presencial"
+    },
+    "pk":1
+  },
+  {
+    "model":"evento.categoria",
+    "fields":{
+      "nombre":"Online"
+    },
+    "pk":2
+  }
+]

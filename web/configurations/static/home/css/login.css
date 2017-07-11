@@ -1,0 +1,167 @@
+@font-face{
+	font-family: 'spartan';
+	src: url('fonts/LeagueSpartan-Bold.otf');
+}
+
+@font-face{
+	font-family: 'arimo';
+	src: url('fonts/Arimo-Regular.ttf');
+}
+
+@media (min-width: 480px) and (max-width: 640px) and (min-height: 320px) and (max-height: 360px){
+
+
+.fondo{
+	height: 200% !important;
+
+}
+
+.login2{
+
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.btn-twitter:hover{
+    background-color: #1295bf;
+    color: #fff;
+}
+
+.btn-facebook:hover{
+    background-color: #205081;
+    color: #FFF;
+}
+
+.btn-twitter:visited{
+    background-color: #1295bf;
+    color: #fff;
+}
+
+.btn-facebook:visited{
+    background-color: #205081;
+    color: #FFF;
+}
+
+
+}
+
+
+@media (max-width: 360px) {
+
+.login2{
+
+	height: 100% !important;
+	width: 100% !important;
+	margin-top: 40px !important	;
+
+}
+
+.login-btn{
+
+	width: 100% !important;
+}
+
+.olvido-pass{
+
+	margin-bottom: 15px;
+}
+
+}
+.fondo{
+
+	background-color: #F1F1F1;
+}
+.body{
+
+	height: 100%;
+}
+.red-social{
+
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+.red-social:hover{
+
+	color: #FFF;
+
+}
+
+.div-login{
+
+	height: 100%;
+}
+
+.alin-ver{
+
+	display: flex;
+	align-items: center;
+}
+
+.login2{
+	background-color: #FFF;
+	height: 80%;
+	padding: 30px;
+	border: 2px double #d9d9d9;
+	border-radius: 6px;
+	box-shadow: 10px 10px 10px 4px #d9d9d9;
+	max-height: 600px;
+	min-height: 530px;
+}
+
+.campo-form{
+
+	width: 100%;
+	border-style: none;	
+	height: 11%;
+	border-bottom: 1px solid #d9d9d9;
+
+	}
+
+.campo-form:hover{
+
+	border-bottom: 1px solid #10AFE0;
+	}
+
+.login-titulo{
+
+	font-family: spartan;
+	font-size: 2rem;
+}
+
+.login-div-form{
+
+	padding-top: 10%;
+}
+
+.login-btn{
+
+	width: 280px;
+	color: #FFF;
+	background-color: #1AB394;
+	height: 35px;
+	font-family: arimo;
+	border-radius: 6px;
+	border: none;	
+	margin-top: 15px;
+}
+
+.login-btn:hover{
+
+	background-color: #5BC4C8;
+}
+
+.olvido-pass{
+
+	font-size: 1.2rem;
+}
+
+.registrarse{
+
+	font-size: 1.2rem;
+}
+
+.alineados{
+
+	text-align: left;
+}

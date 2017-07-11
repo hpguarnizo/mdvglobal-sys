@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eventos</title>
+</head>
+<body>
+    <img src="{{evento.get_imagen}}" alt="{{evento.get_nombre}}">
+    <p>{{evento.get_nombre}}</p>
+    <p>{{evento.get_descripcion}}</p>
+    <p>{{evento.get_fecha}}</p>
+    {% if evento.get_tipo.es_pago %}
+    <p>{{evento.get_precio}}</p>
+    {%endif%}
+    <p><img src="{{evento.imagen}}" alt="{{evento.get_nombre}}"></p>
+    {% if evento.get_categoria.es_presencial%}
+    <p>{{evento.get_ciudad}},{{evento.get_ciudad.get_pais}}</p>
+    <p>{{evento.get_direccion}}</p>
+    <p>{{evento.get_cupo}}</p>
+    {% endif %}
+    <p>{{evento.get_categoria}}</p>
+    <p>{{evento.get_tipo}}</p>
+    <p>
+        {% if evento.get_estado.es_disponible %}
+        <a href="{% url 'evento_registro' evento_id=evento.id %}">
+        {% if evento.get_tipo.es_pago %}
+            <button class="btn">Compar Entrada</button>
+        {%else%}
+            <button class="btn">Reservar Lugar</button>
+        {%endif%}
+        </a>
+        {%else%}
+            <button class="btn">Agotados</button>
+        {% endif %}
+    </p>
+</body>
+</html>

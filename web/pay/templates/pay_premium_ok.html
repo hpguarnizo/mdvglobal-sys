@@ -1,0 +1,54 @@
+{% load staticfiles %}
+{% load google_analytics %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>¡Felicidades!</title>
+    <link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
+
+
+    <link href="{% static 'common/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'common/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+
+    <link href="{% static 'inspinia2/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'inspinia2/css/style.css' %}" rel="stylesheet">
+{% google_analytics %}
+</head>
+
+<body class="gray-bg">
+
+
+    <div class="middle-box text-center animated fadeInDown">
+        
+        <h2 class="font-bold" style="margin-bottom: 30px;">¡Felicidades tu cuenta es premium!</h2>
+
+        <div class="error-desc">
+            
+        {% if user.is_active %}
+
+        <div class="error-desc">
+            Ahora ya puedes empezar a disfrutar de todas las funcionalidades de Codipay </br>
+            <a href="{% url 'share_user_all' %}" class="btn btn-primary m-t">Ingresar</a>
+        </div>
+
+        {% else %}
+            
+        <div class="error-desc">
+            Verifica tu correo electronico para confirmar tu cuenta y asi poder disfrutar de todas las funcionalidades de {{company}}.</br>
+            <a href="{% url 'login_page' %}" class="btn btn-primary m-t">Ingresar</a>
+        </div>
+        {% endif %}
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="{% static 'common/js/jquery-3.0.0.min.js' %}"></script>
+    <script src="{% static 'common/js/bootstrap.min.js' %}"></script>
+</body>
+
+</html>

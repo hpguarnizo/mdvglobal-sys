@@ -1,0 +1,54 @@
+{% extends 'home_index.html' %}
+
+{%block tienda%}
+active
+{%endblock%}
+
+{%block tienda_in%}
+in
+{%endblock%}
+
+
+{%block productos%}
+active
+{%endblock%}
+
+{%block productos_categoria%}
+active
+{%endblock%}
+
+{%block here%}
+Nueva Categoria
+{%endblock%}
+
+{%block list_here%}
+<li>Tienda</li>
+<li><a href="{%url 'tienda_productos_lista'%}">Producto</a></li>
+<li><a href="{%url 'tienda_categoria_lista' %}">Categorias</a></li>
+<li class="active">Nueva Categoria</li>
+{%endblock%}
+
+
+{%block contenido%}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-content">
+                <form action="{%block form%}.{%endblock%}" method="POST" class="form-horizontal" id="form">
+                    {% csrf_token %}
+                    {% include 'home_form_errors.html' %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nombre</label>
+                        <div class="col-sm-10">
+                            {{form.nombre}}
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit"  class="btn btn-success" id="btn">{% block btn %}Nueva Categoria!{%endblock%}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,87 @@
+{% load staticfiles %}
+{% load google_analytics %}
+<html>
+    <head>
+    {% block head %}
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!--Style-->
+        <link href="{% static 'common/css/bootstrap-social.css' %}" rel="stylesheet">
+        <link href="{% static 'common/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+        <link href="{% static 'common/css/bootstrap.min.css' %}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static 'home/css/login.css' %}">
+
+        <!--Javascript-->
+        <script src="{% static 'common/js/jquery-3.0.0.min.js' %}"></script>
+        <script src="{% static 'common/js/bootstrap.min.js' %}"></script>
+
+        <!--Favicon-->
+        <link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
+    {% endblock %}
+
+    <title>{% block title %}Log In{% endblock %}</title>
+
+    {% google_analytics %}
+    </head>
+    <body>
+        <div class="fondo">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4 ">
+                    <div class=" div-login alin-ver text-center">
+                        <div class="login2">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 text-center">
+                                    <p class="login-titulo">{% block titulo %}Iniciar Sesión{% endblock %}</p>
+                                    {%block redes_sociales %}
+                                    <a href="{% url 'social:begin' 'google-oauth2' %}?next={% block next_google %}{% url 'home' %}{% endblock %}"
+                                       class="btn btn-block btn-social btn-google red-social center-block">
+                                        <span class="fa fa-google"></span>
+                                        {% block name_google %} Ingresa con Google {% endblock %}
+                                    </a>
+                                    <a href="{% url 'social:begin' 'twitter' %}?next={% block next_twitter %}{% url 'home' %}{% endblock %}"
+                                       class="btn btn-block btn-social btn-twitter red-social center-block ">
+                                        <span class="fa fa-twitter"></span>
+                                        {% block name_twitter %} Ingresa con Twitter {% endblock %}
+                                    </a>
+                                    <a href="{% url 'social:begin' 'facebook' %}?next={% block next_facebook %}{% url 'home' %}{% endblock %}"
+                                       class="btn btn-block btn-social btn-facebook red-social center-block">
+                                        <span class="fa fa-facebook"></span>
+                                        {% block name_facebook %} Ingresa con Facebook {% endblock %}
+                                    </a>
+                                    {% endblock %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 login-div-form ">
+                                    {% block form %}
+                                    <form method="post" action=" {% url 'login_page' %}">
+                                        {% csrf_token %}
+                                        {% block error_form %}
+                                            {% include "home_form_errors.html" %}
+                                        {% endblock %}
+                                        <div class="form-group">
+                                            {{form.email}}
+                                        </div>
+                                        <div class="form-group">
+                                            {{form.password}}
+                                        </div>
+                                        <button type="submit" class="login-btn">INGRESAR</button>
+                                    </form>
+                                    <p class="olvido-pass"><a href="{% url 'password_reset_page' %}">Olvidé mi contraseña</a><br></p>
+                                    {% block registro %}
+                                        <p class="registrarse">¿Sin cuenta en {{company}}? <a href="{% url 'signup_page' %}">Nueva Cuenta</a></p>
+                                    {% endblock %}
+                                    {% endblock %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

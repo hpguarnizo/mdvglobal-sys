@@ -1,0 +1,39 @@
+{%extends 'tienda_productos_nuevo.html' %}
+
+{%block tienda%}
+active
+{%endblock%}
+
+{%block tienda_in%}
+in
+{%endblock%}
+
+{%block productos%}
+active
+{%endblock%}
+
+{%block productos_ver%}
+active
+{%endblock%}
+
+{%block here%}
+Editar Producto
+{%endblock%}
+
+{%block list_here%}
+<li><a href="{%url 'tienda_productos_lista'%}">Productos</a></li>
+<li class="active">Editar Producto</li>
+{%endblock%}
+
+{% block btn %}Guardar{%endblock%}
+
+{%block stock%}
+{%if producto.get_tipo.es_libro_fisico%}
+    {{block.super}}
+{%endif%}
+{%endblock%}
+
+{%block no_form%}{%endblock%}
+{%block no_form2%}{%endblock%}
+
+{%block action%}.?producto_id={{producto.id}}{%endblock%}

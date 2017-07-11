@@ -1,0 +1,16 @@
+[
+  {
+    "model":"evento.tipoevento",
+    "fields":{
+      "nombre":"Pago"
+    },
+    "pk":1
+  },
+  {
+    "model":"evento.tipoevento",
+    "fields":{
+      "nombre":"Gratis"
+    },
+    "pk":2
+  }
+]

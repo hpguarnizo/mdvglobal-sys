@@ -1,0 +1,20 @@
+{% extends 'home_login.html'%}
+
+{% block title %}Obtener Entrada{% endblock %}
+
+{% block titulo %}Iniciar Sesión{% endblock %}
+
+{% block next_google %}{% url 'evento_completar_perfil' evento_id=evento.id %}{% endblock %}
+{% block next_twitter %}{% url 'evento_completar_perfil' evento_id=evento.id %}{% endblock %}
+{% block next_facebook %}{% url 'evento_completar_perfil' evento_id=evento.id %}{% endblock %}
+
+
+
+{% block registro %}
+    <p class="registrarse">
+        <a href="{% url 'evento_sin_registro' evento_id=evento.id %}">
+            <strong>Continuar sin registrarse</strong>
+        </a>
+    </p>
+    <p class="registrarse">¿Sin cuenta en {{company}}? <a href="{% url 'signup_page' %}">Nueva Cuenta</a></p>
+{% endblock %}

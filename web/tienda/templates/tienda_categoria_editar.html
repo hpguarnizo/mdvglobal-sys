@@ -1,0 +1,16 @@
+{%extends 'tienda_categoria_nuevo.html' %}
+
+{%block here%}
+Editar Categoria
+{%endblock%}
+
+{%block list_here%}
+<li>Tienda</li>
+<li><a href="{%url 'tienda_productos_lista'%}">Producto</a></li>
+<li><a href="{%url 'tienda_categoria_lista' %}">Categorias</a></li>
+<li class="active">Editar Categoria</li>
+{%endblock%}
+
+{%block form%}.?categoria_id={{categoria.id}}{%endblock%}
+
+{%block btn %}Guardar{%endblock%}

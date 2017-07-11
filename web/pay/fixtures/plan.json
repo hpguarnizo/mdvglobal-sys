@@ -1,0 +1,44 @@
+[
+    {
+        "model": "pay.plan",
+        "fields": {
+            "name": "Gratis",
+            "description": "Este plan esta muy limitado"
+        },
+        "pk": 1
+    },
+    {
+        "model": "pay.gratis",
+        "fields": {
+        },
+        "pk": 1
+    },
+    {
+        "model": "pay.plan",
+        "fields": {
+            "name": "Premium",
+            "description": "Este plan tiene acceso a mas contenido"
+        },
+        "pk": 2
+    },
+    {
+        "model": "pay.premium",
+        "fields": {
+        },
+        "pk": 2
+    },
+    {
+        "model": "pay.plan",
+        "fields": {
+            "name": "Ministerial",
+            "description": "Este plan no tiene restricciones"
+        },
+        "pk": 3
+    },
+    {
+        "model": "pay.ministerial",
+        "fields": {
+        },
+        "pk": 3
+    }
+]

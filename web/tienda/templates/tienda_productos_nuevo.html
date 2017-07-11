@@ -1,0 +1,124 @@
+{%extends 'home_index.html' %}
+
+{%block head%}
+    {{block.super}}
+    {{form.media}}
+{%endblock%}
+
+{%block tienda%}
+active
+{%endblock%}
+
+{%block tienda_in%}
+in
+{%endblock%}
+
+{%block productos%}
+active
+{%endblock%}
+
+{%block productos_ver%}
+active
+{%endblock%}
+
+{%block here%}
+Nuevo Producto
+{%endblock%}
+
+{%block list_here%}
+<li><a href="{%url 'tienda_productos_lista'%}">Productos</a></li>
+<li class="active">Nuevo Producto</li>
+{%endblock%}
+
+{%block contenido%}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-content">
+                <form action="{%block action %}.{%endblock%}" method="POST" class="form-horizontal" id="form">
+                    {% csrf_token %}
+                    {% include 'home_form_errors.html' %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Nombre</label>
+                        <div class="col-sm-10">
+                            {{form.nombre}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Descripción</label>
+                        <div class="col-sm-10">
+                            {{form.descripcion}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Categoria</label>
+                        <div class="col-sm-10">
+                            {{form.categoria}}
+                            <span class="help-block m-b-none">
+                                <a href="{% url 'tienda_categoria_nuevo' %}">Puedes agregar una haciendo click aqui.</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" id="precio">
+                        <label class="col-sm-2 control-label">Precio</label>
+                        <div class="col-sm-10">
+                            {{form.precio}}
+                        </div>
+                    </div>
+                    {%block no_form%}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Tipo</label>
+                        <div class="col-sm-10">
+                            {{form.tipo}}
+                        </div>
+                    </div>
+                    {%endblock%}
+                    {% block stock%}
+                    <div class="form-group" id="stock">
+                        <label class="col-sm-2 control-label">Stock</label>
+                        <div class="col-sm-10">
+                            {{form.stock}}
+                        </div>
+                    </div>
+                    {%endblock%}
+                    {%block no_form2%}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Archivo</label>
+                        <div class="col-sm-10">
+                            {{form.archivo}}
+                        </div>
+                    </div>
+                    {%endblock%}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Imagen</label>
+                        <div class="col-sm-10">
+                            {{form.imagen}}
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit"  class="btn btn-success" id="btn">{% block btn %}Nuevo Producto!{%endblock%}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+
+{%block javascript_custom%}
+<script type="text/javascript">
+    $(document).ready(function(){
+        ocultarStock();
+        $("#id_tipo").on("change",ocultarStock);
+
+        function ocultarStock(){
+            if($("#id_tipo").val()!="4"){
+                $("#stock").addClass("sr-only");
+            }else{
+                $("#stock").removeClass("sr-only");
+            }
+        }
+    });
+</script>
+{%endblock%}

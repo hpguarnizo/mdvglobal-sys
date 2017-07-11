@@ -1,0 +1,37 @@
+{% load staticfiles %}
+{% load google_analytics %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Unsubscribe</title>
+
+    <link href="{% static 'common/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'common/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'inspinia2/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'inspinia2/css/style.css' %}" rel="stylesheet">
+    {% google_analytics %}
+</head>
+
+<body class="gray-bg">
+
+
+    <div class="middle-box text-center animated fadeInDown">
+       
+        <div class="error-desc">
+            <h2 style="text-align: center;"><strong>Unsubscribe</strong></h2><p>&nbsp;</p><p><strong>DESUBSCRIPCION FINALIZADA</strong></p>
+            <p>
+                Ya no recibira mas correos de {{company}}.
+            </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="{% static 'inspinia2/js/jquery-2.1.1.js' %}"></script>
+    <script src="{% static 'common/js/bootstrap.min.js' %}"></script>
+</body>
+</html>

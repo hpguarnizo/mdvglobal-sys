@@ -1,0 +1,286 @@
+{% load staticfiles %}
+{% load piwik %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Identifica y enamora a tus mejores clientes. Conviértelos en embajadores de tu marca con nuestra herramienta de fidelización de clientes y marketing social">
+    <meta name="Keywords" content="fidelización de clientes, marketing social">
+    <!-- Add Your favicon here -->
+    <!--<link rel="icon" href="img/favicon.ico">-->
+
+    <title>Herramienta de fidelización de clientes y marketing social | CODIPAY</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "land/css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Animation CSS -->
+    <link href="{% static "land/css/animate.min.css" %}" rel="stylesheet">
+
+    <link href="{% static "land/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
+
+    <!-- Mainly scripts -->
+    <script src="{% static "land/js/jquery-2.1.1.js" %}"></script>
+    <script src="{% static "land/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "land/js/plugins/metisMenu/jquery.metisMenu.js" %}"></script>
+    <script src="{% static "land/js/plugins/slimscroll/jquery.slimscroll.min.js" %}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="{% static "land/js/inspinia.js" %}"></script>
+    <script src="{% static "land/js/plugins/pace/pace.min.js" %}"></script>
+    <script src="{% static "land/js/plugins/wow/wow.min.js" %}"></script>
+    <link href="{% static "Static_Full_Version/css/plugins/toastr/toastr.min.css" %}" rel="stylesheet">
+
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href="{% static "land/css/style.css" %}" rel="stylesheet">
+</head>
+<body>
+
+<div class="navbar-wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    {% if plan_inicia %}
+                    <a class="navbar-brand" href="{% url 'codeqr_commerce' %}"><img src="https://drive.google.com/uc?export=view&id=0B6JU3-CWxKWxTC1FOW9iUEo4SkE" style="height: 16px; width: 36px;"></a>
+                    {% else %}
+                    <a class="navbar-brand" href="{% url 'codeqr_metrics' %}"><img src="https://drive.google.com/uc?export=view&id=0B6JU3-CWxKWxTC1FOW9iUEo4SkE" style="height: 16px; width: 36px;"></a>
+                    {% endif %}
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                     <ul class="nav navbar-nav navbar-right">
+                        <li><a class="page-scroll" href="{% url 'profile' %}">Perfil</a></li>
+                        <li><a class="page-scroll" href="{% url 'codeqr_commerce' %}">Mis negocios</a></li>
+                    {% if plan_inicia %}
+                        <li><a class="page-scroll" href="{% url 'codeqr_commerce' %}">Panel de control</a></li>
+                    {% else %}
+                        <li><a class="page-scroll" href="{% url 'codeqr_metrics' %}">Panel de control</a></li>
+                    {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+                <div style="height: 100px;">
+                    
+
+                </div>
+                <div class="col-lg-12">
+
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            Formas de pago
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="panel-group payments-method" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="pull-right">
+                                            <i class="fa fa-cc-paypal text-success"></i>
+                                        </div>
+                                        <h5 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">PayPal</a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <h2>CRECE</h2>
+                                                    <strong>Precio:</strong>: <span class="text-navy">$49</span>
+
+                                                    <p class="m-t">
+                                                        Este plan esta diseñado para Grandes Empresas, Agencias o Equipos Profesionales.
+                                                    </p>
+
+                                                    {{form.render}}
+                                                </div>
+
+                                            </div>
+
+
+                                             </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="pull-right">
+                                            <i class="fa fa-cc-amex text-success"></i>
+                                            <i class="fa fa-cc-mastercard text-warning"></i>
+                                            <i class="fa fa-cc-discover text-danger"></i>
+                                        </div>
+                                        <h5 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Credit Card</a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <h2>Summary</h2>
+                                                    <strong>Product:</strong>: Name of product <br/>
+                                                    <strong>Price:</strong>: <span class="text-navy">$452.90</span>
+
+                                                    <p class="m-t">
+                                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                                                        enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                                        nisi ut aliquip ex ea commodo consequat.
+
+                                                    </p>
+                                                    <p>
+                                                        Duis aute irure dolor
+                                                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                                                        nulla pariatur. Excepteur sint occaecat cupidatat.
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-8">
+
+                                                    <form role="form" id="payment-form">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label>CARD NUMBER</label>
+                                                                    <div class="input-group">
+                                                                        <input type="text" class="form-control" name="Number" placeholder="Valid Card Number" required />
+                                                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-7 col-md-7">
+                                                                <div class="form-group">
+                                                                    <label>EXPIRATION DATE</label>
+                                                                    <input type="text" class="form-control" name="Expiry" placeholder="MM / YY"  required/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-5 col-md-5 pull-right">
+                                                                <div class="form-group">
+                                                                    <label>CV CODE</label>
+                                                                    <input type="text" class="form-control" name="CVC" placeholder="CVC"  required/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="form-group">
+                                                                    <label>NAME OF CARD</label>
+                                                                    <input type="text" class="form-control" name="nameCard" placeholder="NAME AND SURNAME"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <button class="btn btn-primary" type="submit">Make a payment!</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        
+            
+
+</div>
+        <script>
+
+    $(document).ready(function () {
+
+        $('body').scrollspy({
+            target: '.navbar-fixed-top',
+            offset: 80
+        });
+
+        // Page scrolling feature
+        $('a.page-scroll').bind('click', function(event) {
+            var link = $(this);
+            $('html, body').stop().animate({
+                scrollTop: $(link.attr('href')).offset().top - 50
+            }, 500);
+            event.preventDefault();
+            $("#navbar").collapse('hide');
+        });
+    });
+
+    var cbpAnimatedHeader = (function() {
+        var docElem = document.documentElement,
+                header = document.querySelector( '.navbar-default' ),
+                didScroll = false,
+                changeHeaderOn = 000;
+                $(header).addClass('navbar-scroll')
+        function init() {
+            window.addEventListener( 'scroll', function( event ) {
+                if( !didScroll ) {
+                    didScroll = true;
+                    setTimeout( scrollPage, 250 );
+                }
+            }, false );
+        }
+        function scrollPage() {
+            var sy = scrollY();
+            if ( sy >= changeHeaderOn ) {
+                $(header).addClass('navbar-scroll')
+            }
+            else {
+                $(header).removeClass('navbar-scroll')
+            }
+            didScroll = false;
+        }
+        function scrollY() {
+            return window.pageYOffset || docElem.scrollTop;
+        }
+        init();
+
+    })();
+
+    // Activate WOW.js plugin for animation on scrol
+    new WOW().init();
+
+</script>
+{% piwik %}
+</body>
+</html>

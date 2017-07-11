@@ -1,0 +1,18 @@
+{% extends 'contenido_nuevo.html'%}
+
+{%block conte%}
+active
+{%endblock%}
+
+{%block here%}
+Editar Contenido
+{%endblock%}
+
+{%block action %}.?contenido_id={{contenido.id}}{%endblock%}
+
+{%block list_here%}
+<li><a href="{% url 'contenido_lista' %}">Contenidos</a></li>
+<li class="active">Editar contenido</li>
+{%endblock%}
+
+{% block btn %}Guardar{%endblock%}

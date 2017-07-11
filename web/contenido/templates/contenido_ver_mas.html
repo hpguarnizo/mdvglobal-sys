@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{contenido.get_nombre}}</title>
+</head>
+<body>
+<h1>{{contenido.get_nombre}}</h1>
+<h3>{{contenido.get_tipo}}</h3>
+<h3>{{contenido.get_categoria}}</h3>
+{%if permitido%}
+    {% if contenido.get_tipo.es_audio%}
+    <audio src="{{contenido.get_archivo}}"></audio>
+    {% elif contenido.get_tipo.es_documento%}
+    <a href="{{contenido.get_archivo}}" target="_blank">Ver Docuemento</a>
+    {%else%}
+    <video src="{{contenido.get_archivo}}"></video>
+    {%endif%}
+    <p>{{contenido.get_descripcion}}</p>
+{%else%}
+<a href="{%url 'pay_plans'%}"><p>Para ver el contenido debe actualizar su plan</p></a>
+{%endif%}
+</body>
+</html>
