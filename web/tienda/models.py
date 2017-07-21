@@ -8,7 +8,7 @@ from django.db import models
 from model_utils.managers import InheritanceManager
 from s3direct.fields import S3DirectField
 
-from accounts.models import MyUser
+from accounts.models import MyUser, _generate_code
 
 
 class CategoriaProducto(models.Model):
@@ -90,6 +90,12 @@ class Producto(models.Model):
 
     def hay_stock(self):
         if self.tipo.es_libro_fisico and self.stock==0:
+            return False
+        else:
+            return True
+
+    def hay_stock(self,cantidad):
+        if self.tipo.es_libro_fisico() and (self.stock-cantidad)<0:
             return False
         else:
             return True
@@ -194,24 +200,44 @@ class Enviado(EstadoCompra):
 
 
 class Compra(models.Model):
-    nombre = models.CharField(max_length=256)
-    email = models.EmailField()
-    direccion = models.CharField(max_length=256)
-    provincia = models.ForeignKey(Region)
+    token = models.CharField(max_length=256)
+    nombre = models.CharField(max_length=256,null=True,blank=True)
+    email = models.EmailField(null=True,blank=True)
+    direccion = models.CharField(max_length=256,null=True,blank=True)
+    provincia = models.ForeignKey(Region,null=True,blank=True)
     ciudad = models.ForeignKey(City,null=True,blank=True)
-    user = models.ForeignKey(MyUser)
+    user = models.ForeignKey(MyUser,null=True,blank=True)
     total = models.FloatField(default=0)
     estado = models.ForeignKey(EstadoCompra,default=1)
+
 
     def get_estado(self):
         return EstadoCompra.objects.get_subclass(id=self.estado.id)
 
+    def get_detalle(self):
+        return DetalleCompra.objects.filter(compra=self)
+
     def get_total(self):
         return self.total
 
-    def agregar_producto(self,producto):
-        detalle =DetalleCompra(producto=producto,precio=producto.get_precio(),compra=self)
+    def set_token(self):
+        self.token = _generate_code()
+
+    def agregar_producto(self,producto,cantidad):
+        if DetalleCompra.objects.filter(compra=self,producto=producto):
+            detalle = DetalleCompra.objects.get(compra=self,producto=producto)
+            self.total = self.total + producto.get_precio()
+            detalle.agregar()
+        else:
+            if producto.get_tipo().es_libro_fisico() and cantidad>0:
+                detalle =DetalleCompra(producto=producto,precio=producto.get_precio(),compra=self,cantidad=cantidad)
+                self.total = self.total + producto.get_precio() * cantidad
+            else:
+                detalle =DetalleCompra(producto=producto,precio=producto.get_precio(),compra=self)
+                self.total = self.total + producto.get_precio()
+
         detalle.save()
+        self.save()
 
 
 class DetalleCompra(models.Model):
@@ -222,3 +248,18 @@ class DetalleCompra(models.Model):
 
     def get_compra(self):
         return self.compra
+
+    def get_cantidad(self):
+        return self.cantidad
+
+    def get_precio(self):
+        return self.cantidad
+
+    def get_producto(self):
+        return self.producto
+
+    def get_parcial(self):
+        return self.producto.get_precio()*self.cantidad
+
+    def agregar(self):
+        self.cantidad = self.cantidad +1

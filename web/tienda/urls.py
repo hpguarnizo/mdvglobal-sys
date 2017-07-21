@@ -4,6 +4,11 @@ from tienda.ajax import *
 from tienda.views import *
 
 urlpatterns = [
+    url(r'carrito/menos/$', MenosDetalle, name='tienda_menos_detalle'),
+    url(r'carrito/mas/$', MasDetalle, name='tienda_mas_detalle'),
+    url(r'carrito/eliminar/$', EliminarDetalle, name='tienda_eliminar_detalle'),
+    url(r'carrito/$', Carrito, name='tienda_carrito'),
+    url(r'agregar/carrito/(?P<producto_id>(\d*))/$', AgregarCarrito, name='tienda_agregar_carrito'),
     url(r'productos/buscar/$', BuscarProductos, name='tienda_productos_busqueda'),
     url(r'productos/$',TodosProductos,name='tienda_productos'),
     url(r'productos/lista/$',ListaProductos,name='tienda_productos_lista'),
