@@ -1,37 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Eventos</title>
-</head>
-<body>
-    <img src="{{evento.get_imagen}}" alt="{{evento.get_nombre}}">
-    <p>{{evento.get_nombre}}</p>
-    <p>{{evento.get_descripcion}}</p>
-    <p>{{evento.get_fecha}}</p>
-    {% if evento.get_tipo.es_pago %}
-    <p>{{evento.get_precio}}</p>
-    {%endif%}
-    <p><img src="{{evento.imagen}}" alt="{{evento.get_nombre}}"></p>
-    {% if evento.get_categoria.es_presencial%}
-    <p>{{evento.get_ciudad}},{{evento.get_ciudad.get_pais}}</p>
-    <p>{{evento.get_direccion}}</p>
-    <p>{{evento.get_cupo}}</p>
-    {% endif %}
-    <p>{{evento.get_categoria}}</p>
-    <p>{{evento.get_tipo}}</p>
-    <p>
-        {% if evento.get_estado.es_disponible %}
-        <a href="{% url 'evento_registro' evento_id=evento.id %}">
-        {% if evento.get_tipo.es_pago %}
-            <button class="btn">Compar Entrada</button>
-        {%else%}
-            <button class="btn">Reservar Lugar</button>
-        {%endif%}
-        </a>
-        {%else%}
-            <button class="btn">Agotados</button>
-        {% endif %}
-    </p>
-</body>
-</html>
+{% extends 'index.html' %}
+{% load staticfiles %}
+    {% block contenido %}
+
+        <div class="bg-color-light" style="background-color: #f7f7f7 !important;">
+                <div class="container content-sm">
+                    <div class="row">
+                        <div class="col-md-6 md-margin-bottom-30">
+                           {%if producto.get_imagen%}<img src="{{evento.get_imagen}}" alt="{{evento.get_nombre}}">{%else%}<img src="{% static 'unify-ecommerce/img/blog/11.jpg'%}" alt="{{evento.get_nombre}}" class="img-responsive center-block">{%endif%}
+                        </div>
+                        <div class="col-md-6">
+                            <br><br><br>
+                            <div class="headline-left margin-bottom-30">
+                                <h2 class="headline-brd" style=" text-transform: uppercase; color: #555;text-shadow: none; font-weight: normal; font-family: "Open Sans", Arial;">{{evento.get_nombre}}
+</h2>
+                                <p style="font-size: 1.4rem;">{{evento.get_descripcion}}</p>
+                            </div>
+
+                            
+                            <ul class="list-unstyled lists-v2 margin-bottom-30" style="font-size: 1.6rem;">
+                                <li style="color: #888;"><i class="fa fa-check"></i> {{evento.get_fecha}}</li>
+                                {% if evento.get_tipo.es_pago %}
+                                <li style="color: #888;"><i class="fa fa-check"></i> ${{evento.get_precio}}</li>
+                                {%endif%}
+                                {% if evento.get_categoria.es_presencial%}
+                                <li style="color: #888;"><i class="fa fa-check"></i> {{evento.get_ciudad}},{{evento.get_direccion}}</li>
+                                <li style="color: #888;"><i class="fa fa-check"></i> ¡Aun quedan {{evento.get_cupo}} cupos disponibles!</li>
+                                <li style="color: #888;"><i class="fa fa-check"></i> {{evento.get_categoria}} </li>
+                                <li style="color: #888;"><i class="fa fa-check"></i> {{evento.get_tipo}} </li>
+                                {% endif %}
+                                
+                            </ul>
+                            {% if evento.get_estado.es_disponible %}
+                            <a href="{% url 'evento_registro' evento_id=evento.id %}" class="btn-u  btn-brd-hover btn-u-dark" style="font-weight: bold;">Comprar Entrada</a>
+                            {% if evento.get_tipo.es_pago %}
+                            {%else%}
+                            <a href="{% url 'evento_registro' evento_id=evento.id %}" class="btn-u  btn-brd-hover btn-u-dark" style="font-weight: bold;">Reservar Lugar</a>
+                            {%endif%}
+                            {%else%}
+                            <a class="btn-u btn-brd-hover btn-u-dark" style="font-weight: bold;">Agotado</a>
+                            {% endif %}
+                        </div><!--/end row-->
+                    </div>
+                </div>
+            </div>
+    {% endblock %}

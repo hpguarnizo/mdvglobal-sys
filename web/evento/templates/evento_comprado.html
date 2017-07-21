@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Listo</title>
-</head>
-<body>
-Felicitaciones ya tiene su entrada para {{entrada.get_evento.get_nombre}} su codigo es {{entrada.get_codigo}}.
-Le enviamos un email a {{entrada.get_email}} con su codigo y le recordaremos 24hs antes del evento.
-</body>
-</html>
+{% extends 'index.html' %}
+{% load staticfiles %}
+    {% block contenido %}
+    		<div class="container content">
+	<div class="row">
+				<div class="col-md-12 text-center">
+					<div class="" >
+						<h1 style="font-size: 2.4rem; margin-top: 50px !important;">¡Felicitaciones!</h1>
+						<p style="font-size: 1.8rem; margin-bottom: 50px; margin-top: 80px;">Ya tienes tu entrada para {{entrada.get_evento.get_nombre}} tu codigo es {{entrada.get_codigo}}.
+Tambien hemos enviado un email a {{entrada.get_email}} con tu codigo y te recordaremos 24hs antes del evento.</p>
+						<a class="btn-u btn-bordered" href="{% url 'index' %}" style="margin-bottom: 150px;">Volver</a>
+					</div>
+				</div>
+			</div>
+</div>
+{% endblock %}

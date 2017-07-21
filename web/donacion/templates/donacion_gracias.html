@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Gracias</title>
-</head>
-<body>
-    Gracias {{donacion.get_nombre}} por haber donado {{donacion.get_monto}}. Tu gesto nos ayudara mucho.
-</body>
-</html>
+{% extends 'index.html' %}
+{% load staticfiles %}
+    {% block contenido %}
+    		<div class="container content">
+	<div class="row">
+				<div class="col-md-12 text-center">
+					<div class="" >
+						<h1 style="font-size: 2.4rem; margin-top: 50px !important;">¡Gracias!</h1>
+						<p style="font-size: 1.8rem; margin-bottom: 50px; margin-top: 80px;"> {{donacion.get_nombre}} donaste {{donacion.get_monto}} y estamos muy agradecidos por tu colaboracion.
+						<a class="btn-u btn-bordered" href="{% url 'index' %}" style="margin-bottom: 150px;">Volver</a>
+					</div>
+				</div>
+			</div>
+</div>
+{% endblock %}
