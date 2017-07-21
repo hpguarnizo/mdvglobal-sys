@@ -51,10 +51,18 @@ class Producto(models.Model):
     descuento = models.FloatField()
     archivo = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
     imagen = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
+    imagen2 = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
+    imagen3= S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
     stock = models.IntegerField(null=True,blank=True)
     eliminado = models.BooleanField(default=False)
     cantidad_vendidos=models.IntegerField(default=0)
     fecha = models.DateField(auto_now_add=True)
+
+    def get_imagen2(self):
+        return self.imagen2
+
+    def get_imagen3(self):
+        return self.imagen3
 
     def get_nombre(self):
         return self.nombre

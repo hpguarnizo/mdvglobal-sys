@@ -40,6 +40,9 @@
 
 	<!-- CSS Customization -->
 	<link rel="stylesheet" href="{% static 'unify-ecommerce/css/custom.css' %}">
+
+	{%block head %}
+	{%endblock%}
 	{% google_analytics %}
 </head>
 
@@ -52,7 +55,7 @@
 			<div class="topbar-v3">
 				<div class="search-open">
 					<div class="container">
-						<input type="text" class="form-control" placeholder="Search">
+						<input type="text" class="form-control" placeholder="Buscar">
 						<div class="search-close"><i class="icon-close"></i></div>
 					</div>
 				</div>
