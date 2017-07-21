@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from tienda.forms import NuevoProducto, NuevaCategoria, EditarProducto
-from tienda.models import Producto, TipoProducto, CategoriaProducto, Compra
+from tienda.models import Producto, TipoProducto, CategoriaProducto, Compra, DetalleCompra
 
 
 def BuscarProductos(request):
@@ -114,19 +114,69 @@ def VentasEnvio(request):
 
 def ProductoVerMas(request,producto_id):
     producto = get_object_or_404(Producto,id=producto_id)
+    sin_stock = request.GET.get("sin_stock","")
     tipos = TipoProducto.objects.all()
-    return render(request,'tienda_ver_mas.html',{"producto":producto,"tipos":tipos})
+    return render(request,'tienda_ver_mas.html',{"producto":producto,"tipos":tipos,
+                                                 "productos_que_gustan":Producto.objects.all().order_by("?")[:6],
+                                                 "sin_stock":sin_stock})
 
 
 def AgregarCarrito(request,producto_id):
-    producto = get_object_or_404(Producto,producto_id)
+    producto = get_object_or_404(Producto,id=producto_id)
+    cantidad = int(request.GET.get("cantidad","1"))
+    if not producto.hay_stock(cantidad):
+        return HttpResponseRedirect(reverse("producto_ver_mas",kwargs={"producto_id":producto_id})+"?sin_stock=True")
     user = request.user
-    if user.is_autheticated:
-        if Compra.objects.filter(user=user).exists():
-            compra =Compra.objects.get(user=user)
+    if user.is_authenticated:
+        if Compra.objects.filter(user=user, estado=1).exists():
+            compra =Compra.objects.get(user=user, estado=1)
         else:
             compra = Compra(user=user)
             compra.save()
 
-        compra.agregar_producto(producto)
+        compra.agregar_producto(producto,cantidad)
+        return HttpResponseRedirect(reverse("tienda_carrito"))
+
+    elif request.session["token_compra"]:
+        token =request.session["token_compra"]
+        compra = Compra.objects.get(token=token)
+        compra.agregar_producto(producto,cantidad)
+        return HttpResponseRedirect(reverse("tienda_carrito"))
+
+    else:
+        return HttpResponseRedirect(reverse('tienda_login_producto',kwargs={"producto_id":producto_id}))
+
+def Carrito(request):
+    user = request.user
+    if user.is_authenticated and Compra.objects.filter(user=user,estado=1).exists():
+        compra =Compra.objects.get(user=user,estado=1)
+    elif request.session["token_compra"]:
+        token =request.session["token_compra"]
+        compra = Compra.objects.get(token=token)
+    else:
+        return HttpResponseRedirect(reverse('tienda_productos'))
+
+    return render(request,"tienda_carrito.html",{"compra":compra})
+
+def EliminarDetalle(request):
+    detalle_id=request.GET.get("detalle","")
+    detalle= DetalleCompra.objects.get(id=detalle_id)
+    compra = detalle.get_compra()
+    detalle.delete()
+
+    if compra.get_detalle():
+        return HttpResponseRedirect(reverse('tienda_carrito'))
+    else:
+        return HttpResponseRedirect(reverse('tienda_productos'))
+
+
+def MenosDetalle(request):
+    detalle_id = request.GET.get("detalle", "")
+    detalle = DetalleCompra.objects.get(id=detalle_id)
+    detalle.quitar()
+
+def MasDetalle(request):
+    detalle_id = request.GET.get("detalle", "")
+    detalle = DetalleCompra.objects.get(id=detalle_id)
+    detalle.quitar()
 

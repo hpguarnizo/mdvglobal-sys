@@ -1,10 +1,147 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Carrito</title>
-</head>
-<body>
+{%extends 'tienda_productos.html'%}
+{%load staticfiles %}
+{%block head%}
+    <link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/jquery-steps/css/custom-jquery.steps.css'%}">
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/scrollbar/css/jquery.mCustomScrollbar.css'%}">
+{%endblock%}
 
-</body>
-</html>
+{%block contenido%}
+
+<!--=== Content Medium Part ===-->
+<div class="content margin-bottom-30">
+    <div class="container">
+        <form class="shopping-cart" action="#">
+            <div>
+                <div class="header-tags">
+                    <div class="overflow-h">
+                        <h2>Carrito de compras</h2>
+                        <p>Vea y edite sus productos</p>
+                        <i class="rounded-x fa fa-check"></i>
+                    </div>
+                </div>
+                <section>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for detalle in compra.get_detalle %}
+                                <tr>
+                                    <td class="product-in-table">
+                                        <img class="img-responsive" src="{%if detalle.get_producto.get_imagen%}{{detalle.get_producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/28-thumb.jpg'%}{%endif%}" alt="">
+                                        <div class="product-it-in">
+                                            <h3>{{detalle.get_producto.get_nombre}}</h3>
+                                            <span>{{detalle.get_producto.get_tipo}} - {{detalle.get_producto.get_categoria}}</span>
+                                        </div>
+                                    </td>
+                                    <td>$ {{detalle.get_producto.get_precio_descuento}}</td>
+                                    <td>
+                                        {%if detalle.get_producto.get_tipo.es_libro_fisico%}
+                                        <button type='button' class="quantity-button btn-menos" name='subtract' onclick='javascript: subtractQty1();' value='-'>-</button>
+                                        <input type='text' class="quantity-field" name='qty1' value="{{detalle.cantidad}}" id='qty1'/>
+                                        <button type='button' class="quantity-button btn-mas" name='add' onclick='javascript: document.getElementById("qty1").value++;' value='+'>+</button>
+                                        {%else%}
+                                        <button type='button' class="quantity-button" name='subtract' onclick='javascript: subtractQty1();' value='-' disabled>-</button>
+                                        <input type='text' class="quantity-field" name='qty1' value="{{detalle.cantidad}}" id='qty1' disabled/>
+                                        <button type='button' class="quantity-button" name='add' onclick='javascript: document.getElementById("qty1").value++;' value='+' disabled>+</button>
+
+                                        {%endif%}
+
+                                    </td>
+                                    <td class="shop-red">$ {{detalle.get_parcial}}</td>
+                                    <td>
+                                        <button type="button" class="close btn-eliminar-detalle" id="{{detalle.id}}"><span>&times;</span><span class="sr-only">Eliminar</span></button>
+                                    </td>
+                                </tr>
+                                {%endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <div class="header-tags">
+                    <div class="overflow-h">
+                        <h2>Pago</h2>
+                        <p>Seleccionar el metodo de pago</p>
+                        <i class="rounded-x fa fa-credit-card"></i>
+                    </div>
+                </div>
+                <section></section>
+                <div class="header-tags">
+                    <div class="overflow-h">
+                        <h2>Envio</h2>
+                        <p>Recibe tus productos</p>
+                        <i class="rounded-x fa fa-credit-card"></i>
+                    </div>
+                </div>
+                <section></section>
+                <div class="coupon-code">
+                    <div class="row">
+                        <div class="col-sm-3 col-sm-offset-5">
+                            <ul class="list-inline total-result">
+                                <li class="total-price">
+                                    <h4>Total:</h4>
+                                    <div class="total-result-in">
+                                        <span>$ {{compra.get_total}}</span>
+                                    </div>
+                                </li>
+                                <li class="margin-top-20"><a href=""><button class="btn btn-lg btn-warning" style="border-radius:30px;"><strong>PAGAR AHORA</strong></button></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div><!--/end container-->
+</div>
+		<!--=== End Content Medium Part ===-->
+
+{%endblock%}
+
+{%block javascript%}
+	<script src="{% static 'unify-ecommerce/plugins/jquery-steps/build/jquery.steps.js'%}"></script>
+	<script src="{% static 'unify-ecommerce/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js'%}"></script>
+	<script src="{% static 'unify-ecommerce/js/forms/page_login.js'%}"></script>
+	<script src="{% static 'unify-ecommerce/js/plugins/stepWizard.js'%}"></script>
+	<script src="{% static 'unify-ecommerce/js/forms/product-quantity.js'%}"></script>
+	<script>
+		jQuery(document).ready(function() {
+			Login.initLogin();
+			StepWizard.initStepWizard();
+			StyleSwitcher.initStyleSwitcher();
+
+            $(".btn-eliminar-detalle").click(function(){
+                id = this.id;
+                if(id){
+                    location.href = "{% url 'tienda_eliminar_detalle' %}?detalle=" + id;
+                }
+            });
+            $(".btn-menos").click(function(){
+                id = this.id;
+                if(id){
+                    location.href = "{% url 'tienda_menos_detalle' %}?detalle=" + id;
+                }
+            });
+            $(".btn-mas").click(function(){
+                id = this.id;
+                if(id){
+                    location.href = "{% url 'tienda_mas_detalle' %}?detalle=" + id;
+                }
+            });
+
+            $("div.actions.clearfix").addClass("sr-only");
+
+		});
+	</script>
+	<script src="{% static 'unify-ecommerce/plugins/sky-forms-pro/skyforms/js/sky-forms-ie8.js'%}"></script>
+	<![endif]-->
+    <!--[if lt IE 10]>
+	<script src="{% static 'unify-ecommerce/plugins/sky-forms-pro/skyforms/js/jquery.placeholder.min.js'%}"></script>
+	<![endif]-->
+{%endblock%}

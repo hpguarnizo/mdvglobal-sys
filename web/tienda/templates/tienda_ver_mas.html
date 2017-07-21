@@ -46,6 +46,9 @@
 
             <div class="col-md-6">
                 <div class="shop-product-heading">
+                    {% if sin_stock%}
+                    <h2 style="color:red">No hay stock para su pedido</h2>
+                    {%endif%}
                     <h2>{{producto.get_nombre}}</h2>
                 </div><!--/end shop product social-->
 
@@ -60,17 +63,17 @@
                     <li class="title-price">${{producto.get_precio}}</li>
                     {%endif%}
                 </ul><!--/end shop product prices-->
-                {% if producto.get_tipo.es_librofisico%}
+                {% if producto.get_tipo.es_libro_fisico%}
                 <h3 class="shop-product-title">Cantidad</h3>
                 {% endif%}
                 <div class="margin-bottom-40">
-                    <form name="f1" class="product-quantity sm-margin-bottom-20">
-                        {% if producto.get_tipo.es_librofisico%}
+                    <form name="f1" class="product-quantity sm-margin-bottom-20" method="GET" action="{% url 'tienda_agregar_carrito' producto_id=producto.id%}">
+                        {% if producto.get_tipo.es_libro_fisico%}
                         <button type='button' class="quantity-button" name='subtract' onclick='javascript: subtractQty();' value='-'>-</button>
-                        <input type='text' class="quantity-field" name='qty' value="1" id='qty'/>
-                        <button type='submit' class="quantity-button" name='add' onclick='javascript: document.getElementById("qty").value++;' value='+'>+</button>
+                        <input type='text' class="quantity-field" name='cantidad' value="1" id='qty'/>
+                        <button type='button' class="quantity-button" name='add' onclick='javascript: document.getElementById("qty").value++;' value='+'>+</button>
                         {% endif%}
-                    <button type="button" class="btn-u btn-u-sea-shop btn-u-lg">Agregar al carrito</button>
+                    <button type="submit" class="btn-u btn-u-sea-shop btn-u-lg">Agregar al carrito</button>
                     </form>
                 </div><!--/end product quantity-->
                 <br>
@@ -111,84 +114,13 @@
             </div>
         </div>
     </div><!--/end row-->
+</div>
     <!--=== End Product Service ===-->
-         <!-- Reviews -->
-            <div class="tab-pane fade" id="reviews">
-                <div class="product-comment margin-bottom-40">
-                    <div class="product-comment-in">
-                        <img class="product-comment-img rounded-x" src="{% static 'unify-ecommerce/img/team/01.jpg'%}" alt="">
-                        <div class="product-comment-dtl">
-                            <h4>Mickel <small>22 days ago</small></h4>
-                            <p>I like the green colour, it's very likeable and reminds me of Hollister. A little loose though but I am very skinny</p>
-                            <ul class="list-inline product-ratings">
-                                <li class="reply"><a href="#">Reply</a></li>
-                                <li class="pull-right">
-                                    <ul class="list-inline">
-                                        <li><i class="rating-selected fa fa-star"></i></li>
-                                        <li><i class="rating-selected fa fa-star"></i></li>
-                                        <li><i class="rating-selected fa fa-star"></i></li>
-                                        <li><i class="rating fa fa-star"></i></li>
-                                        <li><i class="rating fa fa-star"></i></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="heading-md margin-bottom-30">Add a review</h3>
-                <form action="{% static 'unify-ecommerce/php/demo-contacts-process.php" method="post" id="sky-form3" class="sky-form sky-changes-4">
-                    <fieldset>
-                        <div class="margin-bottom-30">
-                            <label class="label-v2">Name</label>
-                            <label class="input">
-                                <input type="text" name="name" id="name">
-                            </label>
-                        </div>
-
-                        <div class="margin-bottom-30">
-                            <label class="label-v2">Email</label>
-                            <label class="input">
-                                <input type="email" name="email" id="email">
-                            </label>
-                        </div>
-
-                        <div class="margin-bottom-30">
-                            <label class="label-v2">Review</label>
-                            <label class="textarea">
-                                <textarea rows="7" name="message" id="message"></textarea>
-                            </label>
-                        </div>
-                    </fieldset>
-
-                    <footer class="review-submit">
-                        <label class="label-v2">Review</label>
-                        <div class="stars-ratings">
-                            <input type="radio" name="stars-rating" id="stars-rating-5">
-                            <label for="stars-rating-5"><i class="fa fa-star"></i></label>
-                            <input type="radio" name="stars-rating" id="stars-rating-4">
-                            <label for="stars-rating-4"><i class="fa fa-star"></i></label>
-                            <input type="radio" name="stars-rating" id="stars-rating-3">
-                            <label for="stars-rating-3"><i class="fa fa-star"></i></label>
-                            <input type="radio" name="stars-rating" id="stars-rating-2">
-                            <label for="stars-rating-2"><i class="fa fa-star"></i></label>
-                            <input type="radio" name="stars-rating" id="stars-rating-1">
-                            <label for="stars-rating-1"><i class="fa fa-star"></i></label>
-                        </div>
-                        <button type="button" class="btn-u btn-u-sea-shop btn-u-sm pull-right">Submit</button>
-                    </footer>
-                </form>
-            </div>
-            <!-- End Reviews -->
-        </div>
-    </div>
-</div><!--/end container-->
-<!--=== End Content Medium ===-->
 
 <!--=== Illustration v2 ===-->
 <div class="container">
     <div class="heading heading-v1 margin-bottom-20">
-        <h2>Product you may like</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed odio elit, ultrices vel cursus sed, placerat ut leo. Phasellus in magna erat. Etiam gravida convallis augue non tincidunt. Nunc lobortis dapibus neque quis lacinia. Nam dapibus tellus sit amet odio venenatis</p>
+        <h2>Productos que mas gustan</h2>
     </div>
 
     <div class="illustration-v2 margin-bottom-60">
@@ -198,103 +130,22 @@
         </div>
 
         <ul class="list-inline owl-slider-v4">
+            {% for producto in productos_que_gustan %}
             <li class="item">
-                <a href="#"><img class="img-responsive" src="{% static 'unify-ecommerce/img/thumb/09.jpg'%}" alt=""></a>
+                <a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><img class="img-responsive" src="{%if producto.get_imagen%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/28-thumb.jpg'%}{%endif%}" alt=""></a>
                 <div class="product-description-v2">
                     <div class="margin-bottom-5">
-                        <h4 class="title-price"><a href="#">Double-breasted</a></h4>
-                        <span class="title-price">$95.00</span>
+                        <h4 class="title-price"><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
+                        {% if producto.get_descuento %}
+                        <span class="title-price">${{producto.get_precio_descuento}}</span>
+                        <span class="title-price line-through">${{producto.get_precio}}</span>
+                        {%else%}
+                        <span class="title-price">${{producto.get_precio}}</span>
+                        {%endif%}
                     </div>
-                    <ul class="list-inline product-ratings">
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                    </ul>
-                </div>
+               </div>
             </li>
-            <li class="item">
-                <a href="#"><img class="img-responsive" src="{% static 'unify-ecommerce/img/thumb/07.jpg'%}" alt=""></a>
-                <div class="product-description-v2">
-                    <div class="margin-bottom-5">
-                        <h4 class="title-price"><a href="#">Double-breasted</a></h4>
-                        <span class="title-price">$60.00</span>
-                        <span class="title-price line-through">$95.00</span>
-                    </div>
-                    <ul class="list-inline product-ratings">
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="item">
-                <a href="#"><img class="img-responsive" src="{% static 'unify-ecommerce/img/thumb/08.jpg'%}" alt=""></a>
-                <div class="product-description-v2">
-                    <div class="margin-bottom-5">
-                        <h4 class="title-price"><a href="#">Double-breasted</a></h4>
-                        <span class="title-price">$95.00</span>
-                    </div>
-                    <ul class="list-inline product-ratings">
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="item">
-                <a href="#"><img class="img-responsive" src="{% static 'unify-ecommerce/img/thumb/06.jpg'%}" alt=""></a>
-                <div class="product-description-v2">
-                    <div class="margin-bottom-5">
-                        <h4 class="title-price"><a href="#">Double-breasted</a></h4>
-                        <span class="title-price">$95.00</span>
-                    </div>
-                    <ul class="list-inline product-ratings">
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="item">
-                <a href="#"><img class="img-responsive" src="{% static 'unify-ecommerce/img/thumb/04.jpg'%}" alt=""></a>
-                <div class="product-description-v2">
-                    <div class="margin-bottom-5">
-                        <h4 class="title-price"><a href="#">Double-breasted</a></h4>
-                        <span class="title-price">$95.00</span>
-                    </div>
-                    <ul class="list-inline product-ratings">
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="item">
-                <a href="#"><img class="img-responsive" src="{% static 'unify-ecommerce/img/thumb/03.jpg'%}" alt=""></a>
-                <div class="product-description-v2">
-                    <div class="margin-bottom-5">
-                        <h4 class="title-price"><a href="#">Double-breasted</a></h4>
-                        <span class="title-price">$95.00</span>
-                    </div>
-                    <ul class="list-inline product-ratings">
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating-selected fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                        <li><i class="rating fa fa-star"></i></li>
-                    </ul>
-                </div>
-            </li>
+            {%endfor%}
         </ul>
     </div>
 </div>
