@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from cities_light.models import City, Region
 from django.db import models
@@ -36,7 +37,7 @@ class TipoProducto(models.Model):
         return self.nombre
 
     def mas_vendidos(self):
-        return Producto.objects.filter(tipo=self.id).order_by('cantidad_vendidos')[:4]
+        return Producto.objects.filter(tipo=self.id).order_by('cantidad_vendidos')[:3]
 
     def es_libro_fisico(self):
         return (self.id==4)
@@ -47,6 +48,7 @@ class Producto(models.Model):
     precio = models.FloatField()
     categoria = models.ForeignKey(CategoriaProducto)
     tipo = models.ForeignKey(TipoProducto)
+    descuento = models.FloatField()
     archivo = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
     imagen = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
     stock = models.IntegerField(null=True,blank=True)
@@ -78,6 +80,16 @@ class Producto(models.Model):
     def get_stock(self):
         return self.stock
 
+    def hay_stock(self):
+        if self.tipo.es_libro_fisico and self.stock==0:
+            return False
+        else:
+            return True
+
+    def subido_este_mes(self):
+        now = datetime.now()
+        return (now.year==self.fecha.year and now.month==self.fecha.month)
+
     def set_data(self,producto):
         self.stock = producto.stock
         self.nombre= producto.nombre
@@ -88,6 +100,18 @@ class Producto(models.Model):
 
     def eliminar(self):
         self.eliminado=True
+
+
+    def get_descuento(self):
+        self.descuento
+
+
+    def get_precio_descuento(self):
+        if self.descuento>0:
+            return self.precio*100/self.descuento
+        else:
+            return self.precio
+
 
 class EstadoCompra(models.Model):
     nombre = models.CharField(max_length=25)

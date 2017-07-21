@@ -1,39 +1,432 @@
-{% load static from staticfiles %}
-{% load google_analytics %}
 <!DOCTYPE html>
-<html lang="es">
+{%load staticfiles%}
+{% load google_analytics %}
+
+<!--[if IE 8]> <html lang="es" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="es" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="es"> <!--<![endif]-->
 <head>
-    
-    <!-- Open Graph -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Manantial de Vida</title>
 
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
 
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
 
-    <title>{{company}}</title>
-    
-    <!--Favicon-->
-    <link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
+	<!-- Web Fonts -->
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin">
 
-    <link href="{% static 'inspinia2/css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'inspinia2/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-    {% load google_analytics %}
+	<!-- CSS Global Compulsory -->
+	<link rel="stylesheet" href="{%static 'unify/plugins/bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{%static 'unify/css/style.css' %}">
+
+	<!-- CSS Header and Footer -->
+	<link rel="stylesheet" href="{%static 'unify/css/headers/header-v6.css' %}">
+	<link rel="stylesheet" href="{%static 'unify/css/footers/footer-v6.css' %}">
+
+	<!-- CSS Implementing Plugins -->
+	<link rel="stylesheet" href="{%static 'unify/plugins/animate.css' %}">
+	<link rel="stylesheet" href="{%static 'unify/plugins/line-icons/line-icons.css' %}">
+	<link rel="stylesheet" href="{%static 'unify/plugins/font-awesome/css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{%static 'unify/plugins/sliding-panel/style.css' %}">
+	<link rel="stylesheet" href="{%static 'unify/plugins/owl-carousel/owl-carousel/owl.carousel.css' %}">
+	<link rel="stylesheet" href="{%static 'unify/plugins/cube-portfolio/cubeportfolio/css/cubeportfolio.min.css' %}">
+
+	<!-- CSS Theme -->
+	<link rel="stylesheet" href="{% static 'unify/css/theme-colors/dark-blue.css' %}" id="style_color">
+	<link rel="stylesheet" href="{% static 'unify/css/theme-skins/dark.css' %}">
+
+	<!-- CSS Customization -->
+	<link rel="stylesheet" href="{% static 'unify/css/custom.css '%}">
+	{% google_analytics %}
 </head>
-<body>
-<a href="{% url 'login_page' %}">Loguerse</a>
-<a href="{% url 'signup_page' %}">Registrarse</a>
-<a href="{% url 'evento_lista' %}">Entradas</a>
-<a href="{% url 'donacion_mas' %}">Donacion</a>
-<a href="{% url 'tienda_productos' %}">Tienda</a>
-<a href="{% url 'contenido_mostrar' %}">Contenido</a>
-<a href="">Blog</a>
+
+<body class="header-fixed header-fixed-space promo-padding-top sliding-panel-ini sliding-panel-flag-right dark">
+	<div class="wrapper">
+		<!--=== Header v6 ===-->
+		<div class="header-v6 header-classic-white header-sticky">
+			<!-- Navbar -->
+			<div class="navbar mega-menu" role="navigation">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="menu-container">
+						<button type="button" class="navbar-toggle sliding-panel__btn sliding-panel__btn--dark">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+
+						<!-- Navbar Brand -->
+						<div class="navbar-brand">
+							<a href="#">
+								<img class="default-logo" src="{% static 'unify/img/logo3-light.png' %}" alt="Logo">
+								<img class="shrink-logo" src="{% static 'unify/img/logo3-dark.png' %}" alt="Logo">
+							</a>
+						</div>
+						<!-- ENd Navbar Brand -->
+
+						<!-- Header Inner Right -->
+						<div class="header-inner-right">
+							<ul class="menu-icons-list">
+								<li class="menu-icons shopping-cart">
+									<i class="menu-icons-style radius-x fa fa-shopping-cart"></i>
+									<span class="badge">0</span>
+									<div class="shopping-cart-open">
+										<span class="shc-title">No hay productos en el carrito</span>
+										<button type="button" class="btn-u"><i class="fa fa-shopping-cart"></i> Carrito</button>
+										<span class="shc-total">Total: <strong>$0.00</strong></span>
+									</div>
+								</li>
+								<li class="menu-icons">
+									<i class="menu-icons-style search search-close search-btn fa fa-search"></i>
+									<div class="search-open">
+										<form action="{% url 'tienda_productos' %}" method="GET">
+											<input type="text" class="animated fadeIn form-control" placeholder="Buscar un producto ..." name="q" id="q">
+										</form>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<!-- End Header Inner Right -->
+					</div>
+				</div>
+			</div>
+			<!-- End Navbar -->
+		</div>
+		<!--=== End Header v6 ===-->
+
+		<!-- Promo Block -->
+		<div class="promo-bg-pattern-v1-dark promo-bg-fixed content-xlg parallaxBg">
+			<div class="container text-center" data-start="opacity: 1;" data-320="opacity: 0;">
+				<div class="margin-bottom-20">
+					<a class="promo-video-icon-wrap color-light rounded-x animated fadeInUp wow cbp-lightbox" data-wow-duration="2s" data-wow-delay=".5s" data-title="Video Presentation" href="http://manantialdevidaonline.com/web/wp-content/uploads/2016/04/MPM-JULIO-2017-1.mp4?&rel=0&autoplay=1">
+						<i class="promo-video-icon icon-control-play"></i>
+					</a>
+					<div id="cbp-lightbox" class="dp-none"></div>
+				</div>
+
+				<span class="promo-text-v1 color-light margin-bottom-10 animated fadeInUp wow" data-wow-duration="1.5s" data-wow-delay="1s">
+					MANANTIAL DE VIDA
+				</span>
+
+				<h2 class="promo-text-v2 color-light animated fadeInUp wow margin-bottom-20" data-wow-duration="1.5s" data-wow-delay="1.5s">TIEMPO DEL SER ESPIRITUAL</h2>
+
+				<div class="animated fadeInUp wow" data-wow-duration="1.2s" data-wow-delay="2s">
+					<a href="{% url 'tienda_productos' %}" class="btn-u btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block rounded-4x margin-right-10">Tienda&nbsp;</a>
+					<a href="{% url 'donacion_mas' %}" class="btn-u btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block rounded-4x">&nbsp;Donar&nbsp;</a>
+				</div>
+			</div>
+		</div>
+		<!-- End Promo Block -->
+
+		<!-- Colorfull Block -->
+		<div class="container-fluid">
+			<div class="row no-gutter equal-height-columns">
+				<div class="col-sm-4 promo-bg-img-v1">
+					<div class="service-block rgba-purple no-margin-bottom content-sm equal-height-column">
+						<i class="icon-custom icon-md rounded icon-color-light icon-line icon-plus"></i>
+						<h2 class="heading-md font-light">Mas Eventos</h2>
+						<p class="no-margin-bottom font-light" style="color:white;">Eventos online todas las semanas miercoles 19hs y domingos 9:hs a 19hs.
+							Y ademas podes reservar tu lugar en eventos prescenciales.Puedes ver todos los eventos haciendo <a href="{% url 'evento_lista'%}">click aqui.</a></p>
+					</div>
+				</div>
+				<div class="col-sm-4 promo-bg-img-v5">
+					<div class="service-block rgba-red no-margin-bottom content-sm equal-height-column">
+						<i class="icon-custom icon-md rounded icon-color-light icon-line icon-badge"></i>
+						<h2 class="heading-md font-light">Mejor Contenido</h2>
+						<p class="no-margin-bottom font-light"  style="color:white;">Tenemos una gran cantidad de videos, libros y audios para ayudarte a crecer con nosotros. Disfrutaras de contenido Gratis, Premium o Ministerial segun tu suscripcion.
+							<a href="{% url 'contenido_mostrar'%}">Ver contenido</a></p>
+					</div>
+				</div>
+				<div class="col-sm-4 promo-bg-img-v4">
+					<div class="service-block rgba-blue no-margin-bottom content-sm equal-height-column">
+						<i class="icon-custom icon-md rounded icon-color-light icon-line fa fa-shopping-cart"></i>
+						<h2 class="heading-md font-light">Nuevos Productos</h2>
+						<p class="no-margin-bottom font-light"  style="color:white;">Puedes acceder a nuestra tienda digital y comprar audios, videos y libros tanto fisicos como digitales. Si compras productos digitales recibiras el contenido al instante.
+							<a href="{% url 'tienda_productos' %}">Ver productos</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Colorfull Block -->
 
 
+		<!-- Full Width Section -->
+		<div class="container-fluid bg-color-darker">
+			<div class="row equal-height-columns-v2 no-gutter">
+				<div class="col-md-6 equal-height-column-v2 text-center dp-table">
+					<div class="content-boxes-v3 dp-table-cell quote-v1 parallaxBg">
+						<div class="margin-bottom-10">
+							<img class="rounded-x img-width-60" src="{% static 'unify/img/testimonials/img5.jpg' %}" alt="">
+						</div>
+						<div class="margin-bottom-10">....</div>
+						<p>Si te pasas la vida tratando de ser rico para no ser pobre, te olvidaras de ser prospero.</p>
+						<span>Juan Ballistreri</span>
+					</div>
+				</div>
+				<div class="col-md-6 equal-height-column-v2" data-image-src="{% static 'unify/img/bg/img13.jpg' %}"></div>
+			</div>
+		</div>
+		<!-- End Full Width Section -->
+
+		<!-- Services Blocks -->
+		<div class="bg-color-light">
+			<div class="container content-md">
+				<div class="text-center margin-bottom-60">
+					<h2 class="title-v2 title-center">NUESTROS SERVICIOS</h2>
+				</div>
+
+				<!-- Service Block v8 -->
+				<div class="row margin-bottom-30">
+					<div class="col-sm-6 sm-margin-bottom-50 animated fadeIn wow" data-wow-duration="1.5s">
+						<div class="service-block-v8">
+							<i class="icon-check"></i>
+							<div class="service-block-desc">
+								<h3>Eventos</h3>
+								<p>Eventos online y prescencial para suscribirse en nuestra plataforma.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 sm-margin-bottom-20 animated fadeIn wow" data-wow-duration="1.5s" data-wow-delay=".3s">
+						<div class="service-block-v8">
+							<i class="icon-globe"></i>
+							<div class="service-block-desc">
+								<h3>Dona</h3>
+								<p>Colabora con nosotros y sentite parte al ayudar en distintas causas beneficas.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End Service Block v8 -->
+
+				<!-- Service Block v8 -->
+				<div class="row margin-bottom-30">
+					<div class="col-sm-6 sm-margin-bottom-50 animated fadeIn wow" data-wow-duration="1.5s" data-wow-delay="0.5s">
+						<div class="service-block-v8">
+							<i class="icon-layers"></i>
+							<div class="service-block-desc">
+								<h3>Videos, libros, audios y mucho mas</h3>
+								<p>Disfruta de todo nuestro contenido adhiriendote a nuestra suscripcion..</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 animated fadeIn wow" data-wow-duration="1.5s" data-wow-delay="0.6s">
+						<div class="service-block-v8">
+							<i class="icon-handbag"></i>
+							<div class="service-block-desc">
+								<h3>E-Commerce al instante</h3>
+								<p>Compra libros,videos y libros digitales y recibilos al instante.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End Service Block v8 -->
+
+				<!-- Service Block v8 -->
+				<div class="row">
+					<div class="col-sm-6 sm-margin-bottom-50 animated fadeIn wow" data-wow-duration="1.5s" data-wow-delay="0.7s">
+						<div class="service-block-v8">
+							<i class="icon-paper-plane"></i>
+							<div class="service-block-desc">
+								<h3>Blog</h3>
+								<p>Esta siempre informado de los nuevos acontecimientos.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 sm-margin-bottom-20 animated fadeIn wow" data-wow-duration="1.5s" data-wow-delay="0.8s">
+						<div class="service-block-v8">
+							<i class="icon-present"></i>
+							<div class="service-block-desc">
+								<h3>Juan Ballistreri</h3>
+								<p>Aprende a ser espiritual con el mejor consejero.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End Service Block v8 -->
+			</div>
+		</div>
+		<!-- End Services Blocks -->
+
+		<!-- Parallax Counter -->
+		<div class="parallax-counter parallaxBg1">
+			<div class="container content">
+				<div class="row">
+					<div class="col-sm-3 col-xs-6">
+						<div class="counters">
+							<span class="counter">{{cant_eventos}}</span>
+							<h4>Eventos Activos</h4>
+						</div>
+					</div>
+					<div class="col-sm-3 col-xs-6">
+						<div class="counters">
+							<span class="counter">{{cant_productos}}</span>
+							<h4>Productos disponibles</h4>
+						</div>
+					</div>
+					<div class="col-sm-3 col-xs-6">
+						<div class="counters">
+							<span class="counter">{{cant_contenido}}</span>
+							<h4>Contenido subido</h4>
+						</div>
+					</div>
+					<div class="col-sm-3 col-xs-6">
+						<div class="counters">
+							<span class="counter">{{cant_donaciones}}</span>
+							<h4>Donaciones realizadas</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Parallax Counter -->
+
+		<!--=== Footer v6 ===-->
+		<div id="footer-v6" class="footer-v6">
+			<div class="footer">
+				<div class="container">
+					<div class="row">
+						<!-- Contacts -->
+						<div class="col-xs-12">
+							<div class="heading-footer"><h2>Contacto</h2></div>
+							<ul class="list-unstyled contacts">
+								<li class="col-xs-4">
+									<i class="radius-3x fa fa-map-marker"></i>
+									Suipacha 2357,
+									Córdoba Capital, Argentina
+								</li>
+								<li class="col-xs-4">
+									<i class="radius-3x fa fa-phone"></i>
+									+54 (351) 4515833<br>
+								</li>
+								<li class="col-xs-4">
+									<i class="radius-3x fa fa-globe"></i>
+									<a href="#">mdv@manantialdevidaonlie.com</a><br>
+									<a href="#">anunciosmdv@manantaildevidaonline.com</a>
+								</li>
+							</ul>
+						</div>
+						<!-- End Contacts -->
+					</div>
+				</div><!--/container -->
+			</div>
+
+			<div class="copyright">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 sm-margon-bottom-10">
+							<ul class="list-inline terms-menu">
+								<li class="silver"> &copy; 2017 {{company}} Todos los derechos reservados.</li>
+							</ul>
+						</div>
+						<div class="col-md-4">
+							<ul class="list-inline dark-social pull-right space-bottom-0">
+								<li>
+									<a data-placement="top" data-toggle="tooltip" class="tooltips" data-original-title="Facebook" href="https://www.facebook.com/JuanBallistreriOK">
+										<i class="fa fa-facebook"></i>
+									</a>
+								</li>
+								<li>
+									<a data-placement="top" data-toggle="tooltip" class="tooltips" data-original-title="Twitter" href="https://twitter.com/BallistreriJuan">
+										<i class="fa fa-twitter"></i>
+									</a>
+								</li>
+								<li>
+									<a data-placement="top" data-toggle="tooltip" class="tooltips" data-original-title="Instagram" href="https://www.instagram.com/juanballistreri/">
+										<i class="fa fa-instagram"></i>
+									</a>
+								</li>
+								<li>
+									<a data-placement="top" data-toggle="tooltip" class="tooltips" data-original-title="Youtube" href="https://www.youtube.com/channel/UCWDOchyw0PUEncDT2DiGywg">
+										<i class="fa fa-youtube"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--=== End Footer v6 ===-->
+	</div><!--/wrapper-->
+
+	<!-- Sliding Panel -->
+	<div class="sliding-panel bg-color-darker">
+		<div class="sliding-panel-inner sliding-panel-scrollable fullscreen">
+			<ul class="sliding-navigation">
+				<li><a href="#">Inicio</a></li>
+				<li><a href="{% url 'login_page' %}">Iniciar Sesion</a></li>
+				<li><a href="{% url 'signup_page' %}">Registrarse</a></li>
+				<li><a href="{% url 'evento_lista' %}">Eventos</a></li>
+				<li><a href="{% url 'donacion_mas' %}">Donaciones</a></li>
+				<li><a href="{% url 'tienda_productos' %}">Tienda</a></li>
+				<li><a href="{% url 'contenido_mostrar' %}">Contenido</a></li>
+				<li><a href="">Blog</a></li>
+			</ul>
+
+			<h4>Contacto</h4>
+			<address>
+				Suipacha 2357<br>
+				Córdoba Capital, Argentina<br><br>
+				+54 (351) 4515833<br>
+				<a href="mailto:#">mdv@manantialdevidaonline.com</a><br>
+			</address>
+
+			<ul class="list-inline social-icons-v1 social-icons-v1--dark">
+				<li><a href="https://twitter.com/BallistreriJuan"><i class="fa fa-twitter"></i></a></li>
+				<li><a href="https://www.facebook.com/JuanBallistreriOK"><i class="fa fa-facebook"></i></a></li>
+				<li><a href="https://www.instagram.com/juanballistreri/"><i class="fa fa-instagram"></i></a></li>
+				<li><a href="https://www.youtube.com/channel/UCWDOchyw0PUEncDT2DiGywg"><i class="fa fa-youtube"></i></a></li>
+			</ul>
+		</div>
+
+		<a href="javascript:void(0);" class="sliding-panel__close">Close</a>
+	</div>
+	<!-- End Sliding Panel -->
 
 
-
-<script src="{% static 'inspinia2/js/jquery-2.1.1.js' %}"></script>
-<script src="{% static 'inspinia2/js/bootstrap.min.js' %}"></script>
+	<!-- JS Global Compulsory -->
+	<script src="{% static 'unify/plugins/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'unify/plugins/jquery/jquery-migrate.min.js' %}"></script>
+	<script src="{% static 'unify/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+	<!-- JS Implementing Plugins -->
+	<script src="{% static 'unify/plugins/back-to-top.js' %}"></script>
+	<script src="{% static 'unify/plugins/smoothScroll.js' %}"></script>
+	<script src="{% static 'unify/plugins/jquery.parallax.js' %}"></script>
+	<script src="{% static 'unify/plugins/counter/waypoints.min.js' %}"></script>
+	<script src="{% static 'unify/plugins/counter/jquery.counterup.min.js' %}"></script>
+	<script src="{% static 'unify/plugins/skrollr/skrollr-ini.js' %}"></script>
+	<script src="{% static 'unify/plugins/wow-animations/js/wow.min.js' %}"></script>
+	<script src="{% static 'unify/plugins/backstretch/backstretch-ini.js' %}"></script>
+	<script src="{% static 'unify/plugins/sliding-panel/jquery.sliding-panel.js' %}"></script>
+	<script src="{% static 'unify/plugins/owl-carousel/owl-carousel/owl.carousel.js' %}"></script>
+	<script src="{% static 'unify/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js' %}"></script>
+	<!-- JS Page Level -->
+	<script src="{% static 'unify/js/app.js' %}"></script>
+	<script src="{% static 'unify/js/plugins/owl-carousel.js' %}"></script>
+	<script src="{% static 'unify/js/plugins/cube-portfolio/masonry-v1.js' %}"></script>
+	<!-- JS Customization -->
+	<script src="{% static 'unify/js/custom.js' %}"></script>
+	<!-- JS Initialization -->
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			App.init();
+			App.initCounter();
+			App.initParallaxBg();
+			OwlCarousel.initOwlCarousel();
+			new WOW().init();
+			$('#cbp-lightbox').cubeportfolio({}); // For popup video on the promo block
+		});
+	</script>
+	<!--[if lt IE 9]>
+		<script src="{% static 'unify/plugins/respond.js' %}"></script>
+		<script src="{% static 'unify/plugins/html5shiv.js' %}"></script>
+		<script src="{% static 'unify/plugins/placeholder-IE-fixes.js' %}"></script>
+	<![endif]-->
 </body>
 </html>

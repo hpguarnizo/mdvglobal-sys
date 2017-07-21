@@ -19,6 +19,9 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from django.views.static import serve
+
+from home.views import IndexView
+
 handler404 = 'home.views.handler404'
 
 urlpatterns = [
@@ -38,6 +41,6 @@ urlpatterns = [
     # Aws
     url(r'^s3direct/', include('s3direct.urls')),
     # App Home
-    url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
+    url(r'^$', IndexView, name='index'),
     url(r'^',  include('home.urls')),
             ]

@@ -1,42 +1,439 @@
 <!DOCTYPE html>
-<html lang="en">
+{%load staticfiles %}
+{% load google_analytics %}
+<!--[if IE 8]> <html lang="es" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="es" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="es"> <!--<![endif]-->
 <head>
-    <meta charset="UTF-8">
-    <title>Tienda</title>
+	<title>Tienda | Manantial de Vida</title>
+
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
+
+	<!-- Web Fonts -->
+	<link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600,800&amp;subset=cyrillic,latin'>
+
+	<!-- CSS Global Compulsory -->
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/css/shop.style.css' %}">
+
+	<!-- CSS Header and Footer -->
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/css/headers/header-v5.css' %}">
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/css/footers/footer-v4.css' %}">
+
+	<!-- CSS Implementing Plugins -->
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/animate.css' %}">
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/line-icons/line-icons.css' %}">
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/font-awesome/css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/scrollbar/css/jquery.mCustomScrollbar.css' %}">
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/owl-carousel/owl-carousel/owl.carousel.css' %}">
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/revolution-slider/rs-plugin/css/settings.css' %}">
+
+	<!-- CSS Theme -->
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/css/theme-colors/dark-blue.css' %}" id="style_color">
+
+	<!-- CSS Customization -->
+	<link rel="stylesheet" href="{% static 'unify-ecommerce/css/custom.css' %}">
+	{% google_analytics %}
 </head>
-<body>
-<form action="." method="GET">
-    <input type="text" name="q" placeholder="Buscar Producto...">
-    <button type="submit">Buscar</button>
-</form>
-<h2>Categorias</h2>
-{%for cat in categorias %}
-<p><a href="">{{cat}}</a></p>
-{%endfor%}
 
-<h2>Tipos</h2>
-{%for tipo in tipos%}
-<p><a href="">{{tipo}}</a></p>
-{%endfor%}
+<body class="header-fixed">
 
-{%for tipo in tipos%}
-    <ul>
-    {%for producto in tipo.mas_vendidos%}
-        <li>{{producto.get_nombre}} - ${{producto.get_precio}}
-            <a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><button>Ver mas</button></a>
-        </li>
-    {%endfor%}
-    </ul>
-{%endfor%}
+	<div class="wrapper">
+		<!--=== Header v5 ===-->
+		<div class="header-v5 header-static">
+			<!-- Topbar v3 -->
+			<div class="topbar-v3">
+				<div class="search-open">
+					<div class="container">
+						<input type="text" class="form-control" placeholder="Search">
+						<div class="search-close"><i class="icon-close"></i></div>
+					</div>
+				</div>
 
-<ol>
-{%for producto in productos%}
-    <li>{{producto.get_nombre}} - ${{producto.get_precio}}
-            <a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><button>Ver mas</button></a>
-    </li>
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-6">
+							<!-- Topbar Navigation -->
+							<ul class="left-topbar">
+								<li>
+									<a>Moneda (ARS)</a>
+								</li>
+							</ul><!--/end left-topbar-->
+						</div>
+						<div class="col-sm-6">
+							<ul class="list-inline right-topbar pull-right">
+								{% if not  user.is_authenticated %}
+								<li><a href="{% url 'login_page' %}">Iniciar Sesion</a> | <a href="{% url 'signup_page' %}">Registrarse</a></li>
+								{%else%}
+								<li>{{user.get_full_name}}</li>
+								{%endif%}
+								<li><i class="search fa fa-search search-button"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div><!--/container-->
+			</div>
+			<!-- End Topbar v3 -->
 
-{%endfor%}
-</ol>
+			<!-- Navbar -->
+			<div class="navbar navbar-default mega-menu" role="navigation">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="index.html">
+							<img id="logo-header"  width="131" height="41" src="{% static 'unify-ecommerce/img/logo.png' %}" alt="Logo">
+						</a>
+					</div>
 
+					<!-- Shopping Cart -->
+					<div class="shop-badge badge-icons pull-right">
+						<a href="#"><i class="fa fa-shopping-cart"></i></a>
+						<span class="badge badge-sea rounded-x">0</span>
+						<div class="badge-open">
+							<ul class="list-unstyled mCustomScrollbar" data-mcs-theme="minimal-dark">
+								<li>
+									<img src="{% static 'unify-ecommerce/img/thumb/05.jpg' %}" alt="">
+									<button type="button" class="close">×</button>
+									<div class="overflow-h">
+										<span>Black Glasses</span>
+										<small>1 x $400.00</small>
+									</div>
+								</li>
+								<li>
+									<img src="{% static 'unify-ecommerce/img/thumb/02.jpg' %}" alt="">
+									<button type="button" class="close">×</button>
+									<div class="overflow-h">
+										<span>Black Glasses</span>
+										<small>1 x $400.00</small>
+									</div>
+								</li>
+								<li>
+									<img src="{% static 'unify-ecommerce/img/thumb/03.jpg' %}" alt="">
+									<button type="button" class="close">×</button>
+									<div class="overflow-h">
+										<span>Black Glasses</span>
+										<small>1 x $400.00</small>
+									</div>
+								</li>
+							</ul>
+							<div class="subtotal">
+								<div class="overflow-h margin-bottom-10">
+									<span>Subtotal</span>
+									<span class="pull-right subtotal-cost">$1200.00</span>
+								</div>
+								<div class="row">
+									<div class="col-xs-6">
+										<a href="shop-ui-inner.html" class="btn-u btn-brd btn-brd-hover btn-u-sea-shop btn-block">View Cart</a>
+									</div>
+									<div class="col-xs-6">
+										<a href="shop-ui-add-to-cart.html" class="btn-u btn-u-sea-shop btn-block">Checkout</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End Shopping Cart -->
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse navbar-responsive-collapse">
+						<!-- Nav Menu -->
+						<ul class="nav navbar-nav">
+							<!-- Pages -->
+							<!-- Gifts -->
+							{%for tipo in tipos%}
+							<li class="dropdown mega-menu-fullwidth">
+								<a href="javascript:void(0);" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
+									{{tipo}}
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<div class="mega-menu-content">
+											<div class="container">
+												<div class="row">
+													<div class="col-md-3 col-sm-12 col-xs-12 md-margin-bottom-30">
+														<h3 class="mega-menu-heading">{{tipo}}</h3>
+														<p>Estos son los productos mas vendidos. O puedes ver todos prescionando en el siguiente boton.</p>
+														<a href="{% url 'tienda_productos_busqueda' %}?tipo={{tipo}}"><button type="button" class="btn-u btn-u-dark">Ver todos</button></a>
+													</div>
+													{%for producto in tipo.mas_vendidos%}
+													<div class="col-md-3 col-sm-4 col-xs-4 md-margin-bottom-30">
+														<a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><img class="product-offers img-responsive" src="{%if producto.get_image%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/31.jpg'%}{%endif%}" alt=""></a>
+													</div>
+													{%endfor%}
+												</div><!--/end row-->
+											</div><!--/end container-->
+										</div><!--/end mega menu content-->
+									</li>
+								</ul><!--/end dropdown-menu-->
+							</li>
+							{%endfor%}
+							<!-- End Gifts -->
+						</ul>
+						<!-- End Nav Menu -->
+					</div>
+				</div>
+			</div>
+			<!-- End Navbar -->
+		</div>
+		<!--=== End Header v5 ===-->
+
+{%block contenido%}
+<!--=== Product Content ===-->
+<div class="container ">
+
+	<div class="heading heading-v1 margin-bottom-40">
+		<h2>Ultimos productos agregados</h2>
+	</div>
+
+	<!--=== Illustration v2 ===-->
+	<div class="row illustration-v2">
+		{% for producto in productos %}
+		<div class="col-md-3 col-sm-6 md-margin-bottom-30">
+			<div class="product-img">
+				<a href="shop-ui-inner.html"><img class="full-width img-responsive" width="370" height="555" src="{%if producto.get_image%}{{producto.get_image}}{%else%}{% static 'unify-ecommerce/img/blog/25.jpg' %}{%endif%}" alt=""></a>
+				<a class="product-review" href="{% url 'producto_ver_mas' producto_id=producto.id %}">Ver mas</a>
+				<a class="add-to-cart" href="#"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
+				{% if not producto.hay_stock %}
+				<div class="shop-rgba-red rgba-banner">Sin stock</div>
+				{%elif producto.subido_este_mes %}
+				<div class="shop-rgba-dark-green rgba-banner">Nuevo</div>
+				{%endif%}
+			</div>
+			<div class="product-description product-description-brd">
+				<div class="overflow-h margin-bottom-5">
+					<div class="pull-left">
+						<h4 class="title-price"><a href="shop-ui-inner.html">{{producto.get_nombre}}</a></h4>
+						<span class="gender text-uppercase">{{producto.get_tipo}}</span>
+						<span class="gender">{{producto.get_categoria}}</span>
+					</div>
+					<div class="product-price">
+						{% if producto.get_descuento %}
+							<span class="title-price">${{producto.get_precio_descuento}}</span>
+							<span class="title-price line-through">${{producto.get_precio}}</span>
+						{%else%}
+							<span class="title-price">${{producto.get_precio}}</span>
+						{%endif%}
+
+					</div>
+				</div>
+			</div>
+		</div>
+		{%endfor%}
+	</div>
+	<!--=== End Illustration v2 ===-->
+</div>
+<!--=== End Product Content ===-->
+
+	<div class="container content-md">
+		<!--=== End Product Service ===-->
+
+		<!--=== Illustration v4 ===-->
+		<div class="row illustration-v4 margin-bottom-40">
+			<div class="col-md-4">
+				<div class="heading heading-v1 margin-bottom-20">
+					<h2>MAYORES OFERTAS</h2>
+				</div>
+				{%for producto in mayores_ofertas %}
+				{%if producto.get_descuento %}
+				<div class="thumb-product">
+					<img class="thumb-product-img" src="{%if producto.get_imagen%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/30-thumb.jpg' %}{%endif%}" alt="">
+					<div class="thumb-product-in">
+						<h4><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
+						<span class="thumb-product-type">{{producto.get_tipo}} - {{producto.get_tipo}}</span>
+					</div>
+					<ul class="list-inline overflow-h">
+						<li class="thumb-product-price line-through">${{producto.get_precio}}</li>
+						<li class="thumb-product-price">${{producto.get_precio_descuento}}</li>
+						<li class="thumb-product-purchase"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+					</ul>
+				</div>
+				{%else%}
+				<p>Sin oferta</p>
+				{%endif%}
+				{%endfor%}
+			</div>
+			<div class="col-md-4">
+				<div class="heading heading-v1 margin-bottom-20">
+					<h2>Mas Vendidos</h2>
+				</div>
+				{%for producto in mas_vendidos%}
+				<div class="thumb-product">
+					<img class="thumb-product-img" src="{%if producto.get_imagen%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/30-thumb.jpg' %}{%endif%}" alt="">
+					<div class="thumb-product-in">
+						<h4><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
+						<span class="thumb-product-type">{{producto.get_tipo}} - {{producto.get_tipo}}</span>
+					</div>
+					<ul class="list-inline overflow-h">
+						<li class="thumb-product-price">${{producto.get_precio}}</li>
+						<li class="thumb-product-purchase"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+					</ul>
+				</div>
+				{%endfor%}
+			</div>
+			<div class="col-md-4 padding">
+				<div class="heading heading-v1 margin-bottom-20">
+					<h2>Mas baratos</h2>
+				</div>
+				{%for producto in mas_baratos%}
+				<div class="thumb-product">
+					<img class="thumb-product-img" src="{%if producto.get_imagen%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/30-thumb.jpg' %}{%endif%}" alt="">
+					<div class="thumb-product-in">
+						<h4><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
+						<span class="thumb-product-type">{{producto.get_tipo}} - {{producto.get_tipo}}</span>
+					</div>
+					<ul class="list-inline overflow-h">
+						<li class="thumb-product-price">${{producto.get_precio}}</li>
+						<li class="thumb-product-purchase"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+					</ul>
+				</div>
+				{%endfor%}
+			</div>
+		</div><!--/end row-->
+		<!--=== End Illustration v4 ===-->
+	</div><!--/end cotnainer-->
+{%endblock%}
+	<!--=== Shop Suvbscribe ===-->
+	<div class="shop-subscribe">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 md-margin-bottom-20">
+					<h2>Suscribase a nuestro <strong>newsletter</strong></h2>
+				</div>
+				<div class="col-md-4">
+					<div class="input-group">
+							<input type="text" class="form-control" placeholder="Email...">
+						<span class="input-group-btn">
+							<button class="btn" type="button"><i class="fa fa-envelope-o"></i></button>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div><!--/end container-->
+	</div>
+	<!--=== End Shop Suvbscribe ===-->
+
+	<!--=== Footer v4 ===-->
+	<div class="footer-v4">
+		<div class="footer">
+			<div class="container">
+				<div class="row">
+					<!-- About -->
+					<div class="col-md-4 md-margin-bottom-40">
+						<a href="index.html"><img class="footer-logo" src="{% static 'unify/img/logo3-dark.png' %}" alt=""></a>
+						<br>
+						<ul class="list-unstyled address-list margin-bottom-20">
+							<li><i class="fa fa-angle-right"></i>Suipacha 2357, Córdoba Capital, Argentina</li>
+							<li><i class="fa fa-angle-right"></i>Telefono: +54 (351) 4515833</li>
+							<li><i class="fa fa-angle-right"></i>Email: mdv@manantialdevidaonline.com</li>
+						</ul>
+
+						<ul class="list-inline shop-social">
+							<li><a href="https://www.facebook.com/JuanBallistreriOK"><i class="fb rounded-md fa fa-facebook"></i></a></li>
+							<li><a href="https://twitter.com/BallistreriJuan"><i class="tw rounded-md fa fa-twitter"></i></a></li>
+							<li><a href="https://www.instagram.com/juanballistreri/"><i class="gp rounded-md fa fa-instagram"></i></a></li>
+							<li><a href="https://www.youtube.com/channel/UCWDOchyw0PUEncDT2DiGywg"><i class="yt rounded-md fa fa-youtube"></i></a></li>
+						</ul>
+					</div>
+					<!-- End About -->
+
+				</div><!--/end row-->
+			</div><!--/end continer-->
+		</div><!--/footer-->
+
+		<div class="copyright">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<p>
+							2017 &copy; {{company}}. Todos los derechos reservados.
+
+						</p>
+					</div>
+					<div class="col-md-6">
+						<ul class="list-inline sponsors-icons pull-right">
+							<li><i class="fa fa-cc-paypal"></i></li>
+							<li><i class="fa fa-cc-visa"></i></li>
+							<li><i class="fa fa-cc-mastercard"></i></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div><!--/copyright-->
+	</div>
+	<!--=== End Footer v4 ===-->
+</div><!--/wrapper-->
+
+<!--&lt;!&ndash; Wait Block &ndash;&gt;-->
+<!--<div class="g-popup-wrapper">-->
+	<!--<div class="g-popup g-popup&#45;&#45;discount2">-->
+		<!--<div class="g-popup&#45;&#45;discount2-message">-->
+			<!--<h3>¿Quiere ganar un 10% de descuento?</h3>-->
+			<!--<h4>You Are Fabulous!</h4>-->
+			<!--<p>Get 10% Off Your Next Purchase! Just Type Email Below!</p>-->
+
+			<!--<form action="#" class="sky-form">-->
+				<!--<label class="input">-->
+					<!--<input type="email" placeholder="Email" class="form-control">-->
+				<!--</label>-->
+				<!--<label class="input">-->
+					<!--<button class="btn btn-default" type="button">Subscribe</button>-->
+				<!--</label>-->
+			<!--</form>-->
+		<!--</div>-->
+		<!--<img src="{% static 'unify-ecommerce/img/blog/26.jpg' %}" alt="ALT" width="270">-->
+		<!--<a href="javascript:void(0);" class="g-popup__close g-popup&#45;&#45;discount2__close"><span class="icon-close" aria-hidden="true"></span></a>-->
+	<!--</div>-->
+<!--</div>-->
+<!-- End Wait Block -->
+
+<!-- JS Global Compulsory -->
+<script src="{% static 'unify-ecommerce/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'unify-ecommerce/plugins/jquery/jquery-migrate.min.js' %}"></script>
+<script src="{% static 'unify-ecommerce/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- JS Implementing Plugins -->
+<script src="{% static 'unify-ecommerce/plugins/back-to-top.js' %}"></script>
+<script src="{% static 'unify-ecommerce/plugins/smoothScroll.js' %}"></script>
+<script src="{% static 'unify-ecommerce/plugins/jquery.parallax.js' %}"></script>
+<script src="{% static 'unify-ecommerce/plugins/owl-carousel/owl-carousel/owl.carousel.js' %}"></script>
+<script src="{% static 'unify-ecommerce/plugins/scrollbar/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+<script src="{% static 'unify-ecommerce/plugins/revolution-slider/rs-plugin/js/jquery.themepunch.tools.min.js' %}"></script>
+<script src="{% static 'unify-ecommerce/plugins/revolution-slider/rs-plugin/js/jquery.themepunch.revolution.min.js' %}"></script>
+<!-- JS Customization -->
+<script src="{% static 'unify-ecommerce/js/custom.js' %}"></script>
+<!-- JS Page Level -->
+<script src="{% static 'unify-ecommerce/js/shop.app.js' %}"></script>
+<script src="{% static 'unify-ecommerce/js/plugins/owl-carousel.js' %}"></script>
+<script src="{% static 'unify-ecommerce/js/plugins/revolution-slider.js' %}"></script>
+<script src="{% static 'unify-ecommerce/js/plugins/style-switcher.js' %}"></script>
+<script>
+	jQuery(document).ready(function() {
+		App.init();
+		App.initScrollBar();
+		App.initParallaxBg();
+		OwlCarousel.initOwlCarousel();
+		RevolutionSlider.initRSfullWidth();
+		StyleSwitcher.initStyleSwitcher();
+	});
+</script>
+<!--[if lt IE 9]>
+	<script src="{% static 'unify-ecommerce/plugins/respond.js' %}"></script>
+	<script src="{% static 'unify-ecommerce/plugins/html5shiv.js' %}"></script>
+	<script src="{% static 'unify-ecommerce/js/plugins/placeholder-IE-fixes.js' %}"></script>
+	<![endif]-->
+{%block javascript %}
+{%endblock%}
 </body>
 </html>

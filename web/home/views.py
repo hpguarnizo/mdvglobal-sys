@@ -9,11 +9,23 @@ from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 from django.views.generic.edit import FormView
+
+from contenido.models import Contenido
+from donacion.models import Donacion
+from evento.models import Evento
 from home.emails import email_verify_password, email_welcome, email_contact_technical, \
     email_contact_commercial
+from tienda.models import Producto
 from .forms import SignupForm, LoginForm, SupportForm
 
 
+def IndexView(request):
+    cant_eventos = Evento.objects.filter(estado=1).__len__
+    cant_productos = Producto.objects.all().__len__
+    cant_donaciones = Donacion.objects.all().__len__
+    cant_contenido = Contenido.objects.all().__len__
+    return render(request,'index.html',{'cant_eventos':cant_eventos,'cant_productos':cant_productos,
+                                        'cant_donaciones':cant_donaciones,'cant_contenido':cant_contenido})
 
 class SignupView(FormView):
     template_name = 'home_signup.html'

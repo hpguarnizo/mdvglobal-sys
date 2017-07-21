@@ -9,21 +9,41 @@ from tienda.forms import NuevoProducto, NuevaCategoria, EditarProducto
 from tienda.models import Producto, TipoProducto, CategoriaProducto, Compra
 
 
-def TodosProductos(request):
+def BuscarProductos(request):
     query = request.GET.get("q", "")
-    if query:
+    tipo=request.GET.get("tipo", "")
+    categoria=request.GET.get("categoria", "")
+    if query and tipo:
+        qset = (
+            Q(nombre__icontains=query) |
+            Q(tipo__nombre__icontains=query) |
+            Q(tipo__nombre__exact=tipo) |
+            Q(categoria__nombre__icontains=query)
+        )
+    elif query:
         qset = (
             Q(nombre__icontains=query) |
             Q(tipo__nombre__icontains=query) |
             Q(categoria__nombre__icontains=query)
         )
-        results = Producto.objects.filter(qset).distinct()
-        return render(request, 'tienda_productos.html',
-                      {'tipos': TipoProducto.objects.all(), 'categorias': CategoriaProducto.objects.all(),
-                       'productos': results})
+    results = Producto.objects.filter(qset).distinct()
+    return render(request, 'tienda_productos_buscar.html',
+                  {'tipos': TipoProducto.objects.all(), 'categorias': CategoriaProducto.objects.all(),
+                   'productos': results})
+
+def TodosProductos(request):
+    comienzo = request.GET.get("comienzo","")
+    if comienzo:
+        productos = Producto.objects.all().order_by("-fecha")[comienzo:8]
+    else:
+        productos = Producto.objects.all().order_by("-fecha")[:8]
+
 
     return render(request,'tienda_productos.html',{'tipos':TipoProducto.objects.all(),'categorias':CategoriaProducto.objects.all(),
-                                                  'productos':Producto.objects.all().order_by("-fecha")[:10]})
+                                                  'productos': productos,
+                                                   'mayores_ofertas':Producto.objects.all().order_by("descuento")[:3],
+                                                   'mas_baratos':Producto.objects.all().order_by("-precio")[:3],
+                                                   'mas_vendidos':Producto.objects.all().order_by("cantidad_vendidos")[:3]})
 
 
 def ListaProductos(request):
@@ -70,6 +90,7 @@ def CategoriaNueva(request):
         form = NuevaCategoria()
     return render(request,'tienda_categoria_nuevo.html',{'form':form})
 
+
 def CategoriaEditar(request):
     categoria = get_object_or_404(CategoriaProducto,id=request.GET.get("categoria_id",""))
     if request.method == "POST":
@@ -93,7 +114,8 @@ def VentasEnvio(request):
 
 def ProductoVerMas(request,producto_id):
     producto = get_object_or_404(Producto,id=producto_id)
-    return render(request,'tienda_ver_mas.html',{"producto":producto})
+    tipos = TipoProducto.objects.all()
+    return render(request,'tienda_ver_mas.html',{"producto":producto,"tipos":tipos})
 
 
 def AgregarCarrito(request,producto_id):
