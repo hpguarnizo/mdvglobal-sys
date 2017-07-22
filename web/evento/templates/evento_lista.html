@@ -1,26 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Eventos</title>
-</head>
-<body>
+{% extends 'index.html' %}
+{% load staticfiles %}
+    {% block contenido %}
+    <div class="container content-lg">
+
+    <section id="news" class="news-section">
+        <div class="row news-v1">
+
+        <div class="title-v1">
+            <h2 style="font-weight: bold; margin-top: 40px;">Ultimos Eventos</h2>
+            <p> Conocé más acerca de nuestros eventos en pocos pasos.</p>
+        </div>
+
     {%for evento in eventos%}
-    <ul>
-        {%if evento.get_estado.es_lleno%}
-        <li>Lleno</li>
-        {% endif %}
-        <li><img src="{{evento.get_imagen}}" alt="{{evento.get_nombre}}"></li>
-        <li>{{evento.get_nombre}}</li>
-        <li>{{evento.get_fecha}}</li>
-        <li><img src="{{evento.imagen}}" alt="{{evento.get_nombre}}"></li>
-        {% if evento.get_categoria.es_presencial%}
-        <li>{{evento.get_ciudad}},{{evento.get_ciudad.get_pais}}</li>
-        {%endif%}
-        <li>{{evento.get_categoria}}</li>
-        <li>{{evento.get_tipo}}</li>
-        <li><a href="{% url 'evento_seleccionar' evento_id=evento.id %}"><button>Ver mas</button></a></li>
-    </ul>
-    {%endfor%}
-</body>
-</html>
+
+    
+    <div class="col-md-4 md-margin-bottom-40 text-center">
+
+        
+        <h3 style="color: #FFF; font-weight: bold; font-size: 2.3rem;">{{evento.get_nombre}}</h3>
+        {%if producto.get_imagen%}<img src="{{evento.get_imagen}}" alt="{{evento.get_nombre}}">{%else%}<img src="{% static 'unify-ecommerce/img/blog/28-thumb.jpg'%}" alt="{{evento.get_nombre}}" class="img-responsive center-block">{%endif%}
+        <p style="margin-top: 40px; font-size: 1.7rem;"><i class="fa fa-clock-o"></i> {{evento.get_fecha}}</p> 
+        <ul class="list-inline news-v1-info">
+           
+            <li>{{evento.get_categoria}}</li>
+            <li class="">{{evento.get_tipo}}</li></br>
+            {% if evento.get_estado.es_lleno %} 
+        
+            <a  class="btn-u btn-brd btn-brd-hover btn-u-light" style="margin-top: 20px;"><p style="color: red; margin:0; padding: 0; font-weight: bold;">SIN CUPO</p></a>
+            {%else%}
+            <a href="{% url 'evento_seleccionar' evento_id=evento.id %}" class="btn-u btn-brd btn-brd-hover btn-u-light" style="margin-top: 20px; font-weight: bold;">Ver más</a>
+            {%endif%}
+        </ul>
+
+    </div>
+{%endfor%}
+        </div>
+    </section>
+    </div>
+
+        
+    {% endblock %}
+

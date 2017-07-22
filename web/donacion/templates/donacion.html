@@ -1,17 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Donacion</title>
-</head>
-<body>
-    <h1>{{donacion.get_titulo}}</h1>
-    <p>{{donacion.get_descripcion}}</p>
-    <img src="{{donacion.get_imagen}}" alt="{{donacion.get_titulo}}">
-    <form action="." method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="btn">Donar!</button>
-    </form>
-</body>
-</html>
+{% extends 'index.html' %}
+{% load staticfiles %}
+    {% block contenido %}
+    <div class="container content text-center" style="background-color: #f7f7f7 !important;">
+        <div class="row blog-page">
+            <div class="col-md-12 ">
+                <div class="blog margin-bottom-40">
+                    <h2 style="color: #777; font-weight: bold; font-size: 2.5rem;">{{donacion.get_titulo}}</h2>
+                   
+                    <div class="blog-img">
+                        {%if donacion.get_imagen %}<img src="{{donacion.get_imagen}}" alt="{{evento.get_nombre}}">{%else%}<img src="{% static 'unify-ecommerce/img/blog/11.jpg'%}" alt="{{donacion.get_titulo}}" class="img-responsive center-block">{%endif%}
+                    </div>
+                    <p style="color: #777; margin: 15px;">{{donacion.get_descripcion}}</p>
+                    <form action="." method="POST">
+                    {% csrf_token %}
+                    <input type="number" min="1" name="cantidad" id="cantidad_id" class="form-control center-block" style="width: 300px; margin-bottom: 30px; background-color: white; border-color: #EEE;"><br>
+                      <button style="border:0; margin:0; padding:0;"><p><i class="fa fa-plus-sign"></i><a href="#" class="btn-u btn-u-small">¡Donar!</a></p></button>
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
