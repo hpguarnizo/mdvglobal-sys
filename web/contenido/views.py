@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from contenido.forms import NuevoContenidoForm, NuevaCategoria
 from contenido.models import Contenido, CategoriaContenido, TipoContenido
+from tienda.views import get_compra
 
 
 def ListaContenido(request):
@@ -62,19 +63,59 @@ def CategoriaEditar(request):
 
 def ContenidoMostrar(request):
     query = request.GET.get("q", "")
-    if query:
-        qset = (
-            Q(nombre__icontains=query) |
-            Q(tipo__nombre__icontains=query) |
-            Q(categoria__nombre__icontains=query)
-        )
-        results = Contenido.objects.filter(qset).distinct()
+    tipo = request.GET.get("tipo", "")
+    categoria = request.GET.get("categoria", "")
+    comienzo = request.GET.get("comienzo", "")
+    if comienzo and int(comienzo)>0:
+        comienzo = int(comienzo)
+    else:
+        comienzo=0
+    if query or tipo or categoria:
+        if query and tipo and categoria:
+            qset = (
+                Q(nombre__icontains=query) &
+                Q(tipo__nombre__exact=tipo) &
+                Q(categoria__nombre__exact=categoria)
+            )
+        elif query and tipo:
+            qset = (
+                Q(nombre__icontains=query) &
+                Q(tipo__nombre__exact=tipo)
+            )
+        elif query and categoria:
+            qset = (
+                Q(nombre__icontains=query) &
+                Q(categoria__nombre__exact=categoria)
+            )
+        elif categoria and tipo:
+            qset = (
+                Q(tipo__nombre__exact=tipo) &
+                Q(categoria__nombre__exact=categoria)
+            )
+        elif query:
+            qset = (
+                Q(nombre__icontains=query) |
+                Q(tipo__nombre__icontains=tipo) |
+                Q(categoria__nombre__icontains=categoria)
+            )
+        elif tipo:
+            qset = (
+                Q(tipo__nombre__exact=tipo)
+            )
+        elif categoria:
+            qset = (
+                Q(categoria__nombre__exact=categoria)
+            )
+
+        results = Contenido.objects.filter(qset).distinct()[comienzo:comienzo+10]
         return render(request, 'contenido.html',
                       {'tipos': TipoContenido.objects.all(), 'categorias': CategoriaContenido.objects.all(),
-                       'contenido': results})
+                       'contenido': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo})
 
-    return render(request,'contenido.html',{'tipos':TipoContenido.objects.all(),'categorias':CategoriaContenido.objects.all(),
-                                            'contenido':Contenido.objects.all().order_by("-fecha")[:10]})
+    return render(request,'contenido.html',{'tipos':TipoContenido.objects.all(),
+                                            'categorias':CategoriaContenido.objects.all(),
+                                            'contenido':Contenido.objects.all().order_by("-fecha")[comienzo:comienzo+10],
+                                            "compra":get_compra(request),"comienzo":comienzo})
 
 
 def ContenidoVerMas(request, contenido_id):

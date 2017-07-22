@@ -31,13 +31,11 @@
                                 
                             </ul>
                             {% if evento.get_estado.es_disponible %}
-                            <a href="{% url 'evento_registro' evento_id=evento.id %}" class="btn-u  btn-brd-hover btn-u-dark" style="font-weight: bold;">Comprar Entrada</a>
-                            {% if evento.get_tipo.es_pago %}
+                                <a href="{% url 'evento_registro' evento_id=evento.id %}" class="btn-u  btn-brd-hover btn-u-dark" style="font-weight: bold;">Comprar Entrada</a>
+                            {% elif evento.get_tipo.es_pago %}
+                                <a href="{% url 'evento_registro' evento_id=evento.id %}" class="btn-u  btn-brd-hover btn-u-dark" style="font-weight: bold;">Reservar Lugar</a>
                             {%else%}
-                            <a href="{% url 'evento_registro' evento_id=evento.id %}" class="btn-u  btn-brd-hover btn-u-dark" style="font-weight: bold;">Reservar Lugar</a>
-                            {%endif%}
-                            {%else%}
-                            <a class="btn-u btn-brd-hover btn-u-dark" style="font-weight: bold;">Agotado</a>
+                                <a class="btn-u btn-brd-hover btn-u-dark" style="font-weight: bold;">Agotado</a>
                             {% endif %}
                         </div><!--/end row-->
                     </div>

@@ -104,9 +104,11 @@
 								<li class="menu-icons">
 									<i class="menu-icons-style search search-close search-btn fa fa-search"></i>
 									<div class="search-open">
+										{%block form%}
 										<form action="{% url 'tienda_productos' %}" method="GET">
 											<input type="text" class="animated fadeIn form-control" placeholder="Buscar un producto ..." name="q" id="q">
 										</form>
+										{%endblock%}
 									</div>
 								</li>
 							</ul>
@@ -379,7 +381,7 @@
 	<div class="sliding-panel bg-color-darker">
 		<div class="sliding-panel-inner sliding-panel-scrollable fullscreen">
 			<ul class="sliding-navigation">
-				<li><a href="#">Inicio</a></li>
+				<li><a href="{% url 'index'%}">Inicio</a></li>
 				<li><a href="{% url 'login_page' %}">Iniciar Sesion</a></li>
 				<li><a href="{% url 'signup_page' %}">Registrarse</a></li>
 				<li><a href="{% url 'evento_lista' %}">Eventos</a></li>
@@ -448,5 +450,7 @@
 		<script src="{% static 'unify/plugins/html5shiv.js' %}"></script>
 		<script src="{% static 'unify/plugins/placeholder-IE-fixes.js' %}"></script>
 	<![endif]-->
+	{%block javascript%}
+	{%endblock%}
 </body>
 </html>

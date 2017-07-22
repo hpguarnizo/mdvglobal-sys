@@ -9,15 +9,16 @@ from evento.forms import FormEvento, FormEventoEdit, PerfilCompletar, EntradaFor
 from evento.models import Evento, Disponible, Entrada, Pagada
 from home.forms import LoginForm
 from tienda.models import Producto
+from tienda.views import get_compra
 
 
 def ListaEventos(request):
     eventos = Evento.objects.filter(estado__in=[1,2]).order_by('fecha')
-    return render(request,'evento_lista.html',{'eventos':eventos})
+    return render(request,'evento_lista.html',{'eventos':eventos,"compra":get_compra(request)})
 
 
 def EventoSeleccionado(request,evento_id):
-    return render(request,'evento_seleccionar.html',{'evento':Evento.objects.get(id=evento_id)})
+    return render(request,'evento_seleccionar.html',{'evento':Evento.objects.get(id=evento_id),"compra":get_compra(request)})
 
 
 def TodosEventos(request):
@@ -111,7 +112,7 @@ def EventoRegistro(request,evento_id):
 
 def EventoComprado(request,entrada_id):
     entrada = get_object_or_404(Entrada,id=entrada_id)
-    return render(request,'evento_comprado.html',{'entrada':entrada})
+    return render(request,'evento_comprado.html',{'entrada':entrada,"compra":get_compra(request)})
 
 
 def EntradaSinRegistro(request,evento_id):

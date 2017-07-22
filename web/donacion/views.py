@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from donacion.forms import CantidadForm, PaginaForm
 from donacion.models import Pagina, Donacion as D, Donacion
+from tienda.views import get_compra
 
 
 def VerDonaciones(request):
@@ -39,8 +40,8 @@ def DonacionVista(request):
             return HttpResponseRedirect(reverse('pay_donacion')+"?cantidad=%f" %cantidad)
     else:
         form = CantidadForm()
-    return render(request,'donacion.html',{'form':form,'donacion':Pagina.objects.all().first()})
+    return render(request,'donacion.html',{'form':form,'donacion':Pagina.objects.all().first(),"compra":get_compra(request)})
 
 def DonacionGracias(request,donacion_id):
     donacion = get_object_or_404(Donacion,id=donacion_id)
-    return render(request,'donacion_gracias.html',{"donacion":donacion})
+    return render(request,'donacion_gracias.html',{"donacion":donacion,"compra":get_compra(request)})

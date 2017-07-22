@@ -1,22 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contenido</title>
-</head>
-<body>
-<form action="." method="GET">
-    <input type="text" name="q" placeholder="Buscar contenido">
-    <button>Buscar</button>
+{% extends 'index.html'%}
+
+{%block form%}
+<form action="." method="GET" id="form">
+    <input type="text" class="animated fadeIn form-control" placeholder="Buscar un contenido..." name="q" id="q" value="{{q}}">
+    <input type="hidden" name="tipo" id="tipo_id" value="{{tipo_q}}">
+    <input type="hidden" name="categoria" id="categoria_id" value="{{categoria_q}}">
+    <input type="hidden" name="comienzo" id="comienzo_id" value="{{comienzo}}">
 </form>
+{%endblock%}
+
+
+{%block contenido%}
+{%if q %}
+<h1>Busqueda:{{q}}</h1>
+{%endif%}
+
+{%if categoria_q %}
+<a href="#" class="btn-r-categoria"><h3>Categoria seleccionada:{{categoria_q}}<i class="fa fa-close"></i></h3></a>
+{%endif%}
+
+{%if tipo_q%}
+<a href="#" class="btn-r-tipo"><h3>Tipo seleccionada:{{tipo_q}} <i class="fa fa-close"></i></h3></a>
+{%endif%}
+
+
 <h2>Categorias</h2>
 {%for cat in categorias %}
-<p><a href="">{{cat}}</a></p>
+<p><a class="btn-categoria" href="#" id="{{cat}}">{{cat}}</a></p>
 {%endfor%}
 
 <h2>Tipos</h2>
 {%for tipo in tipos%}
-<p><a href="">{{tipo}}</a></p>
+<p><a class="btn-tipo" href="#" id="{{tipo}}">{{tipo}}</a></p>
 {%endfor%}
 
 {%for cont in contenido%}
@@ -26,7 +41,42 @@
     <li><a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}"><button>Ver</button></a></li>
 </ul>
 {%endfor%}
+<a href="#" class="btn-atras"><button>Atras</button></a>
+<a href="#" class="btn-sig"><button>Siguiente</button></a>
+{%endblock%}
 
+{%block javascript%}
+<script>
+$(document).ready(function(){
+let formulario = document.getElementById("form");
 
-</body>
-</html>
+    $(".btn-tipo").click(function(){
+        $("#tipo_id").val(this.id);
+        formulario.submit();
+    });
+    $(".btn-categoria").click(function(){
+        $("#categoria_id").val(this.id);
+        formulario.submit();
+    });
+    $(".btn-r-tipo").click(function(){
+        $("#tipo_id").val("");
+        formulario.submit();
+    });
+    $(".btn-r-categoria").click(function(){
+        $("#categoria_id").val("");
+        formulario.submit();
+    });
+    $(".btn-sig").click(function(){
+        let comienzo = parseInt($("#comienzo_id").val()) + parseInt(10);
+        $("#comienzo_id").val(comienzo);
+        formulario.submit();
+    });
+    $(".btn-atras").click(function(){
+        let comienzo = parseInt($("#comienzo_id").val()) - parseInt(10);
+        $("#comienzo_id").val(comienzo);
+        formulario.submit();
+    });
+
+});
+</script>
+{%endblock%}
