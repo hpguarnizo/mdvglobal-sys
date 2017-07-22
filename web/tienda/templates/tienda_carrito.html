@@ -20,6 +20,7 @@
                     </div>
                 </div>
                 <section>
+                    {%block carrito %}
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -43,9 +44,9 @@
                                     <td>$ {{detalle.get_producto.get_precio_descuento}}</td>
                                     <td>
                                         {%if detalle.get_producto.get_tipo.es_libro_fisico%}
-                                        <button type='button' class="quantity-button btn-menos" name='subtract' onclick='javascript: subtractQty1();' value='-'>-</button>
+                                        <a href="{%url 'tienda_menos_detalle'  detalle_id=detalle.id %}"><button type='button' class="quantity-button btn-menos" name='subtract' onclick='javascript: subtractQty1();' value='-'>-</button></a>
                                         <input type='text' class="quantity-field" name='qty1' value="{{detalle.cantidad}}" id='qty1'/>
-                                        <button type='button' class="quantity-button btn-mas" name='add' onclick='javascript: document.getElementById("qty1").value++;' value='+'>+</button>
+                                        <a href="{%url 'tienda_mas_detalle' detalle_id=detalle.id %}"><button type='button' class="quantity-button btn-mas" name='add' onclick='javascript: document.getElementById("qty1").value++;' value='+'>+</button></a>
                                         {%else%}
                                         <button type='button' class="quantity-button" name='subtract' onclick='javascript: subtractQty1();' value='-' disabled>-</button>
                                         <input type='text' class="quantity-field" name='qty1' value="{{detalle.cantidad}}" id='qty1' disabled/>
@@ -56,13 +57,14 @@
                                     </td>
                                     <td class="shop-red">$ {{detalle.get_parcial}}</td>
                                     <td>
-                                        <button type="button" class="close btn-eliminar-detalle" id="{{detalle.id}}"><span>&times;</span><span class="sr-only">Eliminar</span></button>
+                                        <a href="{% url 'tienda_eliminar_detalle' detalle_id=detalle.id %}"><button type="button" class="close btn-eliminar-detalle" id="{{detalle.id}}"><span>&times;</span><span class="sr-only">Eliminar</span></button></a>
                                     </td>
                                 </tr>
                                 {%endfor%}
                             </tbody>
                         </table>
                     </div>
+                    {%endblock%}
                 </section>
                 <div class="header-tags">
                     <div class="overflow-h">
@@ -71,7 +73,10 @@
                         <i class="rounded-x fa fa-credit-card"></i>
                     </div>
                 </div>
-                <section></section>
+                <section>
+                    {%block pago%}
+                    {%endblock%}
+                </section>
                 <div class="header-tags">
                     <div class="overflow-h">
                         <h2>Envio</h2>
@@ -79,7 +84,10 @@
                         <i class="rounded-x fa fa-credit-card"></i>
                     </div>
                 </div>
-                <section></section>
+                <section>
+                    {%block envio%}
+                    {%endblock%}
+                </section>
                 <div class="coupon-code">
                     <div class="row">
                         <div class="col-sm-3 col-sm-offset-5">
@@ -90,14 +98,15 @@
                                         <span>$ {{compra.get_total}}</span>
                                     </div>
                                 </li>
-                                <li class="margin-top-20"><a href=""><button class="btn btn-lg btn-warning" style="border-radius:30px;"><strong>PAGAR AHORA</strong></button></a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-
             </div>
         </form>
+        {% block btn_comprar%}
+        <a href="{% url 'pay_tienda' compra_id=compra.id%}"><button class="btn btn-lg btn-warning" style="border-radius:30px;"><strong>PAGAR AHORA</strong></button></a>
+        {%endblock%}
     </div><!--/end container-->
 </div>
 		<!--=== End Content Medium Part ===-->
@@ -115,25 +124,6 @@
 			Login.initLogin();
 			StepWizard.initStepWizard();
 			StyleSwitcher.initStyleSwitcher();
-
-            $(".btn-eliminar-detalle").click(function(){
-                id = this.id;
-                if(id){
-                    location.href = "{% url 'tienda_eliminar_detalle' %}?detalle=" + id;
-                }
-            });
-            $(".btn-menos").click(function(){
-                id = this.id;
-                if(id){
-                    location.href = "{% url 'tienda_menos_detalle' %}?detalle=" + id;
-                }
-            });
-            $(".btn-mas").click(function(){
-                id = this.id;
-                if(id){
-                    location.href = "{% url 'tienda_mas_detalle' %}?detalle=" + id;
-                }
-            });
 
             $("div.actions.clearfix").addClass("sr-only");
 

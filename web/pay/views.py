@@ -11,6 +11,9 @@ from evento.models import Entrada
 from pay.models import Customer, Premium
 import os
 
+from tienda.models import Compra
+
+
 class HomePayView(TemplateView):
     template_name = 'pay_plans.html'
 
@@ -89,6 +92,41 @@ def buy_my_entrada(request,entrada_id):
 
     return render(request,'pay_entrada.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
                                               "entrada":entrada})
+
+def buy_my_productos(request,compra_id):
+    compra = get_object_or_404(Compra,id=compra_id)
+    code = None
+    description = None
+    if request.POST.get('token',''):
+        mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
+        dic = {
+            "transaction_amount": compra.total(),
+            "token": "%s" %request.POST.get('token',''),
+            "installments": 1,
+            "description": "Compra en "+os.environ.get("COMPANY"),
+            "payment_method_id": request.POST.get('paymentMethodId',''),
+            "payer": {
+                "email": os.environ.get("EMAIL_MP")
+            },
+            "external_reference": compra.id,
+            "statement_descriptor": "Compra en "+os.environ.get("COMPANY"),
+        }
+        payment = mp.post("/v1/payments", dic )
+        json.dumps(payment, indent=4)
+
+        if payment['status'] == 201:
+            if payment['response']['status'] == 'approved':
+                compra.pagar()
+                return HttpResponseRedirect(reverse('evento_comprado',kwargs={"compra_id":compra.id}))
+            else:
+                description = payment['response']['status']
+                code = 201
+        else:
+            code = payment['response']['cause'][0]['code']
+            description = payment['response']['cause'][0]['description']
+
+    return render(request,'pay_tienda.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
+                                              "compra":compra})
 
 def buy_my_donacion(request):
     cantidad = request.GET.get("donacion","100")

@@ -668,6 +668,7 @@ function keyUpHandler(event)
         options = getOptions(wizard),
         state = getState(wizard);
 
+
     if (options.suppressPaginationOnFocus && wizard.find(":focus").is(":input"))
     {
         event.preventDefault();

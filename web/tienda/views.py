@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
@@ -43,7 +43,8 @@ def TodosProductos(request):
                                                   'productos': productos,
                                                    'mayores_ofertas':Producto.objects.all().order_by("descuento")[:3],
                                                    'mas_baratos':Producto.objects.all().order_by("-precio")[:3],
-                                                   'mas_vendidos':Producto.objects.all().order_by("cantidad_vendidos")[:3]})
+                                                   'mas_vendidos':Producto.objects.all().order_by("cantidad_vendidos")[:3],
+                                                   'compra':get_compra(request)})
 
 
 def ListaProductos(request):
@@ -137,7 +138,7 @@ def AgregarCarrito(request,producto_id):
         compra.agregar_producto(producto,cantidad)
         return HttpResponseRedirect(reverse("tienda_carrito"))
 
-    elif request.session["token_compra"]:
+    elif "token_compra" in request.session:
         token =request.session["token_compra"]
         compra = Compra.objects.get(token=token)
         compra.agregar_producto(producto,cantidad)
@@ -147,22 +148,20 @@ def AgregarCarrito(request,producto_id):
         return HttpResponseRedirect(reverse('tienda_login_producto',kwargs={"producto_id":producto_id}))
 
 def Carrito(request):
-    user = request.user
-    if user.is_authenticated and Compra.objects.filter(user=user,estado=1).exists():
-        compra =Compra.objects.get(user=user,estado=1)
-    elif request.session["token_compra"]:
-        token =request.session["token_compra"]
-        compra = Compra.objects.get(token=token)
+    compra = get_compra(request)
+    if compra:
+        return render(request, "tienda_carrito.html", {"compra": compra})
     else:
         return HttpResponseRedirect(reverse('tienda_productos'))
 
-    return render(request,"tienda_carrito.html",{"compra":compra})
 
-def EliminarDetalle(request):
-    detalle_id=request.GET.get("detalle","")
+def EliminarDetalle(request,detalle_id):
     detalle= DetalleCompra.objects.get(id=detalle_id)
-    compra = detalle.get_compra()
-    detalle.delete()
+    if detalle.get_compra().get_estado().es_incompleta():
+        compra = detalle.get_compra()
+        compra.set_total(compra.get_total()-(detalle.get_producto().get_precio()*detalle.get_cantidad()))
+        compra.save()
+        detalle.delete()
 
     if compra.get_detalle():
         return HttpResponseRedirect(reverse('tienda_carrito'))
@@ -170,13 +169,36 @@ def EliminarDetalle(request):
         return HttpResponseRedirect(reverse('tienda_productos'))
 
 
-def MenosDetalle(request):
-    detalle_id = request.GET.get("detalle", "")
+def MenosDetalle(request,detalle_id):
     detalle = DetalleCompra.objects.get(id=detalle_id)
-    detalle.quitar()
+    if detalle.get_compra().get_estado().es_incompleta():
+        detalle.quitar()
+        detalle.save()
+    return HttpResponseRedirect(reverse('tienda_carrito'))
 
-def MasDetalle(request):
-    detalle_id = request.GET.get("detalle", "")
+def MasDetalle(request,detalle_id):
     detalle = DetalleCompra.objects.get(id=detalle_id)
-    detalle.quitar()
+    if detalle.get_compra().get_estado().es_incompleta():
+        detalle.agregar()
+        detalle.save()
+    return HttpResponseRedirect(reverse('tienda_carrito'))
 
+def EnvioProductos(request,compra_id):
+    compra = get_object_or_404(Compra,id=compra_id)
+    if not compra.get_estado().es_incompleta():
+
+        return render(request,'tienda_envio.html',{'compra':compra})
+    else:
+        raise Http404
+
+
+def get_compra(request):
+    user = request.user
+    if user.is_authenticated and Compra.objects.filter(user=user,estado=1).exists():
+        compra =Compra.objects.get(user=user,estado=1)
+    elif "token_compra" in request.session:
+        token =request.session["token_compra"]
+        compra = Compra.objects.get(token=token)
+    else:
+        return None
+    return compra

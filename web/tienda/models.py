@@ -161,7 +161,8 @@ class Incompleta(EstadoCompra):
         pass
 
     def pagar(self,compra):
-        pass
+        compra.set_estado(Pagado.objects.all().first())
+        compra.save()
 
 
 class Pagado(EstadoCompra):
@@ -239,6 +240,16 @@ class Compra(models.Model):
         detalle.save()
         self.save()
 
+    def set_total(self,total):
+        self.total = total
+        if self.total<0:
+            self.total=0
+
+    def pagar(self):
+        self.get_estado().pagar(self)
+
+    def set_estado(self,estado):
+        self.estado = estado
 
 class DetalleCompra(models.Model):
     producto = models.ForeignKey(Producto)
@@ -262,4 +273,13 @@ class DetalleCompra(models.Model):
         return self.producto.get_precio()*self.cantidad
 
     def agregar(self):
-        self.cantidad = self.cantidad +1
+        if self.producto.get_tipo().es_libro_fisico():
+            self.cantidad = self.cantidad +1
+            self.compra.set_total(self.compra.get_total()+self.producto.get_precio())
+            self.compra.save()
+
+    def quitar(self):
+        if self.cantidad>1:
+            self.cantidad = self.cantidad-1
+            self.compra.set_total(self.compra.get_total() - self.producto.get_precio())
+            self.compra.save()

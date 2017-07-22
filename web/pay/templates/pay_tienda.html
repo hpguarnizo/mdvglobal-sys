@@ -1,0 +1,203 @@
+{%extends 'tienda_carrito.html' %}
+
+{% block btn_comprar%}
+{%endblock%}
+
+{%block pago%}
+<div class="row">
+<div class="col-md-6 md-margin-bottom-50">
+<h2 class="title-type">Elija el metodo de pago</h2>
+<!-- Accordion -->
+<div class="accordion-v2">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        <i class="fa fa-credit-card"></i>
+                        Tarjeta de Credito o Debito
+                    </a>
+                </h4>
+            </div>
+            <form id="pay" name="pay" method="post" action="">
+            {% csrf_token %}
+            {% include "home_form_errors.html" %}
+            {% if code %}
+            <div class="alert alert-danger alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                {{description}} <a class="alert-link" href="#">{{code}}</a>.
+            </div>
+            {% endif %}
+
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body cus-form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-4 no-col-space control-label">Nombre en la Tarjeta</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control required" maxlength="255"  id="cardholderName" data-checkout="cardholderName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 no-col-space control-label">Numero de la Tarjeta</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control required" id="cardNumber" data-checkout="cardNumber" placeholder="4509953566233704" required maxlength="16">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">Fecha de Vencimiento</label>
+                        <div class="col-sm-8 input-small-field">
+                            <input type="text" id="cardExpirationMonth" data-checkout="cardExpirationMonth" placeholder="12" maxlength="2" required class="form-control required sm-margin-bottom-20">
+                            <span class="slash">/</span>
+                            <input type="text" id="cardExpirationYear" data-checkout="cardExpirationYear" placeholder="2019" maxlength="4" required class="form-control required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 no-col-space control-label">Codigo de Seguridad</label>
+                        <div class="col-sm-8 input-small-field">
+                            <input type="text" name="number" maxlength="3" id="securityCode" data-checkout="securityCode" required placeholder="123" class="form-control required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 no-col-space control-label">N° de Documento</label>
+                        <div class="col-sm-8 ">
+                            <input type="text" name="number" id="docNumber" data-checkout="docNumber" placeholder="12345678" maxlength="20" required class="form-control required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 no-col-space control-label">Tipo de Documento</label>
+                        <div class="col-sm-8">
+                            <select id="docType" data-checkout="docType" class="form-control" required></select>
+                        </div>
+                    </div>
+                    <input id="email" class="form-control" name="email" value="{{user.email}}" type="hidden" placeholder="Su email"/>
+                    <button type="submit" class="btn btn-warning center-block" style="border-radius:30px;">COMPRAR</button>
+                </div>
+            </div>
+            </form>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                        <i class="fa fa-paypal"></i>
+                        Pay with PayPal
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="content margin-left-10">
+                    <a href="#"><img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_150x38.png" alt="PayPal"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{%endblock%}
+
+{%block javascript%}
+{{block.super}}
+<script>
+    $(document).ready(function(){
+        $(".actions > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)").click();
+    });
+</script>
+
+  <!--Mercado Pago-->
+    <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+
+<script>
+    Mercadopago.setPublishableKey("{{PUBLIC_KEY_MP}}");
+    Mercadopago.getIdentificationTypes();
+</script>
+<script>
+function addEvent(el, eventName, handler){
+    if (el.addEventListener) {
+           el.addEventListener(eventName, handler);
+    } else {
+        el.attachEvent('on' + eventName, function(){
+          handler.call(el);
+        });
+    }
+};
+
+function getBin() {
+    var ccNumber = document.querySelector('input[data-checkout="cardNumber"]');
+    return ccNumber.value.replace(/[ .-]/g, '').slice(0, 6);
+};
+
+function guessingPaymentMethod(event) {
+    var bin = getBin();
+
+    if (event.type == "keyup") {
+        if (bin.length >= 6) {
+            Mercadopago.getPaymentMethod({
+                "bin": bin
+            }, setPaymentMethodInfo);
+        }
+    } else {
+        setTimeout(function() {
+            if (bin.length >= 6) {
+                Mercadopago.getPaymentMethod({
+                    "bin": bin
+                }, setPaymentMethodInfo);
+            }
+        }, 100);
+    }
+};
+
+function setPaymentMethodInfo(status, response) {
+    if (status == 200) {
+        // do somethings ex: show logo of the payment method
+        var form = document.querySelector('#pay');
+
+        if (document.querySelector("input[name=paymentMethodId]") == null) {
+            var paymentMethod = document.createElement('input');
+            paymentMethod.setAttribute('name', "paymentMethodId");
+            paymentMethod.setAttribute('type', "hidden");
+            paymentMethod.setAttribute('value', response[0].id);
+
+            form.appendChild(paymentMethod);
+        } else {
+            document.querySelector("input[name=paymentMethodId]").value = response[0].id;
+        }
+    }
+};
+
+addEvent(document.querySelector('input[data-checkout="cardNumber"]'), 'keyup', guessingPaymentMethod);
+addEvent(document.querySelector('input[data-checkout="cardNumber"]'), 'change', guessingPaymentMethod);
+</script>
+<script>
+doSubmit = false;
+addEvent(document.querySelector('#pay'),'submit',doPay);
+function doPay(event){
+    event.preventDefault();
+    if(!doSubmit){
+        var $form = document.querySelector('#pay');
+
+        Mercadopago.createToken($form, sdkResponseHandler); // The function "sdkResponseHandler" is defined below
+
+        return false;
+    }
+};
+</script>
+<script>
+function sdkResponseHandler(status, response) {
+    if (status != 200 && status != 201) {
+        alert("Verifique la informacion ingresada");
+    }else{
+
+        var form = document.querySelector('#pay');
+
+        var card = document.createElement('input');
+        card.setAttribute('name',"token");
+        card.setAttribute('type',"hidden");
+        card.setAttribute('value',response.id);
+        form.appendChild(card);
+        doSubmit=true;
+        form.submit();
+    }
+};
+</script>
+{%endblock%}

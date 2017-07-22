@@ -1,0 +1,27 @@
+{%extends 'tienda_carrito.html' %}
+
+
+{% block btn_comprar%}
+{%endblock%}
+
+{% block pago%}
+<h3>Ya ha pagado sus productos</h3>
+{%endblock%}
+
+{%block envio%}
+{%for detalle in compra.get_detalle%}
+    <p><strong>{{detalle.get_producto.get_nombre}}:</strong> {%if detalle.get_producto.get_tipo.es_libro_fisico%}
+    Se le avisara cuando se realize el envio.{%else%}Link enviado al email.{%endif%}</p>
+{%endfor%}
+{%endblock%}
+
+{%block javascript%}
+{{block.super}}
+<script>
+    $(document).ready(function(){
+        $(".actions > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)").click();
+        $(".actions > ul:nth-child(1) > li:nth-child(2) > a:nth-child(1)").click();
+    });
+</script>
+
+{%endblock%}

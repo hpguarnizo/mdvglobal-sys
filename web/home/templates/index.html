@@ -75,11 +75,30 @@
 							<ul class="menu-icons-list">
 								<li class="menu-icons shopping-cart">
 									<i class="menu-icons-style radius-x fa fa-shopping-cart"></i>
-									<span class="badge">0</span>
+									<span class="badge">{{compra.get_detalle|length}}</span>
 									<div class="shopping-cart-open">
+										{% if compra.get_detalle %}
+										<div class="badge-open">
+											<ul class="list-unstyled mCustomScrollbar" data-mcs-theme="minimal-dark">
+												{%for detalle in compra.get_detalle %}
+												<li>
+													<img src="{%if detalle.get_producto.get_imagen%}{{detalle.get_producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/28-thumb.jpg'%}{%endif%}" alt="">
+													<a href="{% url 'tienda_eliminar_detalle' detalle_id=detalle.id %}"><button type="button" class="close">×</button></a>
+													<div class="overflow-h">
+														<span>{{detalle.get_producto.get_nombre}}</span>
+														<small>{{detalle.get_cantidad}} x ${{detalle.get_producto.get_precio}}</small>
+													</div>
+												</li>
+												{%endfor%}
+											</ul>
+										</div>
+										{%else%}
 										<span class="shc-title">No hay productos en el carrito</span>
-										<button type="button" class="btn-u"><i class="fa fa-shopping-cart"></i> Carrito</button>
-										<span class="shc-total">Total: <strong>$0.00</strong></span>
+										{%endif%}
+										<a href="{% url 'tienda_carrito' %}">
+											<button type="button" class="btn-u"><i class="fa fa-shopping-cart"></i> Carrito</button>
+										</a>
+										<span class="shc-total">Total: <strong>${{compra.get_total}}</strong></span>
 									</div>
 								</li>
 								<li class="menu-icons">
