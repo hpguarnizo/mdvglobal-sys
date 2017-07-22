@@ -55,8 +55,13 @@
 			<div class="topbar-v3">
 				<div class="search-open">
 					<div class="container">
-						<input type="text" class="form-control" placeholder="Buscar">
+						<form action="{% url 'tienda_productos_busqueda'%}" method="GET" id="form">
+						<input type="text" class="form-control" placeholder="Buscar" name="q" id="q_id">
+						<input type="hidden" name="tipo" id="tipo_id" value="{{tipo_q}}">
+						<input type="hidden" name="categoria" id="categoria_id" value="{{categoria_q}}">
+    					<input type="hidden" name="comienzo" id="comienzo_id" value="{{comienzo}}">
 						<div class="search-close"><i class="icon-close"></i></div>
+						</form>
 					</div>
 				</div>
 
@@ -197,7 +202,7 @@
 				<a href="shop-ui-inner.html"><img class="full-width img-responsive" width="370" height="555" src="{%if producto.get_image%}{{producto.get_image}}{%else%}{% static 'unify-ecommerce/img/blog/25.jpg' %}{%endif%}" alt=""></a>
 				<a class="product-review" href="{% url 'producto_ver_mas' producto_id=producto.id %}">Ver mas</a>
 				<a class="add-to-cart" href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
-				{% if not producto.hay_stock %}
+				{% if not producto.hay_stock_s %}
 				<div class="shop-rgba-red rgba-banner">Sin stock</div>
 				{%elif producto.subido_este_mes %}
 				<div class="shop-rgba-dark-green rgba-banner">Nuevo</div>
@@ -305,7 +310,7 @@
 				</div>
 				<div class="col-md-4">
 					<div class="input-group">
-							<input type="text" class="form-control" placeholder="Email...">
+							<input type="text" class="form-control" placeholder="Email..." >
 						<span class="input-group-btn">
 							<button class="btn" type="button"><i class="fa fa-envelope-o"></i></button>
 						</span>

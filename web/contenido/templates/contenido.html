@@ -1,7 +1,7 @@
 {% extends 'index.html'%}
 
 {%block form%}
-<form action="." method="GET" id="form">
+<form action="{% url 'contenido_mostrar'%}" method="GET" id="form">
     <input type="text" class="animated fadeIn form-control" placeholder="Buscar un contenido..." name="q" id="q" value="{{q}}">
     <input type="hidden" name="tipo" id="tipo_id" value="{{tipo_q}}">
     <input type="hidden" name="categoria" id="categoria_id" value="{{categoria_q}}">

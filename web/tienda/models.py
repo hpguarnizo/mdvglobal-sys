@@ -30,6 +30,7 @@ class CategoriaProducto(models.Model):
     def set_nombre(self,nombre):
         self.nombre = nombre
 
+
 class TipoProducto(models.Model):
     nombre = models.CharField(max_length=25)
 
@@ -88,7 +89,7 @@ class Producto(models.Model):
     def get_stock(self):
         return self.stock
 
-    def hay_stock(self):
+    def hay_stock_s(self):
         if self.tipo.es_libro_fisico and self.stock==0:
             return False
         else:

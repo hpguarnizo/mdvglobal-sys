@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{contenido.get_nombre}}</title>
-</head>
-<body>
+{% extends 'contenido.html'%}
+
+{%block contenido %}
 <h1>{{contenido.get_nombre}}</h1>
 <h3>{{contenido.get_tipo}}</h3>
 <h3>{{contenido.get_categoria}}</h3>
@@ -22,3 +18,7 @@
 {%endif%}
 </body>
 </html>
+{%endblock%}
+
+{%block javascript%}
+{%endblock%}

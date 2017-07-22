@@ -11,25 +11,58 @@ from tienda.models import Producto, TipoProducto, CategoriaProducto, Compra, Det
 
 def BuscarProductos(request):
     query = request.GET.get("q", "")
-    tipo=request.GET.get("tipo", "")
-    categoria=request.GET.get("categoria", "")
-    if query and tipo:
-        qset = (
-            Q(nombre__icontains=query) |
-            Q(tipo__nombre__icontains=query) |
-            Q(tipo__nombre__exact=tipo) |
-            Q(categoria__nombre__icontains=query)
-        )
-    elif query:
-        qset = (
-            Q(nombre__icontains=query) |
-            Q(tipo__nombre__icontains=query) |
-            Q(categoria__nombre__icontains=query)
-        )
-    results = Producto.objects.filter(qset).distinct()
-    return render(request, 'tienda_productos_buscar.html',
+    tipo = request.GET.get("tipo", "")
+    categoria = request.GET.get("categoria", "")
+    comienzo = request.GET.get("comienzo", "")
+    if comienzo and int(comienzo) > 0:
+        comienzo = int(comienzo)
+    else:
+        comienzo = 0
+    if query or tipo or categoria:
+        if query and tipo and categoria:
+            qset = (
+                Q(nombre__icontains=query) &
+                Q(tipo__nombre__exact=tipo) &
+                Q(categoria__nombre__exact=categoria)
+            )
+        elif query and tipo:
+            qset = (
+                Q(nombre__icontains=query) &
+                Q(tipo__nombre__exact=tipo)
+            )
+        elif query and categoria:
+            qset = (
+                Q(nombre__icontains=query) &
+                Q(categoria__nombre__exact=categoria)
+            )
+        elif categoria and tipo:
+            qset = (
+                Q(tipo__nombre__exact=tipo) &
+                Q(categoria__nombre__exact=categoria)
+            )
+        elif query:
+            qset = (
+                Q(nombre__icontains=query) |
+                Q(tipo__nombre__icontains=tipo) |
+                Q(categoria__nombre__icontains=categoria)
+            )
+        elif tipo:
+            qset = (
+                Q(tipo__nombre__exact=tipo)
+            )
+        elif categoria:
+            qset = (
+                Q(categoria__nombre__exact=categoria)
+            )
+    else:
+        return HttpResponseRedirect(reverse('tienda_productos'))
+
+    productos = Producto.objects.filter(qset).distinct()
+    results = productos[comienzo:comienzo+10]
+    return render(request, 'tienda_producto_buscar.html',
                   {'tipos': TipoProducto.objects.all(), 'categorias': CategoriaProducto.objects.all(),
-                   'productos': results})
+                   'productos': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo,
+                   "cantidad":len(productos)})
 
 def TodosProductos(request):
     comienzo = request.GET.get("comienzo","")

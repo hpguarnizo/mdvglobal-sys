@@ -110,7 +110,8 @@ def ContenidoMostrar(request):
         results = Contenido.objects.filter(qset).distinct()[comienzo:comienzo+10]
         return render(request, 'contenido.html',
                       {'tipos': TipoContenido.objects.all(), 'categorias': CategoriaContenido.objects.all(),
-                       'contenido': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo})
+                       'contenido': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo,
+                       "compra":get_compra(request)})
 
     return render(request,'contenido.html',{'tipos':TipoContenido.objects.all(),
                                             'categorias':CategoriaContenido.objects.all(),
@@ -120,4 +121,5 @@ def ContenidoMostrar(request):
 
 def ContenidoVerMas(request, contenido_id):
     contenido = get_object_or_404(Contenido, id=contenido_id)
-    return render(request,'contenido_ver_mas.html',{'contenido':contenido,'permitido':contenido.puede_verlo(request.user)})
+    return render(request,'contenido_ver_mas.html',{'contenido':contenido,'permitido':contenido.puede_verlo(request.user),
+                                                    "compra":get_compra(request)})
