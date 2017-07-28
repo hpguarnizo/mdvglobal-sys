@@ -11,6 +11,9 @@ class CategoriaContenido(models.Model):
     def __str__(self):
         return self.nombre
 
+    def get_nombre(self):
+        return self.nombre
+
     def get_tipos(self):
         lista = []
         cant_total = 0
@@ -29,6 +32,9 @@ class TipoContenido(models.Model):
     nombre = models.CharField(max_length=256)
 
     def __str__(self):
+        return self.nombre
+
+    def get_nombre(self):
         return self.nombre
 
     def es_audio(self):

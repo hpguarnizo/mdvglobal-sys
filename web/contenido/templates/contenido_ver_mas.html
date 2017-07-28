@@ -1,24 +1,43 @@
-{% extends 'contenido.html'%}
+{% extends 'index.html' %}
+{% load staticfiles %}
+    {% block contenido %}
 
-{%block contenido %}
-<h1>{{contenido.get_nombre}}</h1>
-<h3>{{contenido.get_tipo}}</h3>
-<h3>{{contenido.get_categoria}}</h3>
-{%if permitido%}
-    {% if contenido.get_tipo.es_audio%}
-    <audio src="{{contenido.get_archivo}}"></audio>
-    {% elif contenido.get_tipo.es_documento%}
-    <a href="{{contenido.get_archivo}}" target="_blank">Ver Docuemento</a>
-    {%else%}
-    <video src="{{contenido.get_archivo}}"></video>
-    {%endif%}
-    <p>{{contenido.get_descripcion}}</p>
-{%else%}
-<a href="{%url 'pay_plans'%}"><p>Para ver el contenido debe actualizar su plan</p></a>
+        <div class="bg-color-light" style="background-color: #f7f7f7 !important;">
+                <div class="container content-sm">
+                    <div class="row">
+                        <div class="col-md-6 md-margin-bottom-30">
+                        {%if permitido%}
+                        {% if contenido.get_tipo.es_audio%}
+                        <audio src="{{contenido.get_archivo}}"></audio>
+                        {% elif contenido.get_tipo.es_documento%}
+                        <a href="{{contenido.get_archivo}}" target="_blank">Ver Docuemento</a>
+                        {%else%}
+                        <video src="{{contenido.get_archivo}}"></video>
+                        {%endif%}
+                        <p>{{contenido.get_descripcion}}</p>
+                        {%else%}
+                            <a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}"><img width="350" height="550" class="img-responsive" src="{% static 'unify-ecommerce/img/blog/16.jpg'%}" alt=""></a>
+
+                            <a href="{%url 'pay_plans'%}"><h2 style="color:#000;">Para ver el contenido debe actualizar su plan</h2></a>
 {%endif%}
-</body>
-</html>
-{%endblock%}
 
-{%block javascript%}
-{%endblock%}
+                        </div>
+                        <div class="col-md-6">
+                            <br><br><br>
+                            <div class="headline-left margin-bottom-30">
+                                <h2 class="headline-brd" style=" text-transform: uppercase; color: #555;text-shadow: none; font-weight: normal; font-family: "Open Sans", Arial;">{{contenido.get_nombre}}
+</h2>
+                                <p style="font-size: 1.4rem;">{{contenido.get_descripcion}}</p>
+                            </div>
+
+                            
+                            <ul class="list-unstyled lists-v2 margin-bottom-30" style="font-size: 1.6rem;">
+                                <li style="color: #888;"><i class="fa fa-check"></i> {{contenido.get_categoria}} </li>
+                                <li style="color: #888;"><i class="fa fa-check"></i> {{contenido.get_tipo}} </li>
+
+                            </ul>
+                        </div><!--/end row-->
+                    </div>
+                </div>
+            </div>
+    {% endblock %}

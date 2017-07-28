@@ -29,7 +29,11 @@
  										{%for tipo in tipos%}
                                         <li>
  											<label class="checkbox">
- 												<input type="checkbox" class="btn-tipo" name="checkbox" {%ifequal tipo_q tipo%}checked{%endifequal%} />
+                                                {%ifequal tipo.get_nombre tipo_q %}
+ 												<input type="checkbox" class="btn-r-tipo" id="{{tipo}}" name="checkbox" checked/>
+                                                {%else%}
+ 												<input type="checkbox" class="btn-tipo" id="{{tipo}}" name="checkbox"/>
+                                                {%endifequal%}
  												<i></i>
  												{{tipo}}
  											</label>
@@ -57,7 +61,11 @@
  										{%for cat in categorias %}
                                         <li>
  											<label class="checkbox">
- 												<input type="checkbox" class="btn-tipo" name="checkbox" {%ifequal categoria_q cat%}checked{%endifequal%}/>
+                                                {%ifequal cat.get_nombre categoria_q %}
+ 												<input type="checkbox" id="{{cat}}" class="btn-r-categoria" name="checkbox" checked/>
+                                                {%else%}
+ 												<input type="checkbox" id="{{cat}}" class="btn-categoria" name="checkbox" />
+                                                {%endifequal%}
  												<i></i>
  												{{cat}}
  											</label>
@@ -73,7 +81,7 @@
  				<div class="col-md-9">
  					<div class="row margin-bottom-5">
  						<div class="col-sm-4 result-category">
- 							<h2>{{q}}</h2>
+ 							<h2>{%if q%}{{q}}{%else%}...{%endif%}</h2>
  							<small class="shop-bg-red badge-results">{{cantidad}} Resultados</small>
  						</div>
  						<div class="col-sm-8">
@@ -81,14 +89,12 @@
  								<li class="sort-list-btn">
  									<h3>Ordenar Por :</h3>
  									<div class="btn-group">
- 										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
- 											Popularidad <span class="caret"></span>
- 										</button>
- 										<ul class="dropdown-menu" role="menu">
- 											<li><a href="#">Descuento</a></li>
- 											<li><a href="#">Mayor Precio</a></li>
- 											<li><a href="#">Menor Precio</a></li>
- 										</ul>
+										<select name="orden_select" id="id_orden_select" class="form-control">
+											<option value="1" id="1">Popularidad</option>
+											<option value="2" id="2">Mayor Precio</option>
+											<option value="3" id="3">Menor Precio</option>
+											<option value="4" id="4">Descuento</option>
+										</select>
  									</div>
  								</li>
  							</ul>
@@ -97,6 +103,9 @@
 
  					<div class="filter-results">
  						<div class="row illustration-v2 margin-bottom-30">
+							{% if not productos%}
+							<h3 class="text-center">No se han encontrado resultados</h3>
+							{%endif%}
  							{%for producto in productos%}
                             {% ifequal forloop.counter 1 %}
                                 <div class="row illustration-v2 margin-bottom-30">
@@ -110,7 +119,7 @@
 
                             <div class="col-md-4">
  								<div class="product-img product-img-brd">
- 									<a href="#"><img class="full-width img-responsive" src="{% static 'unify-ecommerce/img/blog/16.jpg'%}" alt=""></a>
+ 									<a href="#"><img class="full-width img-responsive" src="{% static 'unify-ecommerce/img/blog/14.jpg'%}" alt=""></a>
  									<a class="product-review" href="{% url 'producto_ver_mas' producto_id=producto.id %}">Ver mas</a>
  									<a class="add-to-cart" href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
  									{% if not producto.hay_stock_s %}
@@ -121,7 +130,7 @@
  								</div>
  								<div class="product-description product-description-brd margin-bottom-30">
  									<div class="overflow-h margin-bottom-5">
- 										<div class="pull-left">
+ 										<div class="pull-left" style="max-width:171px;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;">
  											<h4 class="title-price"><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
  											<span class="gender text-uppercase">{{producto.get_tipo}}</span>
  											<span class="gender">{{producto.get_categoria}}</span>
@@ -154,12 +163,15 @@
                             {% ifequal productos|length 5%}</div>{%endifequal%}
                             {% ifequal productos|length 7%}</div>{%endifequal%}
                             {% ifequal productos|length 8%}</div>{%endifequal%}
-                    <div class="text-center">
+                    {%if productos%}
+					<div class="text-center">
  						<ul class="pagination pagination-v2">
- 							<li><a href="#" class="btn-atras"><i class="fa fa-angle-left"></i></a></li>
+ 							<li><a href="#" {%if comienzo%}class="btn-atras"{%endif%}><i class="fa fa-angle-left"></i></a></li>
+ 							<li class="active"><a href="">{{pagina}}</a></li>
  							<li><a href="#" class="btn-sig"><i class="fa fa-angle-right"></i></a></li>
  						</ul>
  					</div><!--/end pagination-->
+					{%endif%}
  				</div>
  			</div><!--/end row-->
  		</div><!--/end container-->
@@ -198,16 +210,22 @@ let formulario = document.getElementById("form");
         formulario.submit();
     });
     $(".btn-sig").click(function(){
-        let comienzo = parseInt($("#comienzo_id").val()) + parseInt(10);
+        let comienzo = parseInt($("#comienzo_id").val()) + parseInt(9);
         $("#comienzo_id").val(comienzo);
         formulario.submit();
     });
     $(".btn-atras").click(function(){
-        let comienzo = parseInt($("#comienzo_id").val()) - parseInt(10);
+        let comienzo = parseInt($("#comienzo_id").val()) - parseInt(9);
         $("#comienzo_id").val(comienzo);
         formulario.submit();
     });
 
+	$("#id_orden_select option[value={{orden}}]").attr("selected",true);
+
+	$("#id_orden_select").on("change",function(){
+		$('input[name=orden]').val($(this).val());
+		formulario.submit();
+	});
 });
 </script>
 {%endblock%}

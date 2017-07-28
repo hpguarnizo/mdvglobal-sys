@@ -1,5 +1,7 @@
 {% extends 'home_index.html' %}
 
+{%load staticfiles%}
+
 {%block head%}
  {{block.super}}
    <link href="{% static 'inspinia2/css/plugins/dataTables/datatables.min.css' %}" rel="stylesheet">
@@ -36,19 +38,19 @@ active
                         </tr>
                         </thead>
                         <tbody>
-                        {%for entrada in entradas %}
+                        {%for entrada in evento.get_entradas %}
                         <tr class="gradeX">
                             <td><input type="radio" id="{{evento.id}}" class="entrada"
                                        {%if entrada.get_estado.es_validada%}checked="checked"{%endif%}></td>
-                            <td>{{evento.get_codigo}}</td>
-                            {% if evento.get_user %}
-                            <td>{{evento.get_user.get_full_name}}</td>
-                            <td>{{evento.get_user.get_email}}</td>
-                            <td>{{evento.get_user.get_provincia}},{{evento.get_user.get_provincia.country}}</td>
+                            <td>{{entrada.get_codigo}}</td>
+                            {% if entrada.get_user %}
+                            <td>{{entrada.get_user.get_full_name}}</td>
+                            <td>{{entrada.get_user.get_email}}</td>
+                            <td>{{entrada.get_user.get_provincia}},{{evento.get_user.get_provincia.country}}</td>
                             {%else%}
-                            <td>{{evento.get_nombre}}</td>
-                            <td>{{evento.get_email}}</td>
-                            <td>{{evento.get_provincia}},{{evento.get_provincia.country}}</td>
+                            <td>{{entrada.get_nombre}}</td>
+                            <td>{{entrada.get_email}}</td>
+                            <td>{{entrada.get_provincia}},{{evento.get_provincia.country}}</td>
                             {%endif%}
                             <td>{{evento.get_estado}}</td>
                         </tr>
@@ -105,8 +107,8 @@ active
             $(".entrada").click(function(){
             	let id = this.attr("id");
             	let request = $.ajax({
-            		type: "GET"
-            		url: "{% url asistir_entrada %}"
+            		type: "GET",
+            		url: "{% url 'asistir_entrada' %}",
             		data:{
             			"entrada_id":id,
             		},

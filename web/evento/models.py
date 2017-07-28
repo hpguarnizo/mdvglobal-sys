@@ -146,6 +146,9 @@ class Evento(models.Model):
     def set_estado(self,estado):
         self.estado = estado
 
+    def get_entradas(self):
+        return Entrada.objects.filter(evento=self.id)
+
     def get_categoria(self):
         return self.categoria
 
@@ -225,6 +228,9 @@ class EstadoEntrada(models.Model):
     def es_validada(self):
         return False
 
+    def asistir(self,entrada):
+        pass
+
 class SinPagar(EstadoEntrada):
 
     def pagar(self,entrada):
@@ -240,6 +246,8 @@ class SinPagar(EstadoEntrada):
     def es_validada(self):
         return False
 
+    def asistir(self, entrada):
+        pass
 
 class Pagada(EstadoEntrada):
     def pagar(self, entrada):
@@ -254,6 +262,9 @@ class Pagada(EstadoEntrada):
     def es_validada(self):
         return False
 
+    def asistir(self, entrada):
+        entrada.set_Estado(Validada.objects.all().first())
+        entrada.save()
 
 class Validada(EstadoEntrada):
     def pagar(self, entrada):
@@ -268,6 +279,8 @@ class Validada(EstadoEntrada):
     def es_sin_pagar(self):
         return False
 
+    def asistir(self, entrada):
+        pass
 
 class Entrada(models.Model):
     user = models.ForeignKey(MyUser,null=True,blank=True)
@@ -319,3 +332,6 @@ class Entrada(models.Model):
 
     def pagar(self,entrada):
         self.get_estado().pagar(entrada)
+
+    def asistir(self):
+        self.get_estado().asistir(self)

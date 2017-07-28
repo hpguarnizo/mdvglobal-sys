@@ -106,12 +106,12 @@ def ContenidoMostrar(request):
             qset = (
                 Q(categoria__nombre__exact=categoria)
             )
-
-        results = Contenido.objects.filter(qset).distinct()[comienzo:comienzo+10]
+        contenidos = Contenido.objects.filter(qset).distinct()
+        results = contenidos[comienzo:comienzo+10]
         return render(request, 'contenido.html',
                       {'tipos': TipoContenido.objects.all(), 'categorias': CategoriaContenido.objects.all(),
                        'contenido': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo,
-                       "compra":get_compra(request)})
+                       "compra":get_compra(request),"cantidad":len(contenidos)})
 
     return render(request,'contenido.html',{'tipos':TipoContenido.objects.all(),
                                             'categorias':CategoriaContenido.objects.all(),

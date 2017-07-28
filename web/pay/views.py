@@ -95,6 +95,7 @@ def buy_my_entrada(request,entrada_id):
 
 def buy_my_productos(request,compra_id):
     compra = get_object_or_404(Compra,id=compra_id)
+
     code = None
     description = None
     if request.POST.get('token',''):
@@ -117,7 +118,7 @@ def buy_my_productos(request,compra_id):
         if payment['status'] == 201:
             if payment['response']['status'] == 'approved':
                 compra.pagar()
-                return HttpResponseRedirect(reverse('evento_comprado',kwargs={"compra_id":compra.id}))
+                return HttpResponseRedirect(reverse('tienda_envio',kwargs={"compra_id":compra.id}))
             else:
                 description = payment['response']['status']
                 code = 201

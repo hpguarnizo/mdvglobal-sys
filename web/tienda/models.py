@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 
 from cities_light.models import City, Region
+from django.contrib.sites.models import Site
 from django.db import models
 
 # Create your models here.
@@ -9,12 +10,16 @@ from model_utils.managers import InheritanceManager
 from s3direct.fields import S3DirectField
 
 from accounts.models import MyUser, _generate_code
+from tienda.emails import email_envio
 
 
 class CategoriaProducto(models.Model):
     nombre = models.CharField(max_length=256)
 
     def __str__(self):
+        return self.nombre
+
+    def get_nombre(self):
         return self.nombre
 
     def get_tipos(self):
@@ -37,6 +42,9 @@ class TipoProducto(models.Model):
     def __str__(self):
         return self.nombre
 
+    def get_nombre(self):
+        return self.nombre
+
     def mas_vendidos(self):
         return Producto.objects.filter(tipo=self.id).order_by('cantidad_vendidos')[:3]
 
@@ -49,7 +57,7 @@ class Producto(models.Model):
     precio = models.FloatField()
     categoria = models.ForeignKey(CategoriaProducto)
     tipo = models.ForeignKey(TipoProducto)
-    descuento = models.FloatField()
+    descuento = models.FloatField(null=True,blank=True)
     archivo = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
     imagen = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
     imagen2 = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
@@ -59,8 +67,29 @@ class Producto(models.Model):
     cantidad_vendidos=models.IntegerField(default=0)
     fecha = models.DateField(auto_now_add=True)
 
-    def get_imagen2(self):
+    def __str__(self):
+        return "%s-%s" %(self.nombre,self.tipo)
+
+    def get_imagen(self):
         return self.imagen2
+
+    def get_imagen2_url(self):
+        if self.imagen2:
+            return self.imagen2
+        else:
+            return "/static/unify-ecommerce/img/blog/31.jpg"
+
+    def get_imagen3_url(self):
+        if self.imagen3:
+            return self.imagen3
+        else:
+            return "/static/unify-ecommerce/img/blog/29.jpg"
+
+    def get_imagen_url(self):
+        if self.imagen:
+            return self.imagen
+        else:
+            return "/static/unify-ecommerce/img/blog/25.jpg"
 
     def get_imagen3(self):
         return self.imagen3
@@ -112,18 +141,24 @@ class Producto(models.Model):
         self.precio = producto.precio
         self.categoria= producto.categoria
         self.imagen = producto.imagen
+        self.imagen2 = producto.imagen2
+        self.imagen3 = producto.imagen3
+        self.descuento = producto.descuento
 
     def eliminar(self):
         self.eliminado=True
 
 
     def get_descuento(self):
-        self.descuento
+        return self.descuento
+
+    def get_cantidad_vendidos(self):
+        return self.cantidad_vendidos
 
 
     def get_precio_descuento(self):
-        if self.descuento>0:
-            return self.precio*100/self.descuento
+        if self.descuento>0 and self.descuento<100:
+            return round(self.precio*(1-(self.descuento/100)),2)
         else:
             return self.precio
 
@@ -147,6 +182,12 @@ class EstadoCompra(models.Model):
     def pagar(self,compra):
         pass
 
+    def enviar(self,compra,codigo,url):
+        pass
+
+    def __str__(self):
+        return self.nombre
+
 
 class Incompleta(EstadoCompra):
     def es_incompleta(self):
@@ -165,6 +206,9 @@ class Incompleta(EstadoCompra):
         compra.set_estado(Pagado.objects.all().first())
         compra.save()
 
+    def envio(self,compra,codigo,url):
+        pass
+
 
 class Pagado(EstadoCompra):
     def es_pagado(self):
@@ -181,6 +225,12 @@ class Pagado(EstadoCompra):
 
     def pagar(self,compra):
         pass
+
+    def enviar(self,compra,codigo,url):
+        compra.set_codigo(codigo)
+        compra.set_url_envio(url)
+        compra.set_estado(Enviado.objects.all().first())
+        compra.save()
 
 
 class Enviado(EstadoCompra):
@@ -199,6 +249,10 @@ class Enviado(EstadoCompra):
     def pagar(self,compra):
         pass
 
+    def enviar(self,compra,codigo,url):
+        compra.set_codigo(codigo)
+        compra.set_url_envio(url)
+        compra.save()
 
 
 class Compra(models.Model):
@@ -209,9 +263,56 @@ class Compra(models.Model):
     provincia = models.ForeignKey(Region,null=True,blank=True)
     ciudad = models.ForeignKey(City,null=True,blank=True)
     user = models.ForeignKey(MyUser,null=True,blank=True)
-    total = models.FloatField(default=0)
+    total = models.FloatField(null=True,blank=True)
     estado = models.ForeignKey(EstadoCompra,default=1)
+    fecha=models.DateField(auto_now_add=True)
+    codigo_seguimiento = models.CharField(max_length=256,null=True,blank=True)
+    url_envio = models.URLField(null=True,blank=True)
 
+    def get_user(self):
+        return self.user
+
+    def __str__(self):
+        return "%i-%s"%(self.id,self.get_nombre())
+
+    def enviar_email_envio(self,request):
+        email_envio(request,self)
+
+    def get_url_envio(self):
+        return self.url_envio
+
+    def get_codigo(self):
+        return self.codigo_seguimiento
+
+    def set_codigo(self,codigo):
+        self.codigo_seguimiento = codigo
+
+    def set_url_envio(self,url):
+        self.url_envio = url
+
+    def get_nombre(self):
+        if self.user:
+            return self.user.get_full_name()
+        else:
+           return self.nombre
+
+    def get_email(self):
+        if self.user:
+            return self.user.get_email()
+        else:
+            return self.email
+
+    def get_provincia(self):
+        if self.user:
+            return self.user.get_provincia()
+        else:
+            return self.provincia
+
+    def get_ciudad(self):
+        return self.ciudad
+
+    def get_direccion(self):
+        return self.direccion
 
     def get_estado(self):
         return EstadoCompra.objects.get_subclass(id=self.estado.id)
@@ -220,37 +321,50 @@ class Compra(models.Model):
         return DetalleCompra.objects.filter(compra=self)
 
     def get_total(self):
-        return self.total
+        if self.total:
+            return self.total
+        else:
+            total= 0
+            for detalle in self.get_detalle():
+                total = total + detalle.get_parcial()
+            return total
 
     def set_token(self):
         self.token = _generate_code()
 
+    def set_user(self,user):
+        self.user = user
+
+    def set_direccion(self,direccion):
+        self.direccion = direccion
+
+    def get_token(self):
+        return self.token
+
     def agregar_producto(self,producto,cantidad):
         if DetalleCompra.objects.filter(compra=self,producto=producto):
             detalle = DetalleCompra.objects.get(compra=self,producto=producto)
-            self.total = self.total + producto.get_precio()
             detalle.agregar()
         else:
             if producto.get_tipo().es_libro_fisico() and cantidad>0:
                 detalle =DetalleCompra(producto=producto,precio=producto.get_precio(),compra=self,cantidad=cantidad)
-                self.total = self.total + producto.get_precio() * cantidad
             else:
                 detalle =DetalleCompra(producto=producto,precio=producto.get_precio(),compra=self)
-                self.total = self.total + producto.get_precio()
 
         detalle.save()
         self.save()
 
     def set_total(self,total):
         self.total = total
-        if self.total<0:
-            self.total=0
 
     def pagar(self):
         self.get_estado().pagar(self)
 
     def set_estado(self,estado):
         self.estado = estado
+
+    def enviar(self,codigo,url):
+        self.get_estado().enviar(self,codigo,url)
 
 class DetalleCompra(models.Model):
     producto = models.ForeignKey(Producto)
@@ -265,22 +379,18 @@ class DetalleCompra(models.Model):
         return self.cantidad
 
     def get_precio(self):
-        return self.cantidad
+        return self.precio
 
     def get_producto(self):
         return self.producto
 
     def get_parcial(self):
-        return self.producto.get_precio()*self.cantidad
+        return self.producto.get_precio_descuento()*self.cantidad
 
     def agregar(self):
         if self.producto.get_tipo().es_libro_fisico():
             self.cantidad = self.cantidad +1
-            self.compra.set_total(self.compra.get_total()+self.producto.get_precio())
-            self.compra.save()
 
     def quitar(self):
         if self.cantidad>1:
             self.cantidad = self.cantidad-1
-            self.compra.set_total(self.compra.get_total() - self.producto.get_precio())
-            self.compra.save()

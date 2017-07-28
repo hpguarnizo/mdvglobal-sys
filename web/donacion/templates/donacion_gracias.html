@@ -1,13 +1,16 @@
 {% extends 'index.html' %}
 {% load staticfiles %}
     {% block contenido %}
-    		<div class="container content">
+<div class="promo-bg-pattern-v1-dark promo-bg-fixed content-xlg parallaxBg">
 	<div class="row">
 				<div class="col-md-12 text-center">
 					<div class="" >
-						<h1 style="font-size: 2.4rem; margin-top: 50px !important;">¡Gracias!</h1>
-						<p style="font-size: 1.8rem; margin-bottom: 50px; margin-top: 80px;"> {{donacion.get_nombre}} donaste {{donacion.get_monto}} y estamos muy agradecidos por tu colaboracion.
-						<a class="btn-u btn-bordered" href="{% url 'index' %}" style="margin-bottom: 150px;">Volver</a>
+						<h1 >¡Gracias!</h1>
+						<p>Muchas gracias {{donacion.get_nombre}} donaste ${{donacion.get_monto}}.</p><p> Gracias por tu colaboracion.</p>
+							<a href="{% url 'index' %}">
+								<button class="btn-u btn-brd btn-brd-width-2 btn-brd-hover
+								 btn-u-light btn-u-block rounded-4x margin-right-10 "  style="margin-bottom: 150px;">Volver</button>
+							</a>
 					</div>
 				</div>
 			</div>

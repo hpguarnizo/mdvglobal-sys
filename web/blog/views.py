@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 
 # Create your views here.
@@ -61,14 +62,14 @@ def VerifyEmail(request):
 
     # Handle other error responses from API
     if len(code_validator) != 1:
-        return render(request,'blog_not_confirmed_email.html')
+        return Http404
 
-    suscriptor = code_validator.first().susciptor.activate_email()
+    suscriptor = code_validator.first().subscriber.activate_email()
+    email_welcome_blog(request,suscriptor)
 
     code = CodeValidatorBlog.objects.filter(subscriber=suscriptor)
     code.delete()
 
-    email_welcome_blog(suscriptor)
 
     return render(request,'blog_confirmed_email.html')
 

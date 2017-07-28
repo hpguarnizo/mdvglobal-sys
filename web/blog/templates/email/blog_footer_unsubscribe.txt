@@ -1,3 +1,0 @@
-Nuestro equipo de Codipay te ha enviado este correo electrónico.
-Si no quieres recibir más correos de nuestro equipo, puedes <a href="https://www.codipay.co{% url 'blog_unsubscribe' %}?cod={{cod}}">Cancelar la Suscripción</a>
-Codipay, Cayetano Silva 170 Código Postal 5003 Córdoba, Argentina.

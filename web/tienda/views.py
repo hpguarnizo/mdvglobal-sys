@@ -1,16 +1,18 @@
+from cities_light.models import Country
+from django.contrib.auth import authenticate, login
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
-
-# Create your views here.
 from django.urls import reverse
-
-from tienda.forms import NuevoProducto, NuevaCategoria, EditarProducto
+from home.forms import LoginForm
+from tienda.emails import email_productos
+from tienda.forms import NuevoProducto, NuevaCategoria, EditarProducto, CompraForm, CompletarCompra, EnviarCompraForm
 from tienda.models import Producto, TipoProducto, CategoriaProducto, Compra, DetalleCompra
 
 
 def BuscarProductos(request):
     query = request.GET.get("q", "")
+    orden = request.GET.get("orden", "1")
     tipo = request.GET.get("tipo", "")
     categoria = request.GET.get("categoria", "")
     comienzo = request.GET.get("comienzo", "")
@@ -18,6 +20,14 @@ def BuscarProductos(request):
         comienzo = int(comienzo)
     else:
         comienzo = 0
+
+    if orden=="":
+        orden = 1
+    else:
+        orden = int(orden)
+        if orden < 1 or orden > 4:
+            orden=1
+
     if query or tipo or categoria:
         if query and tipo and categoria:
             qset = (
@@ -57,12 +67,22 @@ def BuscarProductos(request):
     else:
         return HttpResponseRedirect(reverse('tienda_productos'))
 
-    productos = Producto.objects.filter(qset).distinct()
-    results = productos[comienzo:comienzo+10]
+    orden_dic={
+        1:"-cantidad_vendidos",
+        2:"-precio",
+        3:"precio",
+        4:"-descuento",
+    }
+    productos = Producto.objects.order_by(orden_dic[orden]).filter(qset).distinct()
+    results = productos[comienzo:comienzo+9]
+    if len(results)==0:
+        comienzo = comienzo - 9
+        results = productos[comienzo:comienzo + 9]
+    pagina = int((comienzo+9)/9)
     return render(request, 'tienda_producto_buscar.html',
                   {'tipos': TipoProducto.objects.all(), 'categorias': CategoriaProducto.objects.all(),
                    'productos': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo,
-                   "cantidad":len(productos)})
+                   "cantidad":len(productos), "compra":get_compra(request), "pagina":pagina,"orden":orden})
 
 def TodosProductos(request):
     comienzo = request.GET.get("comienzo","")
@@ -72,11 +92,11 @@ def TodosProductos(request):
         productos = Producto.objects.all().order_by("-fecha")[:8]
 
 
-    return render(request,'tienda_productos.html',{'tipos':TipoProducto.objects.all(),'categorias':CategoriaProducto.objects.all(),
+    return render(request,'tienda_productos.html',{'tipos':TipoProducto.objects.all().order_by("nombre"),'categorias':CategoriaProducto.objects.all(),
                                                   'productos': productos,
-                                                   'mayores_ofertas':Producto.objects.all().order_by("descuento")[:3],
-                                                   'mas_baratos':Producto.objects.all().order_by("-precio")[:3],
-                                                   'mas_vendidos':Producto.objects.all().order_by("cantidad_vendidos")[:3],
+                                                   'mayores_ofertas':Producto.objects.all().order_by("-descuento")[:3],
+                                                   'mas_buscados':Producto.objects.all().order_by("-precio")[:3],
+                                                   'mas_vendidos':Producto.objects.all().order_by("-cantidad_vendidos")[:3],
                                                    'compra':get_compra(request)})
 
 
@@ -106,7 +126,8 @@ def ProductoEditar(request):
     else:
         form = EditarProducto({'nombre':producto.get_nombre(),'descripcion':producto.get_descripcion(),
                                'categoria':producto.get_categoria().id,'precio':producto.get_precio(),'stock':producto.get_stock(),
-                               'imagen':producto.get_imagen()})
+                               'imagen':producto.get_imagen(),'imagen2':producto.get_imagen2(),'imagen3':producto.get_imagen3(),
+                               'descuento':producto.get_descuento()})
     return render(request,'tienda_productos_editar.html',{'form':form,'producto':producto})
 
 
@@ -139,11 +160,59 @@ def CategoriaEditar(request):
 
 
 def ListaVentas(request):
-    return render(request,'tienda_ventas.html')
+    comienzo = request.GET.get("comienzo","")
+    query = request.GET.get("q","")
+    if comienzo and int(comienzo) > 0:
+        comienzo = int(comienzo)
+    else:
+        comienzo = 0
+    if query:
+        qset = (
+            Q(nombre__icontains=query) |
+            Q(email__icontains=query) |
+            Q(user__email__icontains=query) |
+            Q(user__provincia__name__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query) |
+            Q(provincia__name__icontains=query) |
+            Q(provincia__country__name__icontains=query) |
+            Q(ciudad__name__icontains=query) |
+            Q(estado__nombre__icontains=query)
+        )
+        compras = Compra.objects.filter(qset).order_by("-fecha").distinct()[comienzo:comienzo+20]
+        if len(compras)==0:
+            comienzo = comienzo-20
+            compras = Compra.objects.filter(qset).order_by("-fecha").distinct()[comienzo:comienzo + 20]
+
+    else:
+        compras = Compra.objects.all()[comienzo:comienzo+20]
+        if len(compras)==0:
+            comienzo = comienzo-20
+            compras = Compra.objects.all()[comienzo:comienzo + 20]
+
+    return render(request,'tienda_ventas.html',{"ventas":compras,"q":query,"comienzo":comienzo})
+
+
+def VerDetalle(request,compra_id):
+    compra = get_object_or_404(Compra,id=compra_id)
+    return render(request,'tienda_detalle.html',{"compra":compra})
+
+
+def EnviarCompra(request,compra_id):
+    compra = get_object_or_404(Compra,id=compra_id)
+    if request.method=="POST":
+        form = EnviarCompraForm(request.POST)
+        if form.is_valid():
+            compra.enviar(form.cleaned_data["codigo"],form.cleaned_data["url"])
+            compra.enviar_email_envio(request)
+            return HttpResponseRedirect(reverse('tienda_ventas'))
+    else:
+        form = EnviarCompraForm()
+    return render(request,'tienda_enviar_compra.html',{"form":form,"compra":compra})
 
 
 def VentasEnvio(request):
-    return render(request,'tienda_ventas_enviar.html')
+    return render(request,'tienda_ventas_enviar.html',{"ventas":Compra.objects.filter(estado=2)})
 
 
 def ProductoVerMas(request,producto_id):
@@ -152,7 +221,7 @@ def ProductoVerMas(request,producto_id):
     tipos = TipoProducto.objects.all()
     return render(request,'tienda_ver_mas.html',{"producto":producto,"tipos":tipos,
                                                  "productos_que_gustan":Producto.objects.all().order_by("?")[:6],
-                                                 "sin_stock":sin_stock})
+                                                 "sin_stock":sin_stock,"compra":get_compra(request)})
 
 
 def AgregarCarrito(request,producto_id):
@@ -179,6 +248,70 @@ def AgregarCarrito(request,producto_id):
 
     else:
         return HttpResponseRedirect(reverse('tienda_login_producto',kwargs={"producto_id":producto_id}))
+
+
+def TiendaLogin(request,producto_id):
+    producto = get_object_or_404(Producto,id=producto_id)
+
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            user = authenticate(username=email, password=password)
+
+            if user is not None and user.verify_email:
+                if not user.is_active:
+                    user.set_is_active(True)
+                    user.save()
+                login(request, user)
+
+                return HttpResponseRedirect(reverse('tienda_agregar_carrito', kwargs={'producto_id':producto_id}))
+            else:
+                # Return an 'invalid login' error message.
+                form.add_error("email", "El email o password son invalidos")
+    else:
+        form = LoginForm()
+    return render(request, 'tienda_registro.html', {'producto': producto, 'form': form})
+
+
+def TiendaCompletarPerfil(request,producto_id):
+    user = request.user
+    if request.method == "POST":
+        form = CompletarCompra(request.POST)
+        if form.is_valid():
+            user.set_provincia(form.cleaned_data["provincia"])
+            user.set_email(form.cleaned_data["email"])
+            compra= form.save(commit=False)
+            compra.set_user(user)
+            compra.set_direccion(form.cleaned_data["direccion"])
+            return HttpResponseRedirect(reverse('tienda_agregar_carrito', kwargs={"producto_id": producto_id}))
+    else:
+        form = CompletarCompra()
+    return render(request, 'tienda_perfil_completar.html', {'form': form})
+
+
+
+def TiendaSinRegistro(request,producto_id):
+
+    if request.method=="POST":
+        form = CompraForm(request.POST)
+        if form.is_valid():
+            if not Compra.objects.filter(email=form.cleaned_data["email"],estado=1).exists():
+                compra = form.save()
+                compra.set_token()
+                compra.save()
+            else :
+                compra= Compra.objects.get(email=form.cleaned_data["email"],estado=1)
+            request.session["token_compra"] = compra.get_token()
+
+            return HttpResponseRedirect(reverse('tienda_agregar_carrito', kwargs={"producto_id": producto_id}))
+    else:
+        form = CompraForm()
+    return render(request,'tienda_sin_registro.html',{"form":form,'countrys':Country.objects.all()})
+
+
 
 def Carrito(request):
     compra = get_compra(request)
@@ -219,7 +352,7 @@ def MasDetalle(request,detalle_id):
 def EnvioProductos(request,compra_id):
     compra = get_object_or_404(Compra,id=compra_id)
     if not compra.get_estado().es_incompleta():
-
+        email_productos(request,compra)
         return render(request,'tienda_envio.html',{'compra':compra})
     else:
         raise Http404
@@ -227,11 +360,11 @@ def EnvioProductos(request,compra_id):
 
 def get_compra(request):
     user = request.user
-    if user.is_authenticated and Compra.objects.filter(user=user,estado=1).exists():
-        compra =Compra.objects.get(user=user,estado=1)
+    if user.is_authenticated and Compra.objects.filter(user=user,estado__id=1).exists():
+        compra =Compra.objects.get(user=user,estado__id=1)
     elif "token_compra" in request.session:
         token =request.session["token_compra"]
-        compra = Compra.objects.get(token=token)
+        compra = Compra.objects.get(token=token, estado__id=1)
     else:
         return None
     return compra

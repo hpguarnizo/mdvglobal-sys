@@ -9,10 +9,22 @@
 {%endblock%}
 
 {%block envio%}
-{%for detalle in compra.get_detalle%}
+{% ifequal compra.get_user user%}
+    {%for detalle in compra.get_detalle%}
+    <p><strong>{{detalle.get_producto.get_nombre}}:</strong>
+        {%if detalle.get_producto.get_tipo.es_libro_fisico%}
+            Se le avisara cuando se realize el envio.
+        {%else%}
+        <a href="{{producto.get_archivo}}">Descargar.</a>
+        {%endif%}
+    </p>
+    {%endfor%}
+{%else%}
+    {%for detalle in compra.get_detalle%}
     <p><strong>{{detalle.get_producto.get_nombre}}:</strong> {%if detalle.get_producto.get_tipo.es_libro_fisico%}
     Se le avisara cuando se realize el envio.{%else%}Link enviado al email.{%endif%}</p>
-{%endfor%}
+    {%endfor%}
+{%endifequal%}
 {%endblock%}
 
 {%block javascript%}

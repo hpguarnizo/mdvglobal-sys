@@ -1,41 +1,41 @@
 {% extends 'index.html' %}
 {% load staticfiles %}
     {% block contenido %}
-    <div class="container content-lg">
-
-    <section id="news" class="news-section">
+   <div class="promo-bg-pattern-v1-dark promo-bg-fixed content-xlg parallaxBg" style="padding:20px;">
         <div class="row news-v1">
-
         <div class="title-v1">
-            <h2 style="font-weight: bold; margin-top: 40px;">Ultimos Eventos</h2>
+            <h1 >Ultimos Eventos</h1>
             <p> Conocé más acerca de nuestros eventos en pocos pasos.</p>
         </div>
 
     {%for evento in eventos%}
 
     
-    <div class="col-md-4 md-margin-bottom-40 text-center">
+    <div class="{%if not forloop.counter|divisibleby:2%}col-md-offset-2{%endif%} col-md-4 text-center" style="margin-bottom:100px;">
 
         
-        <h3 style="color: #FFF; font-weight: bold; font-size: 2.3rem;">{{evento.get_nombre}}</h3>
-        {%if producto.get_imagen%}<img src="{{evento.get_imagen}}" alt="{{evento.get_nombre}}">{%else%}<img src="{% static 'unify-ecommerce/img/blog/28-thumb.jpg'%}" alt="{{evento.get_nombre}}" class="img-responsive center-block">{%endif%}
-        <p style="margin-top: 40px; font-size: 1.7rem;"><i class="fa fa-clock-o"></i> {{evento.get_fecha}}</p> 
+        {%if producto.get_imagen%}
+        <img src="{{evento.get_imagen}}" alt="{{evento.get_nombre}}">
+        {%else%}
+        <img src="{% static 'unify-ecommerce/img/blog/14.jpg'%}" alt="{{evento.get_nombre}}"
+             class="img-responsive center-block">
+        {%endif%}
+        <h2 style="color: #FFF; font-weight: bold; font-size: 2.3rem;">{{evento.get_nombre}}</h2>
+        <p style=" font-size: 1.7rem;color:#fff;"><i class="fa fa-clock-o"></i> {{evento.get_fecha}}</p>
         <ul class="list-inline news-v1-info">
-           
             <li>{{evento.get_categoria}}</li>
-            <li class="">{{evento.get_tipo}}</li></br>
-            {% if evento.get_estado.es_lleno %} 
-        
-            <a  class="btn-u btn-brd btn-brd-hover btn-u-light" style="margin-top: 20px;"><p style="color: red; margin:0; padding: 0; font-weight: bold;">SIN CUPO</p></a>
+            <li>{{evento.get_tipo}}</li></br>
+            {% if evento.get_estado.es_lleno %}
+            <a  class="btn-u btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block rounded-4x margin-right-10" style="margin-top: 20px;"><p style="color: red; margin:0; padding: 0; font-weight: bold;">SIN CUPO</p></a>
             {%else%}
-            <a href="{% url 'evento_seleccionar' evento_id=evento.id %}" class="btn-u btn-brd btn-brd-hover btn-u-light" style="margin-top: 20px; font-weight: bold;">Ver más</a>
+            <a href="{% url 'evento_seleccionar' evento_id=evento.id %}" class="btn-u btn-brd btn-brd-width-2 btn-brd-hover
+								 btn-u-light btn-u-block rounded-4x margin-right-10" style="margin-top: 20px; font-weight: bold;">Ver más</a>
             {%endif%}
         </ul>
 
     </div>
 {%endfor%}
         </div>
-    </section>
     </div>
 
         

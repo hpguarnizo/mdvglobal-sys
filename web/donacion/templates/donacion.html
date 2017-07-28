@@ -1,20 +1,24 @@
 {% extends 'index.html' %}
 {% load staticfiles %}
     {% block contenido %}
-    <div class="container content text-center" style="background-color: #f7f7f7 !important;">
-        <div class="row blog-page">
-            <div class="col-md-12 ">
+  <div class="promo-bg-pattern-v1-dark promo-bg-fixed content-lg parallaxBg">
+		          <div class="row blog-page">
+            <div class="col-md-6 ">
                 <div class="blog margin-bottom-40">
-                    <h2 style="color: #777; font-weight: bold; font-size: 2.5rem;">{{donacion.get_titulo}}</h2>
-                   
                     <div class="blog-img">
-                        {%if donacion.get_imagen %}<img src="{{donacion.get_imagen}}" alt="{{evento.get_nombre}}">{%else%}<img src="{% static 'unify-ecommerce/img/blog/11.jpg'%}" alt="{{donacion.get_titulo}}" class="img-responsive center-block">{%endif%}
+                        {%if donacion.get_imagen %}<img src="{{donacion.get_imagen}}" alt="{{evento.get_nombre}}">{%else%}<img src="{% static 'unify-ecommerce/img/blog/14.jpg'%}" alt="{{donacion.get_titulo}}" class="img-responsive img-rounded center-block">{%endif%}
                     </div>
-                    <p style="color: #777; margin: 15px;">{{donacion.get_descripcion}}</p>
-                    <form action="." method="POST">
+                </div>
+            </div>
+            <div class="col-md-5">
+                    <h2><strong>{{donacion.get_titulo}}</strong></h2>
+                    <p >{{donacion.get_descripcion}}</p>
+                    <form action="." method="POST" class="margin-top-60">
                     {% csrf_token %}
-                    <input type="number" min="1" name="cantidad" id="cantidad_id" class="form-control center-block" style="width: 300px; margin-bottom: 30px; background-color: white; border-color: #EEE;"><br>
-                      <button style="border:0; margin:0; padding:0;"><p><i class="fa fa-plus-sign"></i><a href="#" class="btn-u btn-u-small">¡Donar!</a></p></button>
+                    <input type="number" min="1" name="cantidad" id="cantidad_id" class="form-control center-block" style="background-color:#FFF;color:#000;margin-top:15px;border-radius:10px;margin-bottom:15px;" placeholder="Introduce la cantidad a donar"><br>
+                      <button class="btn-u btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block rounded-4x margin-right-10 " style="width:120px;">
+                          <i class="fa fa-plus-sign"></i>¡Donar!
+                      </button>
                       </form>
                 </div>
             </div>

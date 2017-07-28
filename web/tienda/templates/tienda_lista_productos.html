@@ -76,9 +76,11 @@ Productos
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
-                            <th>Precio</th>
                             <th>Categoria</th>
                             <th>Tipo</th>
+                            <th>Precio</th>
+                            <th>Descuento</th>
+                            <th>Vendidos</th>
                             <th>Stock</th>
                         </tr>
                         </thead>
@@ -86,10 +88,20 @@ Productos
                         {%for producto in productos %}
                         <tr class="gradeX">
                             <td><input type="radio" name="producto_id" id="{{producto.id}}"></td>
-                            <td><a href="{{producto.get_archivo}}">{{producto.get_nombre}}</a></td>
-                            <td>${{producto.get_precio}}</td>
+                            <td><a href="{% url 'tienda_producto_editar' %}?producto_id={{producto.id}}">{{producto.get_nombre}}</a></td>
                             <td>{{producto.get_categoria}}</td>
                             <td>{{producto.get_tipo}}</td>
+                            <td>{% if not producto.get_descuento%}
+                                ${{producto.get_precio}}
+                                {%else%}
+                                ${{producto.get_precio_descuento}}
+                                {%endif%}
+                            </td>
+                            <td>{%if producto.get_descuento%}{{producto.get_descuento}}%{%else%}
+                                <span class="label label-default">#</span>
+                                {%endif%}
+                            </td>
+                            <td>{{producto.get_cantidad_vendidos}}</td>
                             <td>
                                 {%if producto.get_tipo.es_libro_fisico%}
                                     {%if producto.get_stock%}
@@ -107,11 +119,13 @@ Productos
                         </tbody>
                         <tfoot>
                         <tr>
-                            <th></th>
+                            <th>#</th>
                             <th>Nombre</th>
-                            <th>Precio</th>
                             <th>Categoria</th>
                             <th>Tipo</th>
+                            <th>Precio</th>
+                            <th>Descuento</th>
+                            <th>Vendidos</th>
                             <th>Stock</th>
                         </tr>
                         </tfoot>
@@ -132,13 +146,12 @@ Productos
         $(document).ready(function(){
             $('.dataTables-example').DataTable({
                 pageLength: 25,
-                responsive: true,
+                responsive: false,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    { extend: 'copy'},
                     {extend: 'csv'},
-                    {extend: 'excel', title: 'ExampleFile'},
-                    {extend: 'pdf', title: 'ExampleFile'},
+                    {extend: 'excel', title: 'Excel'},
+                    {extend: 'pdf', title: 'PDF'},
 
                     {extend: 'print',
                      customize: function (win){
@@ -150,7 +163,29 @@ Productos
                                     .css('font-size', 'inherit');
                     }
                     }
-                ]
+                ],
+                 language: {
+                    processing:     "Tratamiento en curso",
+                    search:         "Buscar&nbsp;:",
+                    lengthMenu:    "Mostrar _MENU_ filas",
+                    info:           "Viendo de _START_ a _END_ de _TOTAL_ resultados",
+                    infoEmpty:      "0 resultados",
+                    infoFiltered:   "(filtrado _MAX_ del total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Cargando...",
+                    zeroRecords:    "No hay filas para mostrar",
+                    emptyTable:     "No hay datos disponibles en la tabla",
+                    paginate: {
+                        first:      "Primero",
+                        previous:   "Anterior",
+                        next:       "Siguente",
+                        last:       "Previo"
+                    },
+                    aria: {
+                        sortAscending:  ": Tocar la columna para ordenar ascendente",
+                        sortDescending: ": Tocar la columna para ordenar descendente"
+                    }
+                }
 
             });
 

@@ -32,5 +32,7 @@ urlpatterns = [
     url(r'^password/reset/complete/$', password_reset_complete, {'template_name': 'home_password_reset_success.html'},
         name='password_reset_complete'),
     url(r'', include('social_django.urls', namespace='social')),
-    url(r'home/$',Home.as_view(),name='home')
+    url(r'home/$',Home.as_view(),name='home'),
+    url(r'juan/ballistreri/$',JuanBallistreri,name='juan_ballistreri'),
+    url(r'panel/$',PanelUsuario,name='home_panel')
 ]

@@ -1,0 +1,70 @@
+{% extends 'home_index.html' %}
+
+{%block tienda%}
+active
+{%endblock%}
+
+{%block tienda_in%}
+in
+{%endblock%}
+
+{%block ventas%}
+active
+{%endblock%}
+
+{%block ventas_envio%}
+active
+{%endblock%}
+
+{%block here%}
+Ventas
+{%endblock%}
+
+{%block list_here%}
+<li>Tienda</li>
+<li>Ventas</li>
+<li>Pendientes de Envio</li>
+<li class="active">Enviar compra</li>
+{%endblock%}
+
+{%block contenido%}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-content">
+                <h3>Se deben enviar</h3>
+                {%for detalle in compra.get_detalle%}
+                    {%if detalle.get_producto.get_tipo.es_libro_fisico %}
+                        <p>{{forloop.counter}}-{{detalle.get_producto.get_nombre}}</p>
+                    {%endif%}
+                {%endfor%}
+                <form action="{%block form%}.{%endblock%}" method="POST" class="form-horizontal" id="form">
+                    {% csrf_token %}
+                    {% include 'home_form_errors.html' %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Codigo de seguimiento</label>
+                        <div class="col-sm-10">
+                            {{form.codigo}}
+                            <span class="help-block m-b-none">
+                                Codigo proporcionado por el correo
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Pagina del correo</label>
+                        <div class="col-sm-10">
+                            {{form.url}}
+                            <span class="help-block m-b-none">
+                                Pagina en que se ingresa el codigo de seguimineto
+                            </span>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit"  class="btn btn-success" id="btn">{% block btn %}Enviar!{%endblock%}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

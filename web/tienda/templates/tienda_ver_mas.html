@@ -28,16 +28,16 @@
                     <!-- Master Slider -->
                     <div class="master-slider ms-skin-default" id="masterslider">
                         <div class="ms-slide">
-                            <img class="ms-brd" src="{% static 'unify-ecommerce/img/blank.gif'%}" data-src="{%if producto.get_imagen%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/28.jpg'%}{%endif%}" alt="{{producto.get_nombre}}">
-                            <img class="ms-thumb" src="{%if producto.get_imagen%}{{producto.get_imagen%}{%else%}{% static 'unify-ecommerce/img/blog/28.jpg'%}{%endif%}" alt="thumb">
+                            <img class="ms-brd" width="550" height="560"  src="{% static 'unify-ecommerce/img/blank.gif'%}" data-src="{{producto.get_imagen3_url}}" alt="{{producto.get_nombre}}_1">
+                            <img class="ms-thumb" width="180" height="180" src="{{producto.get_imagen3_url}}" alt="{{producto.get_nombre}}_2">
                         </div>
                         <div class="ms-slide">
-                            <img src="{% static 'unify-ecommerce/img/blank.gif' %}" data-src="{%if producto.get_imagen2%}{{producto.get_imagen2}}{%else%}{% static 'unify-ecommerce/img/blog/28.jpg'%}{%endif%}" alt="{{producto.get_nombre}}1">
-                            <img class="ms-thumb" src="{%if producto.get_imagen%}{{producto.get_imagen%}{%else%}{% static 'unify-ecommerce/img/blog/28.jpg'%}{%endif%}" alt="thumb">
+                            <img src="{% static 'unify-ecommerce/img/blank.gif' %}" width="550" height="560" data-src="{{producto.get_imagen_url}}" alt="{{producto.get_nombre}}_3">
+                            <img class="ms-thumb"  width="180" height="180" src="{{producto.get_imagen_url}}" alt="{{producto.get_nombre}}_3">
                         </div>
                         <div class="ms-slide">
-                            <img src="{% static 'unify-ecommerce/img/blank.gif' %}" data-src="{%if producto.get_imagen3%}{{producto.get_imagen3}}{%else%}{% static 'unify-ecommerce/img/blog/28.jpg'%}{%endif%}" alt="{{producto.get_nombre}}2">
-                            <img class="ms-thumb" src="{%if producto.get_imagen%}{{producto.get_imagen%}{%else%}{% static 'unify-ecommerce/img/blog/28.jpg'%}{%endif%}" alt="thumb">
+                            <img src="{% static 'unify-ecommerce/img/blank.gif' %}" width="550" height="560" data-src="{{producto.get_imagen2_url}}" alt="{{producto.get_nombre}}_4">
+                            <img class="ms-thumb img-responsive"  width="180" height="180" src="{{producto.get_imagen2_url}}" alt="{{producto.get_nombre}}_5">
                         </div>
                     </div>
                     <!-- End Master Slider -->
@@ -78,7 +78,7 @@
                 </div><!--/end product quantity-->
                 <br>
                 <br>
-                <p class="wishlist-category"><strong>Categoria:</strong><a href="#">{{producto.get_categoria}}</a></p>
+                <p class="wishlist-category"><strong>Categoria:</strong><a href="{%url 'tienda_productos_busqueda' %}?categoria={{producto.get_categoria}}">{{producto.get_categoria}}</a></p>
             </div>
         </div><!--/end row-->
     </div>
@@ -91,10 +91,10 @@
     <div class="row margin-bottom-60">
         <div class="col-md-4 product-service md-margin-bottom-30">
             <div class="product-service-heading">
-                <i class="fa fa-truck"></i>
+                <i class="fa fa-lock"></i>
             </div>
             <div class="product-service-in">
-                <h3>Envio Gratis</h3>
+                <h3>Pago Seguro</h3>
             </div>
         </div>
         <div class="col-md-4 product-service md-margin-bottom-30">
@@ -107,10 +107,14 @@
         </div>
         <div class="col-md-4 product-service">
             <div class="product-service-heading">
-                <i class="icon-refresh"></i>
+                <i class="fa fa-truck"></i>
             </div>
             <div class="product-service-in">
-                <h3>Devolucion Gratis</h3>
+                {% if producto.get_tipo.es_libro_fisico%}
+                <h3>Envio Gratis</h3>
+                {%else%}
+                <h3>Descarga Inmediata</h3>
+                {%endif%}
             </div>
         </div>
     </div><!--/end row-->
@@ -132,7 +136,7 @@
         <ul class="list-inline owl-slider-v4">
             {% for producto in productos_que_gustan %}
             <li class="item">
-                <a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><img class="img-responsive" src="{%if producto.get_imagen%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/28-thumb.jpg'%}{%endif%}" alt=""></a>
+                <a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><img class="img-responsive" width="180" height="180" src="{{producto.get_imagen2_url}}" alt="{{producto.get_nombre}}"></a>
                 <div class="product-description-v2">
                     <div class="margin-bottom-5">
                         <h4 class="title-price"><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>

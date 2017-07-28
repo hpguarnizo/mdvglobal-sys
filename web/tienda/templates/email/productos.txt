@@ -1,0 +1,23 @@
+{%if digital%}
+    Felicidades aqui tiene sus productos
+{%else%}
+    Felicidades por su compra
+{%endif%}
+
+{% if digital%}
+Aqui tienes tu(s) producto(s) digitales. Si ademas ordenaste productos fisicos,
+luego te avisaremos cuando esten en camino, con su codigo de seguimiento.
+{%else%}
+Pronto le enviaremos un email con su codigo de seguimiento para que seguir a
+su(s) producto(s). Tambien puede revisar su compra si es usuario en su
+<a  href="{{site_root}}{% url 'home_panel'%}">Panel
+de Administracion.</a>
+{%endif%}
+
+{%for detalle in compra.get_detalle%}
+    {%if detalle.get_producto.get_tipo.es_libro_fisico%}
+             {{detalle.get_producto.get_nombre}}
+             Cantidad: {{detalle.get_cantidad}}. Precio por unidad: {{detalle.get_precio}}
+    {%endif%}
+{%endfor%}
+{% include 'email/home_footer.txt'%}

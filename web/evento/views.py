@@ -12,6 +12,11 @@ from tienda.models import Producto
 from tienda.views import get_compra
 
 
+def EventoEntradas(request):
+    evento_id = request.GET.get("evento_id","")
+    evento = get_object_or_404(Evento,id=evento_id)
+    return render(request,"evento_entradas.html",{"evento":evento})
+
 def ListaEventos(request):
     eventos = Evento.objects.filter(estado__in=[1,2]).order_by('fecha')
     return render(request,'evento_lista.html',{'eventos':eventos,"compra":get_compra(request)})

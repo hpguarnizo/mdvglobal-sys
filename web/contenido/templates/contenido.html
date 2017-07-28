@@ -1,4 +1,11 @@
 {% extends 'index.html'%}
+{%load staticfiles%}
+
+{%block head %}
+
+
+{%endblock%}
+{%block wrapper %}style="background-color:#FFF; "{%endblock%}
 
 {%block form%}
 <form action="{% url 'contenido_mostrar'%}" method="GET" id="form">
@@ -11,38 +18,144 @@
 
 
 {%block contenido%}
-{%if q %}
-<h1>Busqueda:{{q}}</h1>
-{%endif%}
+	<!--=== Content Part ===-->
+ 		<div class="content container" >
+ 			<div class="row">
+ 				<div class="col-md-3 filter-by-block md-margin-bottom-60">
+ 					<h1 class="text-center" style="background-color:#4765a0; font-weight:bold; color:#FFF; border-radius:10px;">Filtar Por</h1>
+ 					<div class="panel-group" id="accordion"  >
+ 						<div class="panel panel-default" >
+ 							<div class="panel-heading" style="background-color:#fff; color: #687074;">
+ 								<h2 class="panel-title" >
+ 									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+ 										Tipo
+ 										<i class="fa fa-angle-down"></i>
+ 									</a>
+ 								</h2>
+ 							</div>
+ 							<div id="collapseOne" class="panel-collapse collapse in">
+ 								<div class="panel-body" style="background-color:#fff;">
+ 									<ul class="list-unstyled checkbox-list" >
+ 										{%for tipo in tipos%}
+                                        <li>
+ 											<label class="checkbox" style="color:#4765a0; margin:10px;">
+                                                {%ifequal tipo.get_nombre tipo_q%}
+ 												<input type="checkbox" class="btn-r-tipo" id="{{tipo}}" name="checkbox" checked/>
+                                                {%else%}
+ 												<input type="checkbox" class="btn-tipo" id="{{tipo}}" name="checkbox"/>
+                                                {%endifequal%}
+ 												<i></i>
+ 												{{tipo}}
+ 											</label>
+ 										</li>
+                                        {%endfor%}
+ 									</ul>
+ 								</div>
+ 							</div>
+ 						</div>
+ 					</div><!--/end panel group-->
 
-{%if categoria_q %}
-<a href="#" class="btn-r-categoria"><h3>Categoria seleccionada:{{categoria_q}}<i class="fa fa-close"></i></h3></a>
-{%endif%}
+ 					<div class="panel-group" id="accordion-v2">
+ 						<div class="panel panel-default">
+ 							<div class="panel-heading" style="background-color:#fff; color: #687074;">
+ 								<h2 class="panel-title">
+ 									<a data-toggle="collapse" data-parent="#accordion-v2" href="#collapseTwo">
+ 										Categoria
+ 										<i class="fa fa-angle-down"></i>
+ 									</a>
+ 								</h2>
+ 							</div>
+ 							<div id="collapseTwo" class="panel-collapse collapse in">
+ 								<div class="panel-body" style="background-color:#fff;">
+ 									<ul class="list-unstyled checkbox-list">
+ 										{%for cat in categorias %}
+                                        <li>
+ 											<label class="checkbox" style="color:#4765a0; margin:10px;">
+                                                {%ifequal cat.get_nombre categoria_q%}
+ 												<input type="checkbox" id="{{cat}}" class="btn-r-categoria" name="checkbox" checked/>
+                                                {%else%}
+ 												<input type="checkbox" id="{{cat}}" class="btn-categoria" name="checkbox" />
+                                                {%endifequal%}
+ 												<i></i>
+ 												{{cat}}
+ 											</label>
+ 										</li>
+                                        {%endfor%}
+ 									</ul>
+ 								</div>
+ 							</div>
+ 						</div>
+ 					</div><!--/end panel group-->
+ 				</div>
 
-{%if tipo_q%}
-<a href="#" class="btn-r-tipo"><h3>Tipo seleccionada:{{tipo_q}} <i class="fa fa-close"></i></h3></a>
-{%endif%}
+ 				<div class="col-md-9">
+ 					<div class="row margin-bottom-5">
+ 						<div class="col-sm-4 result-category">
+ 							<h2>{%if q%}{{q}}{%else%}Contenido{%endif%}</h2>
+ 						</div>
+ 					</div><!--/end result category-->
 
+ 					<div class="filter-results">
+ 						<div class="row illustration-v2 margin-bottom-30">
+ 							{%for cont in contenido%}
+                            {% ifequal forloop.counter 1 %}
+                                <div class="row illustration-v2 margin-bottom-30">
+                            {%endifequal%}
+                            {% ifequal forloop.counter 4 %}
+                                <div class="row illustration-v2 margin-bottom-30">
+                            {%endifequal%}
+                            {% ifequal forloop.counter 7 %}
+                                <div class="row illustration-v2 margin-bottom-30">
+                            {%endifequal%}
 
-<h2>Categorias</h2>
-{%for cat in categorias %}
-<p><a class="btn-categoria" href="#" id="{{cat}}">{{cat}}</a></p>
-{%endfor%}
+                            <div class="col-md-4">
+ 								<div class="product-img product-img-brd">
+ 									<a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}"><img class="full-width img-responsive" src="{% static 'unify-ecommerce/img/blog/16.jpg'%}" alt=""></a>
+ 									<div class="bg-primary text-center" style="">{{cont.get_acceso}}</div>
 
-<h2>Tipos</h2>
-{%for tipo in tipos%}
-<p><a class="btn-tipo" href="#" id="{{tipo}}">{{tipo}}</a></p>
-{%endfor%}
+ 								</div>
+ 								<div class="product-description product-description-brd margin-bottom-30 ">
+ 									<div class="overflow-h margin-bottom-5">
+ 										<div class="text-center">
+ 											<h4 class="title-price"><a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}">{{cont.get_nombre}}</a></h4>
+ 											<span class="gender text-uppercase">{{cont.get_tipo}}</span>-
+ 											<span class="gender">{{cont.get_categoria}}</span><br>
+                                            <a class="btn btn-success" href="{% url 'contenido_ver_mas' contenido_id=cont.id %}">Ver mas</a>
 
-{%for cont in contenido%}
-<ul>
-    <li>{{cont.get_nombre}}</li>
-    <li>{{cont.get_acceso}}</li>
-    <li><a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}"><button>Ver</button></a></li>
-</ul>
-{%endfor%}
-<a href="#" class="btn-atras"><button>Atras</button></a>
-<a href="#" class="btn-sig"><button>Siguiente</button></a>
+ 										</div>
+ 									</div>
+ 								</div>
+ 							</div>
+                            {% ifequal forloop.counter 3 %}
+                                </div>
+                            {%endifequal%}
+                            {% ifequal forloop.counter 6 %}
+                                </div>
+                            {%endifequal%}
+                            {% ifequal forloop.counter 9 %}
+                                </div>
+                            {%endifequal%}
+
+                            {%endfor%}
+                            {% ifequal productos|length 1%}</div>{%endifequal%}
+                            {% ifequal productos|length 2%}</div>{%endifequal%}
+                            {% ifequal productos|length 4%}</div>{%endifequal%}
+                            {% ifequal productos|length 5%}</div>{%endifequal%}
+                            {% ifequal productos|length 7%}</div>{%endifequal%}
+                            {% ifequal productos|length 8%}</div>{%endifequal%}
+                    <div class="text-center">
+ 						<ul class="pagination pagination-v2">
+ 							<li><a href="#" class="btn-atras"><i class="fa fa-angle-left"></i></a></li>
+ 							<li><a href="#" class="btn-sig"><i class="fa fa-angle-right"></i></a></li>
+ 						</ul>
+ 					</div><!--/end pagination-->
+ 				</div>
+ 			</div><!--/end row-->
+ 		</div><!--/end container-->
+            </div>
+        </div>
+ 		<!--=== End Content Part ===-->
+
 {%endblock%}
 
 {%block javascript%}
@@ -79,4 +192,6 @@ let formulario = document.getElementById("form");
 
 });
 </script>
+
 {%endblock%}
+

@@ -1,0 +1,119 @@
+{% extends 'index.html'%}
+{%load staticfiles%}
+
+{%block contenido%}
+	<!--=== Interactive Slider ===-->
+		<div class="breadcrumbs-v3 breadcrumbs-lg img-v2">
+			<div class="container">
+				<h1>Juan Ballistreri</h1>
+				<p>Apóstol</p>
+			</div>
+		</div>
+		<!--=== End Interactive Slider ===-->
+
+		<!--=== Container Part ===-->
+		<div class="container content-sm">
+			<div class="row">
+				<!-- Social Network -->
+				<div class="col-md-6 md-margin-bottom-50">
+					<div class="headline-left margin-bottom-30">
+						<h2 class="headline-brd heading-md">SOBRE <span class="color-green">MI</span></h2>
+					</div>
+					<p>Conferencista internacional reconocido en todo el continente Americano y en Países del Mundo.
+                    Director y Fundador de la Escuela de Liderazgo de Avanzada, la cual afecta a miles de personas, Realizándose en todo el Continente.
+                    </p>
+					<p>Director del Centro de Entrenamiento Ministerial a Distancia (C.E.M.A.D.) que reúne alumnos por todo el mundo.</p><br>
+					<ul class="list-inline social-icons-v1">
+						<li><a target="_blank" href="https://twitter.com/BallistreriJuan"><i class="rounded-x fa fa-twitter"></i></a></li>
+						<li><a target="_blank" href="https://www.facebook.com/JuanBallistreriOK"><i class="rounded-x fa fa-facebook"></i></a></li>
+						<li><a target="_blank" href="https://www.youtube.com/channel/UCWDOchyw0PUEncDT2DiGywg"><i class="rounded-x fa fa-youtube"></i></a></li>
+						<li><a target="_blank" href="https://www.instagram.com/juanballistreri/"><i class="rounded-x fa fa-instagram"></i></a></li>
+					</ul>
+				</div>
+				<!-- End Social Network -->
+
+				<!-- Progress Bar -->
+				<div class="col-md-6 progress-box md-margin-bottom-50">
+					<div class="headline-left margin-bottom-30">
+						<h2 class="headline-brd heading-md">MIS <span class="color-green">MERTRICAS</span></h2>
+					</div>
+					<h3 class="heading-xs">Libros escritos<span class="pull-right">10</span></h3>
+					<div class="progress progress-u progress-xxs">
+						<div class="progress-bar progress-bar-dark" role="progressbar" data-width="88">
+						</div>
+					</div>
+
+					<h3 class="heading-xs">Paises Visitados <span class="pull-right">44</span></h3>
+					<div class="progress progress-u progress-xxs">
+						<div class="progress-bar progress-bar-dark" role="progressbar" data-width="76">
+						</div>
+					</div>
+
+					<h3 class="heading-xs">Horas de conferencia <span class="pull-right">561</span></h3>
+					<div class="progress progress-u progress-xxs">
+						<div class="progress-bar progress-bar-dark" role="progressbar" data-width="97">
+						</div>
+					</div>
+				</div>
+				<!-- End Progress Bar -->
+			</div><!--/end row-->
+		</div>
+		<!--=== End Container Part ===-->
+
+		<!--=== Quote v1 ===-->
+		<div class="quote-v1 parallaxBg">
+			<div class="container">
+				<p>Somos la generación más gloriosa y privilegiada que hay, por una sencilla razon: Somos los unicos que estamos .</p>
+				<span>Juan Ballistreri, <a href="#">Apóstol</a></span>
+			</div>
+		</div>
+		<!--=== End Quote v1 ===-->
+
+		<!--=== Portfolio ===-->
+		<div class="container content-sm">
+			<div class="headline-center margin-bottom-30">
+				<h2 class="headline-brd heading-md">ULTIMOS <span class="color-green">CONTENIDOS</span></h2>
+				<p class="space-lg-hor">Accede a todos los contenidos del apóstol Juan Ballistreri desde cualquier lugar y desde todos tus dispositivos.</p>
+			</div>
+
+			<!-- Cube Portfolio -->
+			<div class="cube-portfolio container margin-bottom-20">
+				<div id="grid-container" class="cbp-l-grid-gallery">
+                    {% for contenido in contenidos%}
+					<div class="cbp-item illustration web-design">
+						<a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}" class="cbp-caption cbp-singlePageInline"
+							data-title="{{contenido.get_nombre}}">
+							<div class="cbp-caption-defaultWrap">
+								<img src="{%if contenido.get_imagen%}{{contenido.get_imagen}}{%else%}{% static 'unify/img/portfolio/20.jpg' %}{%endif%}" alt="">
+							</div>
+							<div class="cbp-caption-activeWrap">
+								<div class="cbp-l-caption-alignLeft">
+									<div class="cbp-l-caption-body">
+										<div class="cbp-l-caption-title">{{contenido.get_nombre}}</div>
+										<div class="cbp-l-caption-desc">{{contenido.get_acceso}}</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</div>
+                    {%endfor%}
+
+				</div><!--/end Grid Container-->
+			</div>
+			<!-- End Cube Portfolio -->
+		</div>
+		<!--=== End Portfolio ===-->
+
+		<!--=== Call To Action v2 ===-->
+		<div class="call-action-v2 parallaxBg">
+			<div class="container">
+				<h2>Contactame!</h2>
+				<p>Si desea ponerse en contacto con migo enviame un email haciendo click en el siguiente boton. <br>Me pondre en contacto contigo
+                tan pronto me sea posible.</p>
+				<a href="malito:mdv@manantialdevidaonlie.com" class="btn-u">Enviar email</a>
+			</div>
+		</div>
+		<!--=== End Call To Action v2 ===-->
+
+
+{%endblock%}

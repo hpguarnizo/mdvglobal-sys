@@ -29,6 +29,16 @@ def IndexView(request):
                                         'cant_donaciones':cant_donaciones,'cant_contenido':cant_contenido,
                                         "compra":get_compra(request)})
 
+def JuanBallistreri(request):
+    contenidos = (Contenido.objects.filter(acceso=1).order_by("-fecha") | \
+                  Contenido.objects.filter(acceso=2).order_by("-fecha") |\
+                  Contenido.objects.filter(acceso=3).order_by("-fecha"))[:6]
+    return render(request,'juan_ballistreri.html',{"contenidos":contenidos,"compra":get_compra(request)})
+
+
+def PanelUsuario(request):
+    return render(request,'home_panel.html')
+
 class SignupView(FormView):
     template_name = 'home_signup.html'
     form_class = SignupForm

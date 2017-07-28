@@ -1,0 +1,22 @@
+{% extends 'home_login.html'%}
+
+{% block title %}Agregar al Carrito{% endblock %}
+
+{% block titulo %}Iniciar Sesión{% endblock %}
+
+{% block next_google %}{% url 'tienda_completar_perfil' producto_id=producto.id %}{% endblock %}
+{% block next_twitter %}{% url 'tienda_completar_perfil' producto_id=producto.id %}{% endblock %}
+{% block next_facebook %}{% url 'tienda_completar_perfil' producto_id=producto.id %}{% endblock %}
+
+{%block action%}
+{%url 'tienda_login_producto' producto_id=producto.id%}
+{%endblock%}
+
+{% block registro %}
+    <p class="registrarse">
+        <a href="{% url 'tienda_sin_registro' producto_id=producto.id %}">
+            <strong>Continuar sin registrarse</strong>
+        </a>
+    </p>
+    <p class="registrarse">¿Sin cuenta en {{company}}? <a href="{% url 'signup_page' %}">Nueva Cuenta</a></p>
+{% endblock %}

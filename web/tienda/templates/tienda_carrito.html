@@ -14,7 +14,7 @@
             <div>
                 <div class="header-tags">
                     <div class="overflow-h">
-                        <h2>Carrito de compras</h2>
+                        <h2>Carrito</h2>
                         <p>Vea y edite sus productos</p>
                         <i class="rounded-x fa fa-check"></i>
                     </div>
@@ -35,7 +35,7 @@
                                 {% for detalle in compra.get_detalle %}
                                 <tr>
                                     <td class="product-in-table">
-                                        <img class="img-responsive" src="{%if detalle.get_producto.get_imagen%}{{detalle.get_producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/28-thumb.jpg'%}{%endif%}" alt="">
+                                        <img class="img-responsive" width="120" height="120" src="{{detalle.get_producto.get_imagen2_url}}" alt="{{detalle.get_producto.get_nombre}}">
                                         <div class="product-it-in">
                                             <h3>{{detalle.get_producto.get_nombre}}</h3>
                                             <span>{{detalle.get_producto.get_tipo}} - {{detalle.get_producto.get_categoria}}</span>
@@ -45,19 +45,24 @@
                                     <td>
                                         {%if detalle.get_producto.get_tipo.es_libro_fisico%}
                                         <a href="{%url 'tienda_menos_detalle'  detalle_id=detalle.id %}"><button type='button' class="quantity-button btn-menos" name='subtract' onclick='javascript: subtractQty1();' value='-'>-</button></a>
-                                        <input type='text' class="quantity-field" name='qty1' value="{{detalle.cantidad}}" id='qty1'/>
-                                        <a href="{%url 'tienda_mas_detalle' detalle_id=detalle.id %}"><button type='button' class="quantity-button btn-mas" name='add' onclick='javascript: document.getElementById("qty1").value++;' value='+'>+</button></a>
+                                        <input type='text' class="quantity-field" name='qty{{forloop.counter}}' value="{{detalle.cantidad}}" />
+                                        <a href="{%url 'tienda_mas_detalle' detalle_id=detalle.id %}"><button type='button' class="quantity-button btn-mas" name='add' onclick='javascript: document.getElementById("qty{{forloop.counter}}").value++;' value='+'>+</button></a>
                                         {%else%}
                                         <button type='button' class="quantity-button" name='subtract' onclick='javascript: subtractQty1();' value='-' disabled>-</button>
-                                        <input type='text' class="quantity-field" name='qty1' value="{{detalle.cantidad}}" id='qty1' disabled/>
-                                        <button type='button' class="quantity-button" name='add' onclick='javascript: document.getElementById("qty1").value++;' value='+' disabled>+</button>
+                                        <input type='text' class="quantity-field" name='qty{{forloop.counter}}' value="{{detalle.cantidad}}" disabled/>
+                                        <button type='button' class="quantity-button" name='add' onclick='javascript: document.getElementById("qty{{forloop.counter}}").value++;' value='+' disabled>+</button>
 
                                         {%endif%}
 
                                     </td>
                                     <td class="shop-red">$ {{detalle.get_parcial}}</td>
-                                    <td>
-                                        <a href="{% url 'tienda_eliminar_detalle' detalle_id=detalle.id %}"><button type="button" class="close btn-eliminar-detalle" id="{{detalle.id}}"><span>&times;</span><span class="sr-only">Eliminar</span></button></a>
+                                    <td >
+                                        <a href="{% url 'tienda_eliminar_detalle' detalle_id=detalle.id %}">
+                                            <button type="button" class="close btn-eliminar-detalle" id="{{detalle.id}}">
+                                                <span>&times;</span>
+                                                <span class="sr-only">Eliminar</span>
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                                 {%endfor%}
@@ -81,7 +86,7 @@
                     <div class="overflow-h">
                         <h2>Envio</h2>
                         <p>Recibe tus productos</p>
-                        <i class="rounded-x fa fa-credit-card"></i>
+                        <i class="rounded-x fa fa-truck"></i>
                     </div>
                 </div>
                 <section>
@@ -105,7 +110,9 @@
             </div>
         </form>
         {% block btn_comprar%}
-        <a href="{% url 'pay_tienda' compra_id=compra.id%}"><button class="btn btn-lg btn-warning" style="border-radius:30px;"><strong>PAGAR AHORA</strong></button></a>
+        <div class="col-xs-12 text-center">
+        <a  href="{% url 'pay_tienda' compra_id=compra.id%}"><button class="btn btn-lg btn-warning" style="border-radius:30px;"><strong>PAGAR AHORA</strong></button></a>
+        </div>
         {%endblock%}
     </div><!--/end container-->
 </div>

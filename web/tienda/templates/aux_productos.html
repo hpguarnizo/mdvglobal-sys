@@ -1,0 +1,16 @@
+<a href="{% url 'producto_ver_mas' producto_id=producto.id %}">
+<div class="thumb-product">
+    <img class="thumb-product-img" src="{{producto.get_imagen2_url}}" alt="{{producto.get_nombre}}" width="180" height="180">
+    <div class="thumb-product-in">
+        <h4><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
+        <span class="thumb-product-type">{{producto.get_tipo}} - {{producto.get_tipo}}</span>
+    </div>
+    <ul class="list-inline overflow-h">
+        {% if producto.get_descuento%}
+        <li class="thumb-product-price line-through">${{producto.get_precio}}</li>
+        {%endif%}
+        <li class="thumb-product-price">${{producto.get_precio_descuento}}</li>
+        <li class="thumb-product-purchase"><a href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}"><i class="fa fa-shopping-cart"></i></a></li>
+    </ul>
+</div>
+</a>

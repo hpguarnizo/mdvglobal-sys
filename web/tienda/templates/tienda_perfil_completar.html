@@ -1,0 +1,63 @@
+{% extends 'home_login.html'%}
+
+{% block title %}Completa tus datos{% endblock %}
+
+{% block titulo %}Completa tus datos{% endblock %}
+
+{%block redes_sociales %}
+{%endblock%}
+
+{%block form%}
+    <form method="post" action="">
+        {% csrf_token %}
+        {% include "home_form_errors.html" %}
+        {%if user.get_email%}
+        <div class="form-group">
+            {{form.email}}
+        </div>
+        {%endif%}
+        <div class="form-group">
+            {{form.pais}}
+        </div>
+        <div class="form-group">
+            {{form.provincia}}
+        </div>
+        <div class="form-group">
+            {{form.nombre}}
+        </div>
+        <div class="form-group">
+            {{form.direccion}}
+        </div>
+        <button type="submit" class="login-btn">INGRESAR</button>
+    </form>
+
+<script>
+    $(document).ready(function(){
+        $("#id_pais").on("change",get_provincias);
+        get_provincias();
+
+        function get_provincias(){
+            let id_pais = $('select[name=pais]').val();
+            if(id_pais){
+                $("#id_provincia").html("");
+                let request = $.ajax({
+                    type: "GET",
+                    url: "{% url 'get_regions' %}",
+                    data:{
+                        "id_country" : id_pais
+                    },
+                });
+                request.done(function(response){
+                    $("#id_provincia").html(response.regions);
+                    $("#id_provincia").trigger("change");
+                })
+            }else{
+                 $("#id_provincia").html("<option value='' selected='selected'>---------</option>");
+                 $("#id_provincia").trigger("change");
+            }
+        };
+
+    });
+</script>
+{%endblock%}
+

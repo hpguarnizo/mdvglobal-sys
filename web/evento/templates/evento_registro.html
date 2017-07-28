@@ -9,6 +9,9 @@
 {% block next_facebook %}{% url 'evento_completar_perfil' evento_id=evento.id %}{% endblock %}
 
 
+{%block action%}
+{%url 'evento_registro' evento_id=evento.id%}
+{%endblock%}
 
 {% block registro %}
     <p class="registrarse">

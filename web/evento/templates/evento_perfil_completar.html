@@ -8,7 +8,7 @@
 {%endblock%}
 
 {%block form%}
-    <form method="post" action="">
+    <form method="post" action="">o
         {% csrf_token %}
         {% include "home_form_errors.html" %}
         {%if user.get_email%}
@@ -21,6 +21,9 @@
         </div>
         <div class="form-group">
             {{form.provincia}}
+        </div>
+        <div class="form-group">
+            {{form.direccion}}
         </div>
         <button type="submit" class="login-btn">INGRESAR</button>
     </form>

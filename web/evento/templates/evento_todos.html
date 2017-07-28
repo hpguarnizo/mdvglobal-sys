@@ -161,6 +161,19 @@ active
             }
         });
 
+        $("#entradas").click(function(){
+            id = getId();
+            if(id){
+                location.href = "{% url 'evento_entradas' %}?evento_id=" + id;
+            }else{
+                swal({
+                    title: "Debe seleccionar un evento",
+                    text: "Seleccione el evento que desea editar."
+                });
+            }
+        });
+
+
         $("#eliminar").click(function(){
             id = getId();
             if(id){

@@ -34,6 +34,7 @@
 	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/scrollbar/css/jquery.mCustomScrollbar.css' %}">
 	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/owl-carousel/owl-carousel/owl.carousel.css' %}">
 	<link rel="stylesheet" href="{% static 'unify-ecommerce/plugins/revolution-slider/rs-plugin/css/settings.css' %}">
+    <link href="{% static 'inspinia2/css/plugins/sweetalert/sweetalert.css' %}" rel="stylesheet">
 
 	<!-- CSS Theme -->
 	<link rel="stylesheet" href="{% static 'unify-ecommerce/css/theme-colors/dark-blue.css' %}" id="style_color">
@@ -50,16 +51,17 @@
 
 	<div class="wrapper">
 		<!--=== Header v5 ===-->
-		<div class="header-v5 header-static">
+		<div class="header-v5 header-static" style="background-color:#eeeeee;">
 			<!-- Topbar v3 -->
 			<div class="topbar-v3">
 				<div class="search-open">
 					<div class="container">
 						<form action="{% url 'tienda_productos_busqueda'%}" method="GET" id="form">
-						<input type="text" class="form-control" placeholder="Buscar" name="q" id="q_id">
+						<input type="text" class="form-control" placeholder="Buscar" name="q" id="q_id" value="{{q}}">
 						<input type="hidden" name="tipo" id="tipo_id" value="{{tipo_q}}">
 						<input type="hidden" name="categoria" id="categoria_id" value="{{categoria_q}}">
     					<input type="hidden" name="comienzo" id="comienzo_id" value="{{comienzo}}">
+    					<input type="hidden" name="orden" id="orden_id" value="{{orden}}">
 						<div class="search-close"><i class="icon-close"></i></div>
 						</form>
 					</div>
@@ -90,8 +92,13 @@
 			</div>
 			<!-- End Topbar v3 -->
 
+			<style>
+				.color-e{
+					background-color:#eee !important;
+				}
+			</style>
 			<!-- Navbar -->
-			<div class="navbar navbar-default mega-menu" role="navigation">
+			<div class="navbar navbar-default mega-menu color-e" role="navigation">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="navbar-header">
@@ -101,8 +108,8 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="index.html">
-							<img id="logo-header"  width="131" height="41" src="{% static 'unify-ecommerce/img/logo.png' %}" alt="Logo">
+						<a class="navbar-brand" href="{% url 'index'%}">
+							<img id="logo-header" width="47" src="{% static 'unify-ecommerce/img/logo.png' %}" alt="Logo">
 						</a>
 					</div>
 
@@ -114,7 +121,7 @@
 							<ul class="list-unstyled mCustomScrollbar" data-mcs-theme="minimal-dark">
 								{%for detalle in compra.get_detalle %}
 								<li>
-									<img src="{%if detalle.get_producto.get_imagen%}{{detalle.get_producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/28-thumb.jpg'%}{%endif%}" alt="">
+									<img src="{{detalle.get_producto.get_imagen2_url}}" alt="{{detalle.get_producto.get_nombre}}" width="180" height="180">
 									<a href="{% url 'tienda_eliminar_detalle' detalle_id=detalle.id %}"><button type="button" class="close">×</button></a>
 									<div class="overflow-h">
 										<span>{{detalle.get_producto.get_nombre}}</span>
@@ -144,9 +151,9 @@
 					<!-- End Shopping Cart -->
 
 					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse navbar-responsive-collapse">
+					<div class="collapse navbar-collapse navbar-responsive-collapse ">
 						<!-- Nav Menu -->
-						<ul class="nav navbar-nav">
+						<ul class="nav navbar-nav " style="margin-left:auto; margin-rigth:auto;">
 							<!-- Pages -->
 							<!-- Gifts -->
 							{%for tipo in tipos%}
@@ -154,7 +161,7 @@
 								<a href="javascript:void(0);" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">
 									{{tipo}}
 								</a>
-								<ul class="dropdown-menu">
+								<ul class="dropdown-menu color-e">
 									<li>
 										<div class="mega-menu-content">
 											<div class="container">
@@ -166,7 +173,7 @@
 													</div>
 													{%for producto in tipo.mas_vendidos%}
 													<div class="col-md-3 col-sm-4 col-xs-4 md-margin-bottom-30">
-														<a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><img class="product-offers img-responsive" src="{%if producto.get_image%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/31.jpg'%}{%endif%}" alt=""></a>
+														<a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><img class="product-offers img-responsive" src="{{producto.get_imagen2_url}}" alt="{{producto.get_nombre}}" width="250" height="250"></a>
 													</div>
 													{%endfor%}
 												</div><!--/end row-->
@@ -187,8 +194,9 @@
 		<!--=== End Header v5 ===-->
 
 {%block contenido%}
+
 <!--=== Product Content ===-->
-<div class="container ">
+<div class="container " style="margin-top:30px;">
 
 	<div class="heading heading-v1 margin-bottom-40">
 		<h2>Ultimos productos agregados</h2>
@@ -197,9 +205,12 @@
 	<!--=== Illustration v2 ===-->
 	<div class="row illustration-v2">
 		{% for producto in productos %}
-		<div class="col-md-3 col-sm-6 md-margin-bottom-30">
+		<div class="col-md-3 col-sm-6 col-xs-12 md-margin-bottom-30" style="margin-top:30px;">
 			<div class="product-img">
-				<a href="shop-ui-inner.html"><img class="full-width img-responsive" width="370" height="555" src="{%if producto.get_image%}{{producto.get_image}}{%else%}{% static 'unify-ecommerce/img/blog/25.jpg' %}{%endif%}" alt=""></a>
+				<a href="{% url 'producto_ver_mas' producto_id=producto.id %}">
+					<img class="full-width img-responsive" width="370" height="555" src="{{producto.get_imagen_url}}"
+						 alt="{{producto.get_nombre}}">
+				</a>
 				<a class="product-review" href="{% url 'producto_ver_mas' producto_id=producto.id %}">Ver mas</a>
 				<a class="add-to-cart" href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
 				{% if not producto.hay_stock_s %}
@@ -208,10 +219,10 @@
 				<div class="shop-rgba-dark-green rgba-banner">Nuevo</div>
 				{%endif%}
 			</div>
-			<div class="product-description product-description-brd">
+			<div class="product-description product-description-brd" >
 				<div class="overflow-h margin-bottom-5">
-					<div class="pull-left">
-						<h4 class="title-price"><a href="shop-ui-inner.html">{{producto.get_nombre}}</a></h4>
+					<div class="pull-left" style="max-width:171px;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;">
+						<h4 class="title-price"><a href="{% url 'producto_ver_mas' producto_id=producto.id %}" >{{producto.get_nombre}}</a></h4>
 						<span class="gender text-uppercase">{{producto.get_tipo}}</span>
 						<span class="gender">{{producto.get_categoria}}</span>
 					</div>
@@ -244,57 +255,28 @@
 				</div>
 				{%for producto in mayores_ofertas %}
 				{%if producto.get_descuento %}
-				<div class="thumb-product">
-					<img class="thumb-product-img" src="{%if producto.get_imagen%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/30-thumb.jpg' %}{%endif%}" alt="">
-					<div class="thumb-product-in">
-						<h4><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
-						<span class="thumb-product-type">{{producto.get_tipo}} - {{producto.get_tipo}}</span>
-					</div>
-					<ul class="list-inline overflow-h">
-						<li class="thumb-product-price line-through">${{producto.get_precio}}</li>
-						<li class="thumb-product-price">${{producto.get_precio_descuento}}</li>
-						<li class="thumb-product-purchase"><a href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}"><i class="fa fa-shopping-cart"></i></a></li>
-					</ul>
-				</div>
-				{%else%}
-				<p>Sin oferta</p>
+					{%include 'aux_productos.html'%}
 				{%endif%}
 				{%endfor%}
+				{%if not mayores_ofertas%}
+				<p>No hay ofertas disponibles en este momento.</p>
+				{%endif%}
+
 			</div>
 			<div class="col-md-4">
 				<div class="heading heading-v1 margin-bottom-20">
 					<h2>Mas Vendidos</h2>
 				</div>
 				{%for producto in mas_vendidos%}
-				<div class="thumb-product">
-					<img class="thumb-product-img" src="{%if producto.get_imagen%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/30-thumb.jpg' %}{%endif%}" alt="">
-					<div class="thumb-product-in">
-						<h4><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
-						<span class="thumb-product-type">{{producto.get_tipo}} - {{producto.get_tipo}}</span>
-					</div>
-					<ul class="list-inline overflow-h">
-						<li class="thumb-product-price">${{producto.get_precio}}</li>
-						<li class="thumb-product-purchase"><a href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}"><i class="fa fa-shopping-cart"></i></a></li>
-					</ul>
-				</div>
+					{%include 'aux_productos.html'%}
 				{%endfor%}
 			</div>
 			<div class="col-md-4 padding">
 				<div class="heading heading-v1 margin-bottom-20">
-					<h2>Mas baratos</h2>
+					<h2>Mas buscados</h2>
 				</div>
-				{%for producto in mas_baratos%}
-				<div class="thumb-product">
-					<img class="thumb-product-img" src="{%if producto.get_imagen%}{{producto.get_imagen}}{%else%}{% static 'unify-ecommerce/img/blog/30-thumb.jpg' %}{%endif%}" alt="">
-					<div class="thumb-product-in">
-						<h4><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
-						<span class="thumb-product-type">{{producto.get_tipo}} - {{producto.get_tipo}}</span>
-					</div>
-					<ul class="list-inline overflow-h">
-						<li class="thumb-product-price">${{producto.get_precio}}</li>
-						<li class="thumb-product-purchase"><a href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}"><i class="fa fa-shopping-cart"></i></a></li>
-					</ul>
-				</div>
+				{%for producto in mas_buscados%}
+					{%include 'aux_productos.html'%}
 				{%endfor%}
 			</div>
 		</div><!--/end row-->
@@ -310,9 +292,9 @@
 				</div>
 				<div class="col-md-4">
 					<div class="input-group">
-							<input type="text" class="form-control" placeholder="Email..." >
+							<input type="text" class="form-control" name="email" id="email" placeholder="Email..." >
 						<span class="input-group-btn">
-							<button class="btn" type="button"><i class="fa fa-envelope-o"></i></button>
+							<button class="btn" id="btn-email" type="button"><i class="fa fa-envelope-o"></i></button>
 						</span>
 					</div>
 				</div>
@@ -328,7 +310,7 @@
 				<div class="row">
 					<!-- About -->
 					<div class="col-md-4 md-margin-bottom-40">
-						<a href="index.html"><img class="footer-logo" src="{% static 'unify/img/logo3-dark.png' %}" alt=""></a>
+						<a href="{%url 'index'%}" ><img class="footer-logo"   src="{% static 'unify/img/logo3-dark.png' %}" alt="{{company}}"></a>
 						<br>
 						<ul class="list-unstyled address-list margin-bottom-20">
 							<li><i class="fa fa-angle-right"></i>Suipacha 2357, Córdoba Capital, Argentina</li>
@@ -354,8 +336,7 @@
 				<div class="row">
 					<div class="col-md-6">
 						<p>
-							2017 &copy; {{company}}. Todos los derechos reservados.
-
+							2017 &copy; {{company}}. Todos los derechos reservados. | <a href="www.flumetrix.com">Hecho con <i class="fa fa-heart"></i> por Flumetrix</a>
 						</p>
 					</div>
 					<div class="col-md-6">
@@ -429,7 +410,37 @@
 	<script src="{% static 'unify-ecommerce/plugins/html5shiv.js' %}"></script>
 	<script src="{% static 'unify-ecommerce/js/plugins/placeholder-IE-fixes.js' %}"></script>
 	<![endif]-->
+	<script src="{% static 'inspinia2/js/plugins/sweetalert/sweetalert.min.js' %}"></script>
 
+	<script>
+		$(document).ready(function(){
+			$("#btn-email").click(function(){
+				let email = $("#email").val();
+				if(email){
+			 		let request = $.ajax({
+						type: "GET",
+						url: "{%url 'suscribirse' %}",
+						data:{
+							"email": email
+						},
+					});
+					request.done(function(response){
+						if(response.suscripto==="true"){
+							swal("Felicitaciones", "Se ha suscripto para recibir nuestras ultimas novedades", "success");
+
+						}else{
+							swal("Error", "No hemos podido suscribirlo", "error");
+						}
+					})
+				}else{
+					 swal({
+						title: "Debe ingresar un correo",
+						text: "Ingrese el correo con el que desea suscribirse."
+					});
+				}
+			});
+		});
+	</script>
 {%block javascript %}
 {%endblock%}
 </body>

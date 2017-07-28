@@ -1,7 +1,7 @@
 from cities_light.models import City, Region
 from django.http import JsonResponse
 
-from evento.models import Evento
+from evento.models import Evento, Entrada
 
 
 def get_regions(request):
@@ -39,3 +39,11 @@ def borrar_evento(request):
 
     return JsonResponse(response)
 
+
+def asistir_entrada(request):
+    entrada_id = request.GET.get("entrada_id","")
+    entrada = Entrada.objects.get(id=entrada_id)
+    entrada.asistir()
+    response ={}
+    response["asistio"] = "true"
+    return JsonResponse(response)
