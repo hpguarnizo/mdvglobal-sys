@@ -1,0 +1,6 @@
+Felicitaciones {{entrada.get_nombre}} estas a un paso de obtener tu entrada!
+Solo debes abonar ${{entrada.get_evento}}ARS para asistir a {{entrada.get_evento.get_nombre}}.
+Puedes abonar haciendo click en el siguiente boton
+<a href="{{site_root}}{% url 'pay_entrada' entrada_id=entrada.id %}">PAGAR</a>
+
+{% include 'email/home_footer.txt' %}

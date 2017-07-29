@@ -39,6 +39,19 @@
     "pk":3
   },
   {
+    "model":"evento.estadoevento",
+    "fields":{
+      "nombre":"En Vivo"
+    },
+    "pk":4
+  },
+  {
+    "model":"evento.envivo",
+    "fields":{
+    },
+    "pk":4
+  },
+  {
     "model":"evento.estadoentrada",
     "fields":{
       "nombre":"No pagada"

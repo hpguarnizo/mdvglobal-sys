@@ -31,7 +31,7 @@ def borrar_evento(request):
     id = request.GET.get("evento_id","")
     evento = Evento.objects.get(id=id)
     response={}
-    if evento.es_gratis() or (evento.es_pago and evento.get_asistentes()==0):
+    if not evento.get_tipo().es_pago() or (evento.get_tipo().es_pago() and evento.get_asistentes()==0):
         evento.delete()
         response["borrado"] = "true"
     else:

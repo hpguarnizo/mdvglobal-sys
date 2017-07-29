@@ -1,0 +1,31 @@
+{% extends 'home_index.html' %}
+{%block list_here%}
+<li><a href="{% url 'evento_todos' %}">Convocatorias</a></li>
+<li class="active">Transmitir</li>
+{%endblock%}
+
+{%block contenido%}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-content">
+                <h3>{{evento.get_nombre}}</h3>
+                <p>Se le enviara un email a todos los participantes para que se unan a la transmicion</p>
+                <form action="{%block form%}.{%endblock%}" method="POST" class="form-horizontal" id="form">
+                    {% csrf_token %}
+                    {% include 'home_form_errors.html' %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">URL</label>
+                        <div class="col-sm-10">
+                            {{form.url}}
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit"  class="btn btn-success" id="btn">Comenzar Transmicion!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

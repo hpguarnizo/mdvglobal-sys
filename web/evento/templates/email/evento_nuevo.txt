@@ -1,6 +1,7 @@
-Se ha creado un nuevo evento:
-{{nombre}}
-Puedes registrarte haciendo click aqui:
-{{url}}
+{{evento.get_nombre}}
+{{evento.get_descripcion}}
+Puedes ver mas de la convocatoria haciendo click en el siguiente boton
+<a href="{{evento.get_url}}">VER MAS</a>
 
-{% include 'email/home_footer_unsubscribe.txt' %}
+
+{% include 'email/home_footer.txt' %}

@@ -7,6 +7,7 @@ import mercadopago
 import json
 
 from donacion.models import Donacion, Pagina
+from evento.emails import email_entrada_nueva
 from evento.models import Entrada
 from pay.models import Customer, Premium
 import os
@@ -62,6 +63,7 @@ def buy_my_entrada(request,entrada_id):
     entrada = get_object_or_404(Entrada,id=entrada_id)
     code = None
     description = None
+
     if request.POST.get('token',''):
         mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
         dic = {
@@ -82,6 +84,7 @@ def buy_my_entrada(request,entrada_id):
         if payment['status'] == 201:
             if payment['response']['status'] == 'approved':
                 entrada.pagar(entrada)
+                email_entrada_nueva(request, entrada)
                 return HttpResponseRedirect(reverse('evento_comprado',kwargs={"entrada_id":entrada.id}))
             else:
                 description = payment['response']['status']

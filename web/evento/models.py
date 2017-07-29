@@ -45,6 +45,12 @@ class EstadoEvento(models.Model):
     def es_terminado(self):
         return False
 
+    def es_en_vivo(self):
+        return False
+
+    def transmitir(self,evento):
+        pass
+
 
 class Disponible(EstadoEvento):
 
@@ -72,6 +78,15 @@ class Disponible(EstadoEvento):
             evento.set_cupo(cupo)
             evento.set_estado(Lleno.objects.all().first())
 
+    def es_en_vivo(self):
+        return False
+
+    def transmitir(self,evento):
+        evento.set_estado(EnVivo.objects.all().first())
+        evento.save()
+
+
+
 class Lleno(EstadoEvento):
 
     def es_lleno(self):
@@ -93,6 +108,13 @@ class Lleno(EstadoEvento):
         if cupo > evento.get_cupo():
             evento.set_cupo(cupo)
             evento.set_estado(Disponible.objects.all().first())
+
+    def es_en_vivo(self):
+        return False
+
+    def transmitir(self,evento):
+        evento.set_estado(EnVivo.objects.all().first())
+        evento.save()
 
 
 class Terminado(EstadoEvento):
@@ -118,6 +140,44 @@ class Terminado(EstadoEvento):
     def set_cupo(self,evento,cupo):
         pass
 
+    def es_en_vivo(self):
+        return False
+
+    def transmitir(self,evento):
+        pass
+
+
+
+class EnVivo(EstadoEvento):
+
+    def es_disponible(self):
+        return False
+
+    def es_lleno(self):
+        return False
+
+    def es_terminado(self):
+        return True
+
+    def es_en_vivo(self):
+        return True
+
+    def se_lleno(self):
+        pass
+
+    def se_lleno(self, evento):
+        pass
+
+    def terminar(self,evento):
+        pass
+
+    def set_cupo(self,evento,cupo):
+        pass
+
+    def transmitir(self,evento):
+        pass
+
+
 # Create your models here.
 class Evento(models.Model):
     nombre = models.CharField(max_length=256)
@@ -133,6 +193,20 @@ class Evento(models.Model):
     ciudad = models.ForeignKey(City,blank=True,null=True)
     tipo_evento = models.ForeignKey(TipoEvento)
     estado = models.ForeignKey(EstadoEvento,default=1)
+    url = models.URLField(null=True,blank=True)
+
+    def transmitir(self,url):
+        self.url = url
+        self.get_estado().transmitir(self)
+
+    def __str__(self):
+        return self.nombre
+
+    def get_imagen_url(self):
+        if self.imagen:
+            return self.imagen
+        else:
+            return "/static/unify-ecommerce/img/blog/14.jpg"
 
     def get_cupo(self):
         return self.cupo
@@ -190,10 +264,11 @@ class Evento(models.Model):
         else:
             return True
 
-    def set_data(self,nombre,descripcion,cupo,precio,direccion,imagen):
+    def set_data(self,nombre,descripcion,cupo,precio,direccion,imagen,fecha):
         self.nombre = nombre
         self.descripcion = descripcion
         self.get_estado().set_cupo(self,cupo)
+        self.fecha=fecha
 
         aux_precio = self.precio
         self.precio = precio
@@ -290,6 +365,9 @@ class Entrada(models.Model):
     provincia = models.ForeignKey(Region,null=True,blank=True)
     estado = models.ForeignKey(EstadoEntrada,null=True,blank=True,default=1)
     evento = models.ForeignKey(Evento,null=True,blank=True)
+
+    def __str__(self):
+        return self.estado
 
     def set_codigo(self):
         self.codigo = hex((self.id * 2) + random.randrange(start=1, stop=100) + 1439)[2:]

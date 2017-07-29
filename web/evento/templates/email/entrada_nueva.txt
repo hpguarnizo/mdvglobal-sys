@@ -1,3 +1,5 @@
-Felicitaciones {{entrada.get_nombre}} ya tiene su entrada para {{entrada.get_evento.get_nombre}} su codigo es {{entrada.get_codigo}}.
+Felicitaciones {{entrada.get_nombre}} aqui tienes tu entrada!
+Este es tu codigo de entrada por si te lo piden {{entrada.get_codigo|upper}} para
+{{entrada.get_evento.get_nombre}} te avisaremos 24hs antes para que no te olvides.
 
-{% include 'email/home_footer_unsubscribe.txt' %}
+{% include 'email/home_footer.txt' %}

@@ -5,6 +5,7 @@ from evento.views import *
 urlpatterns =[
     url(r'entradas/$',EventoEntradas, name='evento_entradas'),
     url(r'lista/$',ListaEventos, name='evento_lista'),
+    url(r'transmitir/(?P<evento_id>(\d*))/$',Transmitir, name='evento_transmitir'),
     url(r'seleccionar/(?P<evento_id>(\d*))/$',EventoSeleccionado, name='evento_seleccionar'),
     url(r'completar/perfil/(?P<evento_id>(\d*))/$',CompletarPerfil, name='evento_completar_perfil'),
     url(r'sin/registro/(?P<evento_id>(\d*))/$',EntradaSinRegistro, name='evento_sin_registro'),

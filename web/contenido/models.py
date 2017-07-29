@@ -27,6 +27,9 @@ class CategoriaContenido(models.Model):
     def set_nombre(self,nombre):
         self.nombre= nombre
 
+    def get_cantidad(self):
+        return len(Contenido.objects.filter(categoria=self))
+
 
 class TipoContenido(models.Model):
     nombre = models.CharField(max_length=256)
@@ -46,6 +49,10 @@ class TipoContenido(models.Model):
     def es_documento(self):
         return (self.nombre=="Documento")
 
+    def get_cantidad(self):
+        return len(Contenido.objects.filter(tipo=self))
+
+
 class Contenido(models.Model):
     nombre = models.CharField(max_length=256)
     descripcion = models.TextField()
@@ -63,7 +70,10 @@ class Contenido(models.Model):
         return self.descripcion
 
     def get_imagen(self):
-        return self.imagen
+        if self.imagen:
+            return self.imagen
+        else:
+            return '/static/unify/img/team/img1-md.jpg'
 
     def get_categoria(self):
         return self.categoria

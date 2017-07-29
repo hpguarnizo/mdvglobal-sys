@@ -30,7 +30,7 @@ class FormEvento(forms.ModelForm):
 class FormEventoEdit(forms.ModelForm):
     class Meta:
         model = Evento
-        fields = ['nombre', 'descripcion', 'imagen', 'cupo', 'precio', 'direccion']
+        fields = ['nombre', 'descripcion', 'imagen', 'cupo', 'precio', 'direccion',"fecha"]
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control b-r-xl', 'required': True, "maxlength": "256"}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control b-r-xl', 'required': True}),
@@ -38,6 +38,7 @@ class FormEventoEdit(forms.ModelForm):
                 attrs={'class': 'form-control b-r-xl presencial', "min": "1", "placeholder": "50"}),
             'precio': forms.NumberInput(attrs={'class': 'form-control b-r-xl', "min": "0", "placeholder": "47.99"}),
             'direccion': forms.TextInput(attrs={'class': 'form-control b-r-xl presencial', "maxlength": "256"}),
+            'fecha': forms.DateInput(attrs={'class': 'form-control b-r-xl', 'required': True}),
         }
 
 
@@ -62,3 +63,6 @@ class EntradaForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super(EntradaForm,self).__init__(*args,**kwargs)
         self.fields["provincia"].choices = Region.objects.none()
+
+class EventoTransmitir(forms.Form):
+    url = forms.URLInput(attrs={"class":"form-control b-r-xl","required":True})

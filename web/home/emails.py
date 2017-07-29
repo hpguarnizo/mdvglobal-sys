@@ -81,4 +81,4 @@ def send_email(email,subject,message,message_html,from_email,auth_user,auth_pass
         else:
             send_mail(subject=subject, message=message,from_email="", auth_user=settings.EMAIL_HOST_USER,
                       auth_password=settings.EMAIL_HOST_PASSWORD,
-                      recipient_list=[email], fail_silently=True, html_message=message_html)
+                      recipient_list=[email], fail_silently=False, html_message=message_html)

@@ -168,7 +168,7 @@
 												<div class="row">
 													<div class="col-md-3 col-sm-12 col-xs-12 md-margin-bottom-30">
 														<h3 class="mega-menu-heading">{{tipo}}</h3>
-														<p>Estos son los productos mas vendidos. O puedes ver todos prescionando en el siguiente boton.</p>
+														<p>Estos son los productos mas vendidos. O puedes ver todos presionando en el siguiente boton.</p>
 														<a href="{% url 'tienda_productos_busqueda' %}?tipo={{tipo}}"><button type="button" class="btn-u btn-u-dark">Ver todos</button></a>
 													</div>
 													{%for producto in tipo.mas_vendidos%}

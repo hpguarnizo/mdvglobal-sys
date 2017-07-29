@@ -108,15 +108,20 @@ def ContenidoMostrar(request):
             )
         contenidos = Contenido.objects.filter(qset).distinct()
         results = contenidos[comienzo:comienzo+10]
+        if len(results)==0:
+            comienzo= comienzo-10
+            results = contenidos[comienzo:comienzo + 10]
+
+        pagina = int((comienzo+10)/10)
         return render(request, 'contenido.html',
                       {'tipos': TipoContenido.objects.all(), 'categorias': CategoriaContenido.objects.all(),
                        'contenido': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo,
-                       "compra":get_compra(request),"cantidad":len(contenidos)})
-
+                       "compra":get_compra(request),"cantidad":len(contenidos),"pagina":pagina})
+    pagina = int((comienzo+10)/10)
     return render(request,'contenido.html',{'tipos':TipoContenido.objects.all(),
                                             'categorias':CategoriaContenido.objects.all(),
                                             'contenido':Contenido.objects.all().order_by("-fecha")[comienzo:comienzo+10],
-                                            "compra":get_compra(request),"comienzo":comienzo})
+                                            "compra":get_compra(request),"comienzo":comienzo,"pagina":pagina})
 
 
 def ContenidoVerMas(request, contenido_id):

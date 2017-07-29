@@ -54,10 +54,16 @@
                             </a>
                         </div>
                     </li>
+                    <li class="{% block home %} {% endblock %}">
+                        <a  href="{% url 'home' %}">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">Inicio</span>
+                        </a>
+                    </li>
                     <li class="{% block eventos %} {% endblock %}">
                         <a  href="{% url 'evento_todos' %}">
-                            <i class="fa fa-home"></i>
-                            <span class="nav-label">Eventos</span>
+                            <i class="fa fa-users"></i>
+                            <span class="nav-label">Convocatorias</span>
                         </a>
                     </li>
                     <li class="{%block donaciones%}{%endblock%}">

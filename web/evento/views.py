@@ -4,8 +4,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from evento.emails import email_evento_nuevo, email_entrada_nueva
-from evento.forms import FormEvento, FormEventoEdit, PerfilCompletar, EntradaForm
+from evento.emails import email_evento_nuevo, email_entrada_nueva, email_entrada_pago
+from evento.forms import FormEvento, FormEventoEdit, PerfilCompletar, EntradaForm, EventoTransmitir
 from evento.models import Evento, Disponible, Entrada, Pagada
 from home.forms import LoginForm
 from tienda.models import Producto
@@ -18,7 +18,7 @@ def EventoEntradas(request):
     return render(request,"evento_entradas.html",{"evento":evento})
 
 def ListaEventos(request):
-    eventos = Evento.objects.filter(estado__in=[1,2]).order_by('fecha')
+    eventos = Evento.objects.filter(estado__in=[1,2]).order_by('-fecha')
     return render(request,'evento_lista.html',{'eventos':eventos,"compra":get_compra(request)})
 
 
@@ -27,7 +27,7 @@ def EventoSeleccionado(request,evento_id):
 
 
 def TodosEventos(request):
-    eventos = Evento.objects.all().order_by('fecha')
+    eventos = Evento.objects.all().order_by('-fecha')
     return render(request,'evento_todos.html',{'eventos':eventos})
 
 
@@ -63,7 +63,8 @@ def EditarEvento(request):
         form = FormEventoEdit(request.POST)
         if form.is_valid():
             evento.set_data(form.cleaned_data["nombre"],form.cleaned_data["descripcion"],form.cleaned_data["cupo"],
-                            form.cleaned_data["precio"],form.cleaned_data["direccion"],form.cleaned_data["imagen"])
+                            form.cleaned_data["precio"],form.cleaned_data["direccion"],form.cleaned_data["imagen"],
+                            form.cleaned_data["fecha"])
             evento.save()
             return HttpResponseRedirect(reverse('evento_todos'))
     else:
@@ -75,7 +76,7 @@ def EventoRegistro(request,evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
 
     if user.is_authenticated:
-        if not Entrada.objects.filter(evento=evento,user=user).exists():
+        if not Entrada.objects.filter(evento=evento,user=user,estado__in=[2,3]).exists():
             if evento.get_tipo().es_pago():
                 entrada = Entrada(user=user,evento=evento)
             else:
@@ -84,13 +85,17 @@ def EventoRegistro(request,evento_id):
             entrada.save()
             entrada.set_codigo()
             entrada.save()
-            email_entrada_nueva(entrada)
 
             if evento.get_tipo().es_pago():
+                email_entrada_pago(request, entrada)
                 return HttpResponseRedirect(reverse('pay_entrada', kwargs={"entrada_id": entrada.id}))
+            else:
+                email_entrada_nueva(request, entrada)
 
         else:
             entrada = Entrada.objects.get(evento=evento, user=user)
+            email_entrada_nueva(request, entrada)
+
         return HttpResponseRedirect(reverse('evento_comprado',kwargs={"entrada_id":entrada.id}))
 
     if request.method=="POST":
@@ -160,3 +165,13 @@ def CompletarPerfil(request,entrada_id):
     else:
         form = PerfilCompletar()
     return render(request,'evento_completar_perfil.html',{'form':form})
+
+def Transmitir(request,evento_id):
+    evento = get_object_or_404(Evento,id=evento_id)
+    if request.method=="POST":
+        form = EventoTransmitir(request.POST)
+        if form.is_valid():
+            evento.transmitir(form.cleaned_data["url"])
+    else:
+        form = EventoTransmitir()
+    return render(request,'evento_transmitir.html',{'form':form,'evento':evento})

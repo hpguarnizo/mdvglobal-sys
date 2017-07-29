@@ -12,7 +12,7 @@ Entradas
 {%endblock%}
 
 {%block list_here %}
-<li>Eventos</li>
+<li><a href="{% url 'evento_todos'%}">Convocatorias</a></li>
 <li class="active">Entradas</li>
 {%endblock%}
 
@@ -42,7 +42,7 @@ active
                         <tr class="gradeX">
                             <td><input type="radio" id="{{evento.id}}" class="entrada"
                                        {%if entrada.get_estado.es_validada%}checked="checked"{%endif%}></td>
-                            <td>{{entrada.get_codigo}}</td>
+                            <td><span class="label label-primary">{{entrada.get_codigo}}</span></td>
                             {% if entrada.get_user %}
                             <td>{{entrada.get_user.get_full_name}}</td>
                             <td>{{entrada.get_user.get_email}}</td>
@@ -52,7 +52,14 @@ active
                             <td>{{entrada.get_email}}</td>
                             <td>{{entrada.get_provincia}},{{evento.get_provincia.country}}</td>
                             {%endif%}
-                            <td>{{evento.get_estado}}</td>
+                            <td>
+                                {% if entrada.get_estado.es_sin_pagar%}
+                                    <span class="label label-danger">{{entrada.get_estado}}</span></td>
+                                {%elif entrada.get_estado.es_pagada%}
+                                    <span class="label label-success">{{entrada.get_estado}}</span></td>
+                                {%else%}
+                                    <span class="label label-primary">{{entrada.get_estado}}</span></td>
+                                {%endif%}
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -72,7 +79,6 @@ active
             </div>
         </div>
     </div>
-</div>
 {% endblock%}
 
 {% block javascript_custom %}
@@ -80,15 +86,14 @@ active
     <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function(){
-            $('.dataTables-example').DataTable({
+           $('.dataTables-example').DataTable({
                 pageLength: 25,
-                responsive: true,
+                responsive: false,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    { extend: 'copy'},
                     {extend: 'csv'},
-                    {extend: 'excel', title: 'ExampleFile'},
-                    {extend: 'pdf', title: 'ExampleFile'},
+                    {extend: 'excel', title: 'Excel'},
+                    {extend: 'pdf', title: 'PDF'},
 
                     {extend: 'print',
                      customize: function (win){
@@ -100,12 +105,33 @@ active
                                     .css('font-size', 'inherit');
                     }
                     }
-                ]
+                ],
+                 language: {
+                    processing:     "Tratamiento en curso",
+                    search:         "Buscar&nbsp;:",
+                    lengthMenu:    "Mostrar _MENU_ filas",
+                    info:           "Viendo de _START_ a _END_ de _TOTAL_ resultados",
+                    infoEmpty:      "0 resultados",
+                    infoFiltered:   "(filtrado _MAX_ del total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Cargando...",
+                    zeroRecords:    "No hay filas para mostrar",
+                    emptyTable:     "No hay datos disponibles en la tabla",
+                    paginate: {
+                        first:      "Primero",
+                        previous:   "Anterior",
+                        next:       "Siguente",
+                        last:       "Previo"
+                    },
+                    aria: {
+                        sortAscending:  ": Tocar la columna para ordenar ascendente",
+                        sortDescending: ": Tocar la columna para ordenar descendente"
+                    }
+                }
 
             });
-
             $(".entrada").click(function(){
-            	let id = this.attr("id");
+            	let id = this.id;
             	let request = $.ajax({
             		type: "GET",
             		url: "{% url 'asistir_entrada' %}",

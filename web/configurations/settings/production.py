@@ -23,7 +23,7 @@ CSRF_COOKIE_SECURE=True
 
 ADMINS=[('Support', EMAIL_HOST_USER_SOPORTE)]
 
-ALLOWED_HOSTS = ['www.tudominio.com',]
+ALLOWED_HOSTS = ['www.mdvglobal.herokuapp.com']
 
 INSTALLED_APPS += [
      'django.contrib.staticfiles',
@@ -124,10 +124,10 @@ S3DIRECT_DESTINATIONS = {
     },
 
     #  Allow staff users to upload any MIME type
-    # 'pdfs': {
-    #     'key': 'uploads/pdfs',
-    #     'auth': lambda u: u.is_staff
-    # },
+    'pdfs': {
+        'key': 'uploads/pdfs',
+        'auth': lambda u: u.is_staff
+    },
 
     # Allow anybody to upload jpeg's and png's. Limit sizes to 5kb - 20mb
     'images': {
@@ -141,11 +141,11 @@ S3DIRECT_DESTINATIONS = {
     },
 
     # # Allow authenticated users to upload mp4's
-    # 'videos': {
-    #     'key': 'uploads/videos',
-    #     'auth': lambda u: u.is_authenticated(),
-    #     'allowed': ['video/mp4']
-    # },
+    'videos': {
+        'key': 'uploads/videos',
+        'auth': lambda u: u.is_staff,
+        'allowed': ['video/mp4']
+    },
 
     # Allow anybody to upload any MIME type with a custom name function
     'custom_filename': {

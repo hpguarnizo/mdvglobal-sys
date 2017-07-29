@@ -75,13 +75,12 @@ Todas las donaciones
         $(document).ready(function(){
             $('.dataTables-example').DataTable({
                 pageLength: 25,
-                responsive: true,
+                responsive: false,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    { extend: 'copy'},
                     {extend: 'csv'},
-                    {extend: 'excel', title: 'ExampleFile'},
-                    {extend: 'pdf', title: 'ExampleFile'},
+                    {extend: 'excel', title: 'Excel'},
+                    {extend: 'pdf', title: 'PDF'},
 
                     {extend: 'print',
                      customize: function (win){
@@ -93,9 +92,32 @@ Todas las donaciones
                                     .css('font-size', 'inherit');
                     }
                     }
-                ]
+                ],
+                 language: {
+                    processing:     "Tratamiento en curso",
+                    search:         "Buscar&nbsp;:",
+                    lengthMenu:    "Mostrar _MENU_ filas",
+                    info:           "Viendo de _START_ a _END_ de _TOTAL_ resultados",
+                    infoEmpty:      "0 resultados",
+                    infoFiltered:   "(filtrado _MAX_ del total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Cargando...",
+                    zeroRecords:    "No hay filas para mostrar",
+                    emptyTable:     "No hay datos disponibles en la tabla",
+                    paginate: {
+                        first:      "Primero",
+                        previous:   "Anterior",
+                        next:       "Siguente",
+                        last:       "Previo"
+                    },
+                    aria: {
+                        sortAscending:  ": Tocar la columna para ordenar ascendente",
+                        sortDescending: ": Tocar la columna para ordenar descendente"
+                    }
+                }
 
             });
+
 
         });
     </script>

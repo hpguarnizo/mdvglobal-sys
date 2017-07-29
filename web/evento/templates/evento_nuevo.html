@@ -11,7 +11,7 @@
 {%endblock%}
 
 {%block here%}
-Nuevo Evento
+Nueva Convocatorias
 {%endblock%}
 
 {%block eventos%}
@@ -20,8 +20,8 @@ active
 
 
 {%block list_here%}
-<li><a href="{% url 'evento_todos' %}">Eventos</a></li>
-<li class="active">Nuevo Evento</li>
+<li><a href="{% url 'evento_todos' %}">Convocatorias</a></li>
+<li class="active">Nueva Convocatoria</li>
 {%endblock%}
 
 {%block contenido%}
@@ -44,7 +44,6 @@ active
                             {{form.descripcion}}
                         </div>
                     </div>
-                    {% block campos_no_edit %}
                     <div class="form-group" id="data_1">
                         <label class="col-sm-2 control-label">Fecha</label>
                         <div class="col-sm-10">
@@ -56,6 +55,7 @@ active
                             </div>
                         </div>
                     </div>
+                    {% block campos_no_edit %}
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Categoria</label>
                         <div class="col-sm-10">
@@ -119,6 +119,9 @@ active
                         <label class="col-sm-2 control-label">Imagen</label>
                         <div class="col-sm-10">
                             {{form.imagen}}
+                             <span class="help-block m-b-none">
+                                 Tamaño recomendado 360x400
+                            </span>
                         </div>
                     </div>
                     <div class="text-center">

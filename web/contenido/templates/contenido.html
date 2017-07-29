@@ -1,11 +1,13 @@
 {% extends 'index.html'%}
 {%load staticfiles%}
+{%block style%}ligth{%endblock%}
 
 {%block head %}
-
+	<link rel="stylesheet" href="{% static 'unify/plugins/image-hover/css/img-hover.css'%}">
+	<!-- CSS Page Style -->
+	<link rel="stylesheet" href="{% static 'unify/css/pages/page_job.css'%}">
 
 {%endblock%}
-{%block wrapper %}style="background-color:#FFF; "{%endblock%}
 
 {%block form%}
 <form action="{% url 'contenido_mostrar'%}" method="GET" id="form">
@@ -18,147 +20,134 @@
 
 
 {%block contenido%}
-	<!--=== Content Part ===-->
- 		<div class="content container" >
- 			<div class="row">
- 				<div class="col-md-3 filter-by-block md-margin-bottom-60">
- 					<h1 class="text-center" style="background-color:#4765a0; font-weight:bold; color:#FFF; border-radius:10px;">Filtar Por</h1>
- 					<div class="panel-group" id="accordion"  >
- 						<div class="panel panel-default" >
- 							<div class="panel-heading" style="background-color:#fff; color: #687074;">
- 								<h2 class="panel-title" >
- 									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
- 										Tipo
- 										<i class="fa fa-angle-down"></i>
- 									</a>
- 								</h2>
- 							</div>
- 							<div id="collapseOne" class="panel-collapse collapse in">
- 								<div class="panel-body" style="background-color:#fff;">
- 									<ul class="list-unstyled checkbox-list" >
- 										{%for tipo in tipos%}
-                                        <li>
- 											<label class="checkbox" style="color:#4765a0; margin:10px;">
-                                                {%ifequal tipo.get_nombre tipo_q%}
- 												<input type="checkbox" class="btn-r-tipo" id="{{tipo}}" name="checkbox" checked/>
-                                                {%else%}
- 												<input type="checkbox" class="btn-tipo" id="{{tipo}}" name="checkbox"/>
-                                                {%endifequal%}
- 												<i></i>
- 												{{tipo}}
- 											</label>
- 										</li>
-                                        {%endfor%}
- 									</ul>
- 								</div>
- 							</div>
- 						</div>
- 					</div><!--/end panel group-->
+<!--=== Job Img ===-->
+		<div class="job-img">
+			<div class="job-banner">
+				<h2>Todos los recursos que necesitas estan aqui</h2>
+			</div>
+			<div class="job-img-inputs">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-8 md-margin-bottom-10">
+							<input type="text" placeholder="Busca el contenido que necesites" class="form-control rounded-4x">
+						</div>
+						<div class="col-sm-4">
+							<button type="button" class="btn-u btn-block btn-u-dark rounded-4x"> Buscar Contenido</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--=== End Job Img ===-->
+		<div class="container bg-color-light">
+		<div class="row">
+			<div class="col-md-3">
+			<!-- Job Content -->
+			<div class="headline"><h2>Filtrar Por</h2></div>
+			<div class="row job-content margin-bottom-40">
+				<div class="col-md-10 col-sm-12 col-md-offset-1 md-margin-bottom-40">
+					<h3 class="heading-md"><strong>Tipo</strong></h3>
+					<ul class="list-unstyled categories">
+						{%for tipo in tipos%}
+						<li><a href="#">
+							{%ifequal tipo.get_nombre tipo_q%}
+								<input type="checkbox" class="btn-r-tipo" id="{{tipo}}" name="checkbox" checked/>
+							{%else%}
+								<input type="checkbox" class="btn-tipo" id="{{tipo}}" name="checkbox"/>
+							{%endifequal%}
+							{{tipo}}</a>
+							<small class="hex">({{tipo.get_cantidad}} contenidos)</small>
+						</li>
+						{%endfor%}
+					</ul>
+				</div>
+				<div class="col-md-10 col-sm-12 col-md-offset-1 md-margin-bottom-40">
+					<h3 class="heading-md"><strong>Categoria</strong></h3>
+					<ul class="list-unstyled categories">
+						{%for cat in categorias %}
+						<li><a href="#">{%ifequal cat.get_nombre categoria_q%}
+										<input type="checkbox" id="{{cat}}" class="btn-r-categoria" name="checkbox" checked/>
+									{%else%}
+										<input type="checkbox" id="{{cat}}" class="btn-categoria" name="checkbox" />
+									{%endifequal%}
+									{{cat}}</a> <small class="hex">({{cat.get_cantidad}} contenidos)</small>
+						</li>
+						{%endfor%}
+					</ul>
+				</div>
+			</div>
+			<!-- End Job Content -->
+		</div>
+			<div class="col-md-9">
+		<!--=== Job Team ===-->
+		<div class="bg-color-light">
+				<div class="title-box-v2">
+					<div class="headline">
+						<h2>{%if q%}Resultados de busqueda
+							<span class="color-green">{{q}}{%else%}Ultimos Contenidos{%endif%}</span>
+						</h2>
+					</div>
+				</div>
 
- 					<div class="panel-group" id="accordion-v2">
- 						<div class="panel panel-default">
- 							<div class="panel-heading" style="background-color:#fff; color: #687074;">
- 								<h2 class="panel-title">
- 									<a data-toggle="collapse" data-parent="#accordion-v2" href="#collapseTwo">
- 										Categoria
- 										<i class="fa fa-angle-down"></i>
- 									</a>
- 								</h2>
- 							</div>
- 							<div id="collapseTwo" class="panel-collapse collapse in">
- 								<div class="panel-body" style="background-color:#fff;">
- 									<ul class="list-unstyled checkbox-list">
- 										{%for cat in categorias %}
-                                        <li>
- 											<label class="checkbox" style="color:#4765a0; margin:10px;">
-                                                {%ifequal cat.get_nombre categoria_q%}
- 												<input type="checkbox" id="{{cat}}" class="btn-r-categoria" name="checkbox" checked/>
-                                                {%else%}
- 												<input type="checkbox" id="{{cat}}" class="btn-categoria" name="checkbox" />
-                                                {%endifequal%}
- 												<i></i>
- 												{{cat}}
- 											</label>
- 										</li>
-                                        {%endfor%}
- 									</ul>
- 								</div>
- 							</div>
- 						</div>
- 					</div><!--/end panel group-->
- 				</div>
+				<div class="row">
+					{%for cont in contenido%}
+					<!-- Team v2 -->
+					<div class="col-md-4 col-sm-6 col-xs-12">
+						<div class="team-v2">
+							<a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}">
+								<img class="img-responsive" src="{{cont.get_imagen}}" alt="{{cont.get_nombre}}" />
+							</a>
+							<div class="inner-team">
+								<a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}"><h3>{{cont.get_nombre}}</h3></a>
+								<small class="color-green">{{cont.get_acceso}},{{cont.get_tipo}},{{cont.get_categoria}}</small>
+								<div class="pull-left">
+									<p style="max-width:171px;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;">
+										{{cont.get_descripcion}}
+									</p>
+								</div>
+								<br>
+								<hr>
+								<a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}">
+									<button class="btn  rounded-4x">VER</button>
+								</a>
+							</div>
+						</div>
+					</div>
+					<!-- End Team v2 -->
+				   {%endfor%}
+				</div>
+						<!-- Begin Inner Results -->
+				<div class="margin-bottom-30"></div>
+				<div class="text-center">
+					<ul class="pagination">
+						<li><a href="#" class="btn-atras">«</a></li>
+						<li class="active"><a href="#" >{{pagina}}</a></li>
+						<li><a href="#"  class="btn-atras">»</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--=== End Job Team ===-->
+</div>
+</div>
 
- 				<div class="col-md-9">
- 					<div class="row margin-bottom-5">
- 						<div class="col-sm-4 result-category">
- 							<h2>{%if q%}{{q}}{%else%}Contenido{%endif%}</h2>
- 						</div>
- 					</div><!--/end result category-->
 
- 					<div class="filter-results">
- 						<div class="row illustration-v2 margin-bottom-30">
- 							{%for cont in contenido%}
-                            {% ifequal forloop.counter 1 %}
-                                <div class="row illustration-v2 margin-bottom-30">
-                            {%endifequal%}
-                            {% ifequal forloop.counter 4 %}
-                                <div class="row illustration-v2 margin-bottom-30">
-                            {%endifequal%}
-                            {% ifequal forloop.counter 7 %}
-                                <div class="row illustration-v2 margin-bottom-30">
-                            {%endifequal%}
-
-                            <div class="col-md-4">
- 								<div class="product-img product-img-brd">
- 									<a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}"><img class="full-width img-responsive" src="{% static 'unify-ecommerce/img/blog/16.jpg'%}" alt=""></a>
- 									<div class="bg-primary text-center" style="">{{cont.get_acceso}}</div>
-
- 								</div>
- 								<div class="product-description product-description-brd margin-bottom-30 ">
- 									<div class="overflow-h margin-bottom-5">
- 										<div class="text-center">
- 											<h4 class="title-price"><a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}">{{cont.get_nombre}}</a></h4>
- 											<span class="gender text-uppercase">{{cont.get_tipo}}</span>-
- 											<span class="gender">{{cont.get_categoria}}</span><br>
-                                            <a class="btn btn-success" href="{% url 'contenido_ver_mas' contenido_id=cont.id %}">Ver mas</a>
-
- 										</div>
- 									</div>
- 								</div>
- 							</div>
-                            {% ifequal forloop.counter 3 %}
-                                </div>
-                            {%endifequal%}
-                            {% ifequal forloop.counter 6 %}
-                                </div>
-                            {%endifequal%}
-                            {% ifequal forloop.counter 9 %}
-                                </div>
-                            {%endifequal%}
-
-                            {%endfor%}
-                            {% ifequal productos|length 1%}</div>{%endifequal%}
-                            {% ifequal productos|length 2%}</div>{%endifequal%}
-                            {% ifequal productos|length 4%}</div>{%endifequal%}
-                            {% ifequal productos|length 5%}</div>{%endifequal%}
-                            {% ifequal productos|length 7%}</div>{%endifequal%}
-                            {% ifequal productos|length 8%}</div>{%endifequal%}
-                    <div class="text-center">
- 						<ul class="pagination pagination-v2">
- 							<li><a href="#" class="btn-atras"><i class="fa fa-angle-left"></i></a></li>
- 							<li><a href="#" class="btn-sig"><i class="fa fa-angle-right"></i></a></li>
- 						</ul>
- 					</div><!--/end pagination-->
- 				</div>
- 			</div><!--/end row-->
- 		</div><!--/end container-->
-            </div>
-        </div>
- 		<!--=== End Content Part ===-->
-
+<!--/container-->
+<!--=== End Search Results ===-->
 {%endblock%}
 
 {%block javascript%}
+<script type="text/javascript" src="{% static 'unify/plugins/image-hover/js/touch.js'%}"></script>
+<script type="text/javascript" src="{% static 'unify/plugins/image-hover/js/modernizr.js'%}"></script>
+
+<script type="text/javascript" src="{% static 'unify/js/plugins/style-switcher.js'%}"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		StyleSwitcher.initStyleSwitcher();
+	});
+</script>
+
+
 <script>
 $(document).ready(function(){
 let formulario = document.getElementById("form");

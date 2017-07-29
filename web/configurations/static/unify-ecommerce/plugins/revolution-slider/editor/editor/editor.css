@@ -113,9 +113,6 @@ menu						{	border-top:2px solid #eee;border-bottom:2px solid #eee; padding:0px 
 .menubutton.noborder:hover,
 .menubutton.noborder:visited	{	border-right:none !important; padding-right:0px; margin-right:0px;}
 
-.icon-responsive			{	width:35px; height:28px; background:url(assets/icon-responsive.jpg) no-repeat center top 100%; float:left;margin-right:10px;}
-.icon-fullscreen			{	width:35px; height:28px; background:url(assets/icon-fullscreen.jpg) no-repeat center top 100%; float:left;margin-right:10px;}
-.icon-fullwidth				{	width:35px; height:28px; background:url(assets/icon-fullwidth.jpg) no-repeat center top 100%; float:left;margin-right:10px;}
 .redcircle					{	background-color:#e33a0c; font-size:12px; padding:1px 7px; margin-right:10px; color:#fff; font-weight:400; border-radius:15px;-moz-border-radius:15px;-webkit-border-radius:15px;}
 
 
@@ -158,7 +155,6 @@ menu						{	border-top:2px solid #eee;border-bottom:2px solid #eee; padding:0px 
 .centertop,.centerbottom	{	line-height:1px; height:10px; }
 .centertop					{	margin-top:7px;}
 
-.tryme						{	background:url(assets/tryme.png); background-size:100%; width:83px; height:25px; position:absolute; right:-89px; top:50%; margin-top:-12px; margin-left:-20px;}
 
 
 .tool:hover .tooltext		{	color:#fff; background-color:#e33a0c; border-color:#e33a0c;}
@@ -198,7 +194,6 @@ menu						{	border-top:2px solid #eee;border-bottom:2px solid #eee; padding:0px 
 .flist ul, .flist li		{	list-style: none;}
 .flist ul					{	margin-bottom:35px;}
 .flist ul li				{	margin-bottom:12px; position: relative; padding-left:30px;}
-.flist ul li:before			{	content:" ";width:14px;height:14px; position:absolute; left:0px; top:2px;background:url(assets/check.png) center bottom;}
 .flist ul li:first-child:before	{	content:""; background:none;}
 .flist ul li:first-child	{	font-weight:700;}
 
@@ -229,8 +224,6 @@ table.features span		{	font-size:13px;line-height:16px !important; color:#888; f
 
 table.features tr.titles	{	color:#888; font-size:13px;  font-weight:400; text-align:center;}
 
-.yo							{	background:url(assets/check.png) no-repeat; width:14px;height:13px; margin:auto;}
-.nop						{	background:url(assets/no.png) no-repeat; width:12px;height:14px; margin:auto;}
 
 
 
@@ -623,7 +616,6 @@ input[name="css_font-size"], input[name="css_font-weight"]{
 #css-editor-accordion .ui-accordion-content.ui-helper-reset.ui-widget-content.ui-corner-bottom.ui-accordion-content-active,
 #css_static_editor_wrap .ui-accordion-content.ui-helper-reset.ui-widget-content.ui-corner-bottom.ui-accordion-content-active
 {
-	background: url(../images/grain.png) repeat #F1F1F1;
 	-webkit-border-radius: 0px 0px 3px 3px !important;
 	border-radius: 0px 0px 3px 3px !important;
 	border:1px solid #dfdfdf;

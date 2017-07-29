@@ -1,43 +1,42 @@
 {% extends 'index.html' %}
 {% load staticfiles %}
-    {% block contenido %}
-   <div class="promo-bg-pattern-v1-dark promo-bg-fixed content-xlg parallaxBg" style="padding:20px;">
-        <div class="row news-v1">
-        <div class="title-v1">
-            <h1 >Ultimos Eventos</h1>
-            <p> Conocé más acerca de nuestros eventos en pocos pasos.</p>
-        </div>
-
-    {%for evento in eventos%}
-
-    
-    <div class="{%if not forloop.counter|divisibleby:2%}col-md-offset-2{%endif%} col-md-4 text-center" style="margin-bottom:100px;">
-
-        
-        {%if producto.get_imagen%}
-        <img src="{{evento.get_imagen}}" alt="{{evento.get_nombre}}">
-        {%else%}
-        <img src="{% static 'unify-ecommerce/img/blog/14.jpg'%}" alt="{{evento.get_nombre}}"
-             class="img-responsive center-block">
-        {%endif%}
-        <h2 style="color: #FFF; font-weight: bold; font-size: 2.3rem;">{{evento.get_nombre}}</h2>
-        <p style=" font-size: 1.7rem;color:#fff;"><i class="fa fa-clock-o"></i> {{evento.get_fecha}}</p>
-        <ul class="list-inline news-v1-info">
-            <li>{{evento.get_categoria}}</li>
-            <li>{{evento.get_tipo}}</li></br>
-            {% if evento.get_estado.es_lleno %}
-            <a  class="btn-u btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block rounded-4x margin-right-10" style="margin-top: 20px;"><p style="color: red; margin:0; padding: 0; font-weight: bold;">SIN CUPO</p></a>
-            {%else%}
-            <a href="{% url 'evento_seleccionar' evento_id=evento.id %}" class="btn-u btn-brd btn-brd-width-2 btn-brd-hover
-								 btn-u-light btn-u-block rounded-4x margin-right-10" style="margin-top: 20px; font-weight: bold;">Ver más</a>
-            {%endif%}
+{% block contenido %}
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs">
+    <div class="container">
+        <h1 class="text-center">ULTIMAS CONVOCATORIAS</h1>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
+<!--=== Team v1 ===-->
+<div class="promo-bg-pattern-v1-dark promo-bg-fixed parallaxBg">
+    <div class="container content-md team-v1 ">
+        <ul class="list-unstyled row">
+            {%for evento in eventos%}
+            <li class="col-sm-4 col-xs-12 md-margin-bottom-30">
+                <div class="team-img">
+                    <img class="img-responsive" src="{{evento.get_imagen_url}}" alt="{{evento.get_nombre}}">
+                    <ul>
+                        <li><a href="{% url 'evento_seleccionar' evento_id=evento.id %}">
+                            VER MAS</a>
+                        </li>
+                    </ul>
+                </div>
+                <h3><a href="{% url 'evento_seleccionar' evento_id=evento.id %}">{{evento.get_nombre}}</a></h3>
+                <h4> {{evento.get_fecha}}</h4>
+                <p>{{evento.get_categoria}}-{{evento.get_tipo}}</p>
+            </li>
+            {%endfor%}
         </ul>
+</div>
+</div>
+{% endblock %}
 
-    </div>
-{%endfor%}
-        </div>
-    </div>
-
-        
-    {% endblock %}
-
+{%block javascript%}
+<script type="text/javascript" src="{% static 'unify/js/plugins/style-switcher.js'%}"></script>
+<script>
+    $(document).ready(function(){
+        StyleSwitcher.initStyleSwitcher();
+    });
+</script>
+{%endblock%}
