@@ -32,30 +32,30 @@ Contenidos
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="row">
-                    <div class="col-xs-3 col-md-1 col-md-offset-9 text-center">
+                    <div class="col-xs-4 col-md-1 col-md-offset-9 text-center">
                         <small>Nuevo</small>
                     </div>
-                    <div class="col-xs-3 col-md-1  text-center">
+                    <div class="col-xs-4 col-md-1  text-center">
                         <small>Editar</small>
                     </div>
-                    <div class="col-xs-3 col-md-1  text-center">
+                    <div class="col-xs-4 col-md-1  text-center">
                         <small>Eliminar</small>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-3 col-md-1 col-md-offset-9 text-center">
+                    <div class="col-xs-4 col-md-1 col-md-offset-9 text-center">
                         <a href="{% url 'contenido_nuevo' %}">
                             <button class="btn btn-success">
                                 <i class="fa fa-plus fa-2x"></i>
                             </button>
                         </a>
                     </div>
-                    <div class="col-xs-3 col-md-1  text-center">
+                    <div class="col-xs-4 col-md-1  text-center">
                         <button class="btn btn-success" id="edit">
                             <i class="fa fa-edit fa-2x"></i>
                         </button>
                     </div>
-                    <div class="col-xs-3 col-md-1  text-center">
+                    <div class="col-xs-4 col-md-1  text-center">
                         <button class="btn btn-success" id="eliminar">
                             <i class="fa fa-times fa-2x"></i>
                         </button>
@@ -78,10 +78,18 @@ Contenidos
                         {%for cont in contenidos %}
                         <tr class="gradeX">
                             <td><input type="radio" name="contenido_id" id="{{cont.id}}"></td>
-                            <td>{{cont.get_nombre}}</td>
-                            <td>{{cont.get_categoria}}</td>
-                            <td>{{cont.get_tipo}}</td>
-                            <td>{{cont.get_acceso}}</td>
+                            <td><a href="{% url 'contenido_editar' %}?contenido_id={{cont.id}}">{{cont.get_nombre}}</a></td>
+                            <td><span class="label label-default">{{cont.get_categoria}}</span></td>
+                            <td><span class="label label-default">{{cont.get_tipo}}</span></td>
+                            <td>
+                                {% if cont.get_acceso.es_gratis%}
+                                    <span class="label label-danger">{{cont.get_acceso}}</span>
+                                {%elif cont.get_acceso.es_premium%}
+                                    <span class="label label-warning">{{cont.get_acceso}}</span>
+                                {%else%}
+                                    <span class="label label-primary">{{cont.get_acceso}}</span>
+                                {%endif%}
+                            </td>
                             <td><a href=""><button><i class="fa fa-file"></i></button></a></td>
                         </tr>
                         {% endfor %}
@@ -112,15 +120,14 @@ Contenidos
         <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function(){
-            $('.dataTables-example').DataTable({
+          $('.dataTables-example').DataTable({
                 pageLength: 25,
-                responsive: true,
+                responsive: false,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    { extend: 'copy'},
                     {extend: 'csv'},
-                    {extend: 'excel', title: 'ExampleFile'},
-                    {extend: 'pdf', title: 'ExampleFile'},
+                    {extend: 'excel', title: 'Excel'},
+                    {extend: 'pdf', title: 'PDF'},
 
                     {extend: 'print',
                      customize: function (win){
@@ -132,11 +139,33 @@ Contenidos
                                     .css('font-size', 'inherit');
                     }
                     }
-                ]
+                ],
+                 language: {
+                    processing:     "Tratamiento en curso",
+                    search:         "Buscar&nbsp;:",
+                    lengthMenu:    "Mostrar _MENU_ filas",
+                    info:           "Viendo de _START_ a _END_ de _TOTAL_ resultados",
+                    infoEmpty:      "0 resultados",
+                    infoFiltered:   "(filtrado _MAX_ del total)",
+                    infoPostFix:    "",
+                    loadingRecords: "Cargando...",
+                    zeroRecords:    "No hay filas para mostrar",
+                    emptyTable:     "No hay datos disponibles en la tabla",
+                    paginate: {
+                        first:      "Primero",
+                        previous:   "Anterior",
+                        next:       "Siguente",
+                        last:       "Previo"
+                    },
+                    aria: {
+                        sortAscending:  ": Tocar la columna para ordenar ascendente",
+                        sortDescending: ": Tocar la columna para ordenar descendente"
+                    }
+                }
 
             });
 
-        });
+
 
         $("#edit").click(function(){
             id = getId();
@@ -199,7 +228,7 @@ Contenidos
         function getId(){
             return $("input[name=contenido_id]:checked").attr("id");
         }
-
+    });
     </script>
 
 {% endblock %}
