@@ -1,4 +1,4 @@
-FROM codi0/python:latest
+FROM codi0/ubuntu-base:1.6
 
 # Install python and pip
 ADD ./web/requirements/base.txt /tmp/base.txt
