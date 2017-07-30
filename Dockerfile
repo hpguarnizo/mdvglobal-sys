@@ -1,8 +1,9 @@
-FROM codi0/ubuntu-base:1.6
+FROM python:3.6.1
 
 # Install python and pip
 ADD ./web/requirements/base.txt /tmp/base.txt
 ADD ./web/requirements/production.txt /tmp/requirements.txt
+
 
 # Install dependencies
 RUN pip install -r /tmp/requirements.txt

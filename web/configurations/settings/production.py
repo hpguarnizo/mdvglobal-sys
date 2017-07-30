@@ -23,7 +23,7 @@ CSRF_COOKIE_SECURE=True
 
 ADMINS=[('Support', EMAIL_HOST_USER_SOPORTE)]
 
-ALLOWED_HOSTS = ['www.mdvglobal.herokuapp.com']
+ALLOWED_HOSTS = ['mdvglobal.herokuapp.com']
 
 INSTALLED_APPS += [
      'django.contrib.staticfiles',
