@@ -96,6 +96,76 @@ def buy_my_entrada(request,entrada_id):
     return render(request,'pay_entrada.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
                                               "entrada":entrada})
 
+def buy_my_premium(request):
+    code = None
+    description = None
+    user = request.user
+
+    if request.POST.get('token',''):
+        mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
+        dic = {
+            "transaction_amount": 150,
+            "token": "%s" %request.POST.get('token',''),
+            "installments": 1,
+            "description": "Suscripcion Premium",
+            "payment_method_id": request.POST.get('paymentMethodId',''),
+            "payer": {
+                "email": os.environ.get("EMAIL_MP")
+            },
+            "external_reference": user.id,
+            "statement_descriptor": user.get_full_name(),
+        }
+        payment = mp.post("/v1/payments", dic )
+        json.dumps(payment, indent=4)
+
+        if payment['status'] == 201:
+            if payment['response']['status'] == 'approved':
+
+                return HttpResponseRedirect(reverse('home_panel'))
+            else:
+                description = payment['response']['status']
+                code = 201
+        else:
+            code = payment['response']['cause'][0]['code']
+            description = payment['response']['cause'][0]['description']
+
+    return render(request,'pay_premium.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP')})
+
+def buy_my_ministerial(request):
+    code = None
+    description = None
+    user = request.user
+
+    if request.POST.get('token',''):
+        mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
+        dic = {
+            "transaction_amount": 999,
+            "token": "%s" %request.POST.get('token',''),
+            "installments": 1,
+            "description": "Suscripcion Miniterial",
+            "payment_method_id": request.POST.get('paymentMethodId',''),
+            "payer": {
+                "email": os.environ.get("EMAIL_MP")
+            },
+            "external_reference": user.id,
+            "statement_descriptor": user.get_full_name(),
+        }
+        payment = mp.post("/v1/payments", dic )
+        json.dumps(payment, indent=4)
+
+        if payment['status'] == 201:
+            if payment['response']['status'] == 'approved':
+
+                return HttpResponseRedirect(reverse('home_panel'))
+            else:
+                description = payment['response']['status']
+                code = 201
+        else:
+            code = payment['response']['cause'][0]['code']
+            description = payment['response']['cause'][0]['description']
+
+    return render(request,'pay_ministerial.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP')})
+
 def buy_my_productos(request,compra_id):
     compra = get_object_or_404(Compra,id=compra_id)
 
