@@ -27,7 +27,7 @@ def email_verify_password(code,user):
 
 
 def email_welcome(user):
-    context = {'name': user.get_first_name(),'url_panel':  Site.objects.get_current().domain + reverse('turn_all'),
+    context = {'name': user.get_first_name(),'url_panel':  Site.objects.get_current().domain + reverse('home_panel'),
                'company':os.environ.get("COMPANY","")}
 
     message_html = get_template("email/home_welcome.html").render(context)

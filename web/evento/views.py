@@ -138,10 +138,11 @@ def EntradaSinRegistro(request,evento_id):
             else :
                 entrada = Entrada.objects.get(email=form.cleaned_data["email"],evento=evento)
 
-            email_entrada_nueva(entrada)
             if evento.get_tipo().es_pago() and entrada.get_estado().es_sin_pagar():
+                email_entrada_pago(request,entrada)
                 return HttpResponseRedirect(reverse('pay_entrada', kwargs={"entrada_id": entrada.id}))
             else:
+                email_entrada_nueva(request, entrada)
                 entrada.pagar(entrada)
                 return HttpResponseRedirect(reverse('evento_comprado', kwargs={"entrada_id": entrada.id}))
 

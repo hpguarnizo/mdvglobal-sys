@@ -321,13 +321,13 @@ class Compra(models.Model):
         return DetalleCompra.objects.filter(compra=self)
 
     def get_total(self):
-        if self.total:
-            return self.total
-        else:
+        if self.get_estado().es_incompleta:
             total= 0
             for detalle in self.get_detalle():
                 total = total + detalle.get_parcial()
             return total
+        else:
+            return self.total
 
     def set_token(self):
         self.token = _generate_code()

@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.template.loader import get_template, render_to_string
+from django.template.loader import  render_to_string
 
 from home.emails import send_email_hola
 

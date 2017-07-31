@@ -359,11 +359,13 @@ def EnvioProductos(request,compra_id):
 
 def get_compra(request):
     user = request.user
+    compra = None
     if user.is_authenticated and Compra.objects.filter(user=user,estado__id=1).exists():
         compra =Compra.objects.get(user=user,estado__id=1)
     elif "token_compra" in request.session:
         token =request.session["token_compra"]
-        compra = Compra.objects.get(token=token, estado__id=1)
+        if Compra.objects.filter(token=token, estado__id=1).exists():
+            compra = Compra.objects.get(token=token, estado__id=1)
     else:
         return None
     return compra

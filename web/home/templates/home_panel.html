@@ -1,10 +1,146 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'index.html'%}
+{%load staticfiles%}
+{%block contenido%}
+<!--=== Content Part ===-->
+		<div class="container content">
+			<div class="row">
+				<div class="col-md-4 md-margin-bottom-50">
+					<!-- Our Services -->
+					<div class="service-block service-block-blue">
+						<i class="icon-custom icon-color-light rounded-x icon-line icon-diamond"></i>
+						<h2 class="heading-md">Convocatorias</h2>
+						<p>
+                            {% if entradas %}
+                            Aqui se puede ver las convocatorias que se ha inscripto.</p>
+                            {%else%}
+                            Aun no se ha inscripto a ninguna convocatoria, puede unirse a una haciendo <a href="{% url 'evento_lista'%}" style="color:#FFF;"><strong>click aqui.</strong></a>
+                            {%endif%}
+					</div>
+					<!-- End Our Services -->
 
-</body>
-</html>
+					<!-- Recent Works -->
+					<div class="owl-carousel-v1 owl-work-v1 margin-bottom-40">
+						<div class="headline"><h2 class="pull-left">Inscripto en</h2>
+							<div class="owl-navigation">
+								<div class="customNavigation">
+									<a class="owl-btn prev-v2"><i class="fa fa-angle-left"></i></a>
+									<a class="owl-btn next-v2"><i class="fa fa-angle-right"></i></a>
+								</div>
+							</div><!--/navigation-->
+						</div>
+
+						<div class="owl-recent-works-v1">
+							{% for entrada in entradas%}
+                            <div class="item">
+								<a href="{% url 'evento_convocatoria' evento_id=entrada.get_evento.id%}">
+									<em class="overflow-hidden">
+										<img class="img-responsive" src="{{entrada.get_evento.get_imagen_url}}" alt="{{entrada.get_evento.get_nombre}}">
+									</em>
+									<span>
+										<strong>{{entrada.get_evento.get_nombre}}</strong>
+										<i>{{entrada.get_estado}}</i>
+									</span>
+								</a>
+							</div>
+                            {%endfor%}
+						</div>
+					</div>
+					<!-- End Recent Works -->
+				</div><!--/col-md-4-->
+
+				<div class="col-md-4 md-margin-bottom-50">
+					<!-- Our Services -->
+					<div class="service-block service-block-u">
+						<i class="icon-custom icon-color-light rounded-x fa fa-shopping-cart"></i>
+						<h2 class="heading-md">Productos</h2>
+						<p>
+                            {%if productos %}
+                            Aqui estan se mostraran su(s) ultimo(s) productos adquiridos.
+                            {%else%}
+                            No ha comprado ningun producto puede visitar la tienda haciendo <a href="{%url 'tienda_productos'%}" style="color:#FFF;"><strong>click aqui</strong></a>
+                            {%endif%}
+                        </p>
+					</div>
+					<!-- End Our Services -->
+
+
+
+					<div class="margin-bottom-30 clearfix"></div>
+
+					<!--Testimonials Block-->
+					<div class="carousel slide testimonials testimonials-v1" id="testimonials-1">
+						<div class="carousel-inner">
+							{%for comp in productos%}
+                                {%for deta in comp.get_detalle%}
+                                    <div class="item {% if forloop.parentloop.first %}active{%endif%}">
+                                        <p>{{deta.get_producto.get_categoria}}, {{deta.get_producto.get_tipo}}, ${{deta.get_producto.get_precio}}
+                                            {% if deta.get_producto.get_tipo.es_libro_fisico%},Cantidad:{{deta.get_cantidad}}{%endif%}</p>
+                                        <div class="testimonial-info">
+                                            <img alt="{{deta.get_producto.get_nombre}}" width="60" height="60" src="{{deta.get_producto.get_imagen2_url}}">
+                                            <span class="testimonial-author">
+                                                {{deta.get_producto.get_nombre}}
+                                                <em>{% if deta.get_producto.get_tipo.es_libro_fisico%}
+                                                        {{deta.get_compra.get_estado}}{%if deta.get_compra.get_estado.es_enviado%},Seguimiento:
+                                                        <a href="{{deta.get_compra.get_url_envio}}">{{deta.get_compra.get_codigo}}</a>{%endif%}
+                                                    {%else%}
+                                                        <a target="_blank" href="{{deta.get_producto.get_archivo}}">Descargar</a>
+                                                    {%endif%}
+                                                </em>
+                                            </span>
+                                        </div>
+                                 </div>
+                                {%endfor%}
+                            {%endfor%}
+						</div>
+                        {% if productos%}
+						<div class="carousel-arrow">
+							<a data-slide="prev" href="#testimonials-1" class="left carousel-control">
+								<i class="fa fa-angle-left"></i>
+							</a>
+							<a data-slide="next" href="#testimonials-1" class="right carousel-control">
+								<i class="fa fa-angle-right"></i>
+							</a>
+						</div>
+                        {%endif%}
+					</div>
+					<!--End Testimonials Block-->
+				</div><!--/col-md-4-->
+
+				<div class="col-md-4 md-margin-bottom-50">
+					<!-- Our Services -->
+					<div class="service-block service-block-red">
+						<i class="icon-custom icon-color-light rounded-x icon-line icon-fire"></i>
+						<h2 class="heading-md">Suscripcion</h2>
+						<p>
+                        {% if not user.get_plan.es_gratis%}
+                            {% if user.get_customer.remaining_days %}
+                                Tu suscripción {{user.get_plan}} finaliza en {{user.get_customer.remaining_days}} días. El
+                                {{user.get_customer.date_finish}}
+                            {% else %}
+                                Usuario de prueba con suscripcion ilimitada
+                            {%endif%}
+                        {%else%}
+                            No tiene suscripcion puede adquirir una haciendo <a href="{% url 'pay_plans'%}" style="color:#FFF;"><strong>click aqui</strong></a>
+                        {%endif%}
+                        </p>
+					</div>
+					<!-- End Our Services -->
+
+					<p>{% if not user.get_plan.es_gratis%} Puede cancelar sus suscripcion haciendo click aqui{%endif%}</p><br>
+
+					</div><!--/col-md-4-->
+			</div><!--/row-->
+		</div><!--/container-->
+		<!--=== End Content Part ===-->
+{%endblock%}
+
+{%block javascript%}
+	<script type="text/javascript" src="{% static 'unify/js/pages/page_contacts.js'%}"></script>
+	<script type="text/javascript" src="{% static 'unify/js/plugins/owl-recent-works.js'%}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			OwlRecentWorks.initOwlRecentWorksV3();
+		});
+	</script>
+
+{%endblock%}

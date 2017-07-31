@@ -12,10 +12,10 @@ from django.views.generic.edit import FormView
 
 from contenido.models import Contenido
 from donacion.models import Donacion
-from evento.models import Evento
+from evento.models import Evento, Entrada
 from home.emails import email_verify_password, email_welcome, email_contact_technical, \
     email_contact_commercial
-from tienda.models import Producto
+from tienda.models import Producto, Compra
 from .forms import SignupForm, LoginForm, SupportForm
 
 
@@ -35,41 +35,44 @@ def JuanBallistreri(request):
 
 
 def PanelUsuario(request):
-    return render(request,'home_panel.html')
+    user = request.user
+    return render(request,'home_panel.html',{'entradas':Entrada.objects.filter(user=user),
+                                             'productos':Compra.objects.filter(user=user).order_by("-fecha")})
 
-class SignupView(FormView):
+def SignupView(request):
     template_name = 'home_signup.html'
     form_class = SignupForm
 
-    def form_valid(self, form):
-        first_name = form.cleaned_data['first_name']
-        email = form.cleaned_data['email']
-        password = form.cleaned_data['password']
+    if request.method=="POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
 
-        user = MyUser.objects.filter(email=email)
-        if len(user)==0:
-            user = MyUser.objects.create_user(email=email,password=password,first_name=first_name,username=email,
-                                              verify_email= False)
+            user = MyUser.objects.filter(email=email)
+            if len(user)==0:
+                user = MyUser.objects.create_user(email=email,password=password,first_name=first_name,username=email,
+                                                  verify_email= False)
 
-        else:
-            user=user[0]
-            if user.verify_email:
-                form.add_error("email","El email ya se encuentra registrado")
-                return super(SignupView, self).form_invalid(form)
             else:
-                code = CodeValidator.objects.filter(user=user)
-                code.delete()
+                user=user[0]
+                if user.verify_email:
+                    form.add_error("email","El email ya se encuentra registrado")
+                    return render(request, template_name, {'form': form})
+                else:
+                    code = CodeValidator.objects.filter(user=user)
+                    code.delete()
 
-        code = CodeValidator(code=_generate_code(), user=user)
-        code.save()
+            code = CodeValidator(code=_generate_code(), user=user)
+            code.save()
 
-        email_verify_password(code,user)
+            email_verify_password(code,user)
 
-        return super(SignupView, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse('signup_email_sent_page')
-
+            return HttpResponseRedirect(reverse('signup_email_sent_page',kwargs={"email":email}))
+    else:
+        form = SignupForm()
+    return render(request,template_name,{'form':form})
 
 class SignupEmailSentView(TemplateView):
     template_name = 'home_signup_email_sent.html'
@@ -116,8 +119,10 @@ class LoginView(FormView):
     def get(self, request,**kwargs):
         user = request.user
         if user.is_authenticated:
-            return HttpResponseRedirect(reverse('home'))
-
+            if user.is_staff:
+                return HttpResponseRedirect(reverse('home'))
+            else:
+                return HttpResponseRedirect(reverse('home_panel'))
         return render(request,self.template_name,{'form':LoginForm()})
 
     def form_valid(self, form):
@@ -139,8 +144,10 @@ class LoginView(FormView):
         return super(LoginView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('home')
-
+        if self.request.user.is_staff:
+            return reverse('home')
+        else:
+            return reverse('home_panel')
 
 class LogoutView(View):
     def get(self, request):

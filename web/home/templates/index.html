@@ -78,7 +78,7 @@
 										<button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
 										 rounded-4x margin-right-10"
 												style="font-family:sans-serif;">
-											<i class="fa fa-circle"></i> Transmision en Vivo
+											<i class="fa fa-circle"></i> En Vivo
 										</button>
 									</a>
 								</li>
@@ -131,7 +131,9 @@
 										<a href="{% url 'tienda_carrito' %}">
 											<button type="button" class="btn-u"><i class="fa fa-shopping-cart" ></i> Carrito</button>
 										</a>
+										{% if compra%}
 										<span class="shc-total">Total: <strong>${{compra.get_total}}</strong></span>
+										{%endif%}
 									</div>
 								</li>
 								<li class="menu-icons">
@@ -464,7 +466,7 @@
 								<li><a href="{% url 'donacion_mas' %}">Donaciones</a></li>
 								<li><a href="{% url 'tienda_productos' %}">Tienda</a></li>
 								<li><a href="{% url 'contenido_mostrar' %}">Contenido</a></li>
-								<li><a href="">Transmision en Vivo</a></li>
+								<li><a href="{% url 'evento_en_vivo'%}">Transmision en Vivo</a></li>
 								<li><a href="#">Blog</a></li>
 							</ul>
 						</div>
@@ -499,7 +501,7 @@
 						<div class="col-md-8 sm-margon-bottom-10">
 							<ul class="list-inline terms-menu">
 								<li class="silver"> &copy; 2017 {{company}} todos los derechos reservados.</li>
-								<li class="silver"><a href="www.flumetrix.com">Hecho con <i class="fa fa-heart"></i> por Flumetrix</a></li>
+								<li class="silver"><a target="_blank" href="https://www.flumetrix.com">Hecho con <i class="fa fa-heart"></i> por Flumetrix</a></li>
 							</ul>
 						</div>
 						<div class="col-md-4">
