@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12 text-center">
             {% if evento.get_estado.es_en_vivo%}
-                {{evento.get_url}}
+                {{evento.get_transmision}}
             {%else%}
                 {% if evento.get_tipo.es_prescencial%}
                     <h2>Esta convocatoria no ha empezado</h2>

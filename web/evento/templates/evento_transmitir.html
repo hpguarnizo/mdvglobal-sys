@@ -8,8 +8,9 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-            <div class="ibox-content">
+            <div class="ibox-content text-center">
                 <h3>{{evento.get_nombre}}</h3>
+                <p>Recuerda que cuando finalize la transmicion <strong>deberas finalizarla</strong></p>
                 <p>Se le enviara un email a todos los participantes para que se unan a la transmicion</p>
                 <form action="{%block form%}.{%endblock%}" method="POST" class="form-horizontal" id="form">
                     {% csrf_token %}

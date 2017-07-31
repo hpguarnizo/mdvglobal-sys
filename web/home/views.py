@@ -27,7 +27,7 @@ def IndexView(request):
     cant_contenido = Contenido.objects.all().__len__
     return render(request,'index.html',{'cant_eventos':cant_eventos,'cant_productos':cant_productos,
                                         'cant_donaciones':cant_donaciones,'cant_contenido':cant_contenido,
-                                        "compra":get_compra(request)})
+                                        "compra":get_compra(request),"en_vivo":Evento.objects.filter(estado=4).exists()})
 
 def JuanBallistreri(request):
     contenidos = (Contenido.objects.filter(acceso=1).order_by("-fecha") | \

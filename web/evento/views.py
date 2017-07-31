@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from evento.emails import email_evento_nuevo, email_entrada_nueva, email_entrada_pago
+from evento.emails import email_evento_nuevo, email_entrada_nueva, email_entrada_pago, email_evento_inicia
 from evento.forms import FormEvento, FormEventoEdit, PerfilCompletar, EntradaForm, EventoTransmitir
 from evento.models import Evento, Disponible, Entrada, Pagada
 from home.forms import LoginForm
@@ -172,6 +172,8 @@ def Transmitir(request,evento_id):
         form = EventoTransmitir(request.POST)
         if form.is_valid():
             evento.transmitir(form.cleaned_data["url"])
+            email_evento_inicia(request,evento)
+            return HttpResponseRedirect(reverse('evento_convocatoria',kwargs={"evento_id":evento.id}))
     else:
         form = EventoTransmitir()
     return render(request,'evento_transmitir.html',{'form':form,'evento':evento})

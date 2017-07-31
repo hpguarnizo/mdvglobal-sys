@@ -1,0 +1,4 @@
+{{evento.get_nombre}}
+La convocatoria ha iniciado date prisa y unete a la sala para no perderte nada.
+Entra ya haciendo click en el siguiente boton
+<a href="{% url 'evento_convocatoria' evento_id=evento.id%}">ENTRAR AHORA</a>

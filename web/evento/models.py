@@ -281,6 +281,9 @@ class Evento(models.Model):
     def set_cupo(self,cupo):
         self.cupo = cupo
 
+    def get_transmision(self):
+        return self.url
+
     def get_url(self):
         return Site.objects.get_current().domain + reverse('evento_seleccionar',kwargs={'evento_id':self.id})
 
