@@ -70,8 +70,9 @@ class Producto(models.Model):
     def __str__(self):
         return "%s-%s" %(self.nombre,self.tipo)
 
-    def get_imagen(self):
+    def get_imagen2(self):
         return self.imagen2
+
 
     def get_imagen2_url(self):
         if self.imagen2:

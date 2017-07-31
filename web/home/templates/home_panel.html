@@ -32,7 +32,11 @@
 						<div class="owl-recent-works-v1">
 							{% for entrada in entradas%}
                             <div class="item">
-								<a href="{% url 'evento_convocatoria' evento_id=entrada.get_evento.id%}">
+								<a href="{% if entrada.get_evento.get_estado.es_pagada or entrada.get_evento.get_estado.es_validada%}
+								{% url 'evento_convocatoria' evento_id=entrada.get_evento.id%}
+                                {%else%}
+                                {% url 'pay_entrada' entrada_id=entrada.id%}
+                                {%endif%}">
 									<em class="overflow-hidden">
 										<img class="img-responsive" src="{{entrada.get_evento.get_imagen_url}}" alt="{{entrada.get_evento.get_nombre}}">
 									</em>

@@ -36,7 +36,7 @@ def JuanBallistreri(request):
 
 def PanelUsuario(request):
     user = request.user
-    return render(request,'home_panel.html',{'entradas':Entrada.objects.filter(user=user),
+    return render(request,'home_panel.html',{'entradas':Entrada.objects.filter(user=user,evento__estado__in=[1,2]),
                                              'productos':Compra.objects.filter(user=user).order_by("-fecha")})
 
 def SignupView(request):
