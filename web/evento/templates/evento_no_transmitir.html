@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+{% load staticfiles %}
+{% block contenido %}
+    <div class="promo-bg-pattern-v1-dark promo-bg-fixed content-xlg parallaxBg">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 >No hay ninguna convocatoria transmitiendo en vivo en este momento</h1>
+                <p >Puedes verificar en las convocatorias dispoibles cuando es el proximo evento</p>
+                <a class="btn-u btn-brd btn-brd-width-2 btn-brd-hover
+                             btn-u-light btn-u-block rounded-4x margin-right-10" href="{% url 'evento_lista' %}" style="margin-top: 30px; ">Ver Convocatorias</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

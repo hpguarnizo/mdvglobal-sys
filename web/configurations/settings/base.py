@@ -99,6 +99,8 @@ TEMPLATES = [
                 'home.context_processors.dashboard',
                 'home.context_processors.site',
                 'home.context_processors.company',
+                'home.context_processors.compra',
+                'home.context_processors.en_vivo',
 
                 # Python Social Auth Context Processors
                 'social_django.context_processors.backends',

@@ -8,8 +8,6 @@ from evento.emails import email_evento_nuevo, email_entrada_nueva, email_entrada
 from evento.forms import FormEvento, FormEventoEdit, PerfilCompletar, EntradaForm, EventoTransmitir
 from evento.models import Evento, Disponible, Entrada, Pagada
 from home.forms import LoginForm
-from tienda.models import Producto
-from tienda.views import get_compra
 
 
 def EventoEntradas(request):
@@ -19,11 +17,11 @@ def EventoEntradas(request):
 
 def ListaEventos(request):
     eventos = Evento.objects.filter(estado__in=[1,2]).order_by('-fecha')
-    return render(request,'evento_lista.html',{'eventos':eventos,"compra":get_compra(request)})
+    return render(request,'evento_lista.html',{'eventos':eventos})
 
 
 def EventoSeleccionado(request,evento_id):
-    return render(request,'evento_seleccionar.html',{'evento':Evento.objects.get(id=evento_id),"compra":get_compra(request)})
+    return render(request,'evento_seleccionar.html',{'evento':Evento.objects.get(id=evento_id)})
 
 
 def TodosEventos(request):
@@ -122,7 +120,7 @@ def EventoRegistro(request,evento_id):
 
 def EventoComprado(request,entrada_id):
     entrada = get_object_or_404(Entrada,id=entrada_id)
-    return render(request,'evento_comprado.html',{'entrada':entrada,"compra":get_compra(request)})
+    return render(request,'evento_comprado.html',{'entrada':entrada})
 
 
 def EntradaSinRegistro(request,evento_id):
@@ -168,6 +166,10 @@ def CompletarPerfil(request,entrada_id):
 
 def Transmitir(request,evento_id):
     evento = get_object_or_404(Evento,id=evento_id)
+    if Evento.objects.filter(estado=4).exists():
+        evento = Evento.objects.get(estado=4)
+        evento.finalizar_transmision()
+        return HttpResponseRedirect(reverse("evento_todos"))
     if request.method=="POST":
         form = EventoTransmitir(request.POST)
         if form.is_valid():
@@ -181,3 +183,10 @@ def Transmitir(request,evento_id):
 def Convocatoria(request,evento_id):
     evento = get_object_or_404(Evento,id=evento_id)
     return render(request,'evento_convocatoria.html',{"evento":evento})
+
+def TransmisionEnVivo(request):
+    if Evento.objects.filter(estado=4):
+        evento = Evento.objects.get(estado=4)
+        return HttpResponseRedirect(reverse('evento_convocatoria',kwargs={"evento_id":evento.id}))
+    else:
+        return render(request,'evento_no_transmitir.html')

@@ -74,18 +74,22 @@
 							<ul class="menu-icons-list" >
 								{% if not en_vivo%}
 								<li class="menu-icons" >
-									<button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
-									 rounded-4x margin-right-10"
-											style="font-family:sans-serif;">
-										<i class="fa fa-circle"></i> Transmision en Vivo
-									</button>
+									<a href="{% url 'evento_en_vivo'%}">
+										<button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x margin-right-10"
+												style="font-family:sans-serif;">
+											<i class="fa fa-circle"></i> Transmision en Vivo
+										</button>
+									</a>
 								</li>
 								{%else%}
 								<li class="menu-icons" >
-									<button class="btn-u  btn-en-vivo btn-brd btn-brd-width-2 btn-u-light btn-u-block
-									 rounded-4x margin-right-10">
-										<i class="fa fa-play" style="color:#FFF;"></i> Transmision en Vivo
-									</button>
+									<a href="{% url 'evento_en_vivo'%}">
+										<button class="btn-u  btn-en-vivo btn-brd btn-brd-width-2 btn-u-light btn-u-block
+										 rounded-4x margin-right-10">
+											<i class="fa fa-play" style="color:#FFF;"></i> Transmision en Vivo
+										</button>
+									</a>
 								</li>
 
 								<style>

@@ -2,6 +2,9 @@ import os
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.functional import SimpleLazyObject
 
+from evento.models import Evento
+from tienda.views import get_compra
+
 
 def dashboard(request):
     user = request.user
@@ -30,4 +33,14 @@ def site(request):
 def company(request):
     return {
         'company': os.environ.get("COMPANY","")
+    }
+
+def en_vivo(request):
+    return {
+        'en_vivo':Evento.objects.filter(estado=4).exists()
+    }
+
+def compra(request):
+    return {
+        'compra':get_compra(request)
     }

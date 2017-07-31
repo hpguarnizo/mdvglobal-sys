@@ -82,7 +82,7 @@ def BuscarProductos(request):
     return render(request, 'tienda_producto_buscar.html',
                   {'tipos': TipoProducto.objects.all(), 'categorias': CategoriaProducto.objects.all(),
                    'productos': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo,
-                   "cantidad":len(productos), "compra":get_compra(request), "pagina":pagina,"orden":orden})
+                   "cantidad":len(productos), "pagina":pagina,"orden":orden})
 
 def TodosProductos(request):
     comienzo = request.GET.get("comienzo","")
@@ -96,8 +96,7 @@ def TodosProductos(request):
                                                   'productos': productos,
                                                    'mayores_ofertas':Producto.objects.all().order_by("-descuento")[:3],
                                                    'mas_buscados':Producto.objects.all().order_by("-precio")[:3],
-                                                   'mas_vendidos':Producto.objects.all().order_by("-cantidad_vendidos")[:3],
-                                                   'compra':get_compra(request)})
+                                                   'mas_vendidos':Producto.objects.all().order_by("-cantidad_vendidos")[:3]})
 
 
 def ListaProductos(request):
@@ -221,7 +220,7 @@ def ProductoVerMas(request,producto_id):
     tipos = TipoProducto.objects.all()
     return render(request,'tienda_ver_mas.html',{"producto":producto,"tipos":tipos,
                                                  "productos_que_gustan":Producto.objects.all().order_by("?")[:6],
-                                                 "sin_stock":sin_stock,"compra":get_compra(request)})
+                                                 "sin_stock":sin_stock})
 
 
 def AgregarCarrito(request,producto_id):
@@ -316,7 +315,7 @@ def TiendaSinRegistro(request,producto_id):
 def Carrito(request):
     compra = get_compra(request)
     if compra:
-        return render(request, "tienda_carrito.html", {"compra": compra})
+        return render(request, "tienda_carrito.html")
     else:
         return HttpResponseRedirect(reverse('tienda_productos'))
 

@@ -51,6 +51,8 @@ class EstadoEvento(models.Model):
     def transmitir(self,evento):
         pass
 
+    def finalizar_transmision(self,estado):
+        pass
 
 class Disponible(EstadoEvento):
 
@@ -85,7 +87,8 @@ class Disponible(EstadoEvento):
         evento.set_estado(EnVivo.objects.all().first())
         evento.save()
 
-
+    def finalizar_transmision(self,estado):
+        pass
 
 class Lleno(EstadoEvento):
 
@@ -116,6 +119,8 @@ class Lleno(EstadoEvento):
         evento.set_estado(EnVivo.objects.all().first())
         evento.save()
 
+    def finalizar_transmision(self,evento):
+        pass
 
 class Terminado(EstadoEvento):
 
@@ -146,6 +151,8 @@ class Terminado(EstadoEvento):
     def transmitir(self,evento):
         pass
 
+    def finalizar_transmision(self,evento):
+        pass
 
 
 class EnVivo(EstadoEvento):
@@ -157,7 +164,7 @@ class EnVivo(EstadoEvento):
         return False
 
     def es_terminado(self):
-        return True
+        return False
 
     def es_en_vivo(self):
         return True
@@ -177,6 +184,10 @@ class EnVivo(EstadoEvento):
     def transmitir(self,evento):
         pass
 
+    def finalizar_transmision(self,evento):
+        evento.set_estado(Terminado.objects.all().first())
+        evento.save()
+
 
 # Create your models here.
 class Evento(models.Model):
@@ -194,6 +205,9 @@ class Evento(models.Model):
     tipo_evento = models.ForeignKey(TipoEvento)
     estado = models.ForeignKey(EstadoEvento,default=1)
     url = models.URLField(null=True,blank=True)
+
+    def finalizar_transmision(self):
+        self.get_estado().finalizar_transmision(self)
 
     def transmitir(self,url):
         self.url = url

@@ -16,7 +16,6 @@ from evento.models import Evento
 from home.emails import email_verify_password, email_welcome, email_contact_technical, \
     email_contact_commercial
 from tienda.models import Producto
-from tienda.views import get_compra
 from .forms import SignupForm, LoginForm, SupportForm
 
 
@@ -26,14 +25,13 @@ def IndexView(request):
     cant_donaciones = Donacion.objects.all().__len__
     cant_contenido = Contenido.objects.all().__len__
     return render(request,'index.html',{'cant_eventos':cant_eventos,'cant_productos':cant_productos,
-                                        'cant_donaciones':cant_donaciones,'cant_contenido':cant_contenido,
-                                        "compra":get_compra(request),"en_vivo":Evento.objects.filter(estado=4).exists()})
+                                        'cant_donaciones':cant_donaciones,'cant_contenido':cant_contenido,})
 
 def JuanBallistreri(request):
     contenidos = (Contenido.objects.filter(acceso=1).order_by("-fecha") | \
                   Contenido.objects.filter(acceso=2).order_by("-fecha") |\
                   Contenido.objects.filter(acceso=3).order_by("-fecha"))[:6]
-    return render(request,'juan_ballistreri.html',{"contenidos":contenidos,"compra":get_compra(request)})
+    return render(request,'juan_ballistreri.html',{"contenidos":contenidos})
 
 
 def PanelUsuario(request):
