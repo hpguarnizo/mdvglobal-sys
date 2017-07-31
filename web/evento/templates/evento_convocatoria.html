@@ -1,0 +1,20 @@
+{% extends 'index.html'%}
+{%block contenido%}
+<div class="promo-bg-pattern-v1-dark promo-bg-fixed content-xlg parallaxBg">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            {% if evento.get_estado.es_en_vivo%}
+                {{evento.get_url}}
+            {%else%}
+                {% if evento.get_tipo.es_prescencial%}
+                    <h2>Esta convocatoria no ha empezado</h2>
+                    <p>La convocatoria {{evento.get_nombre}} comienza el {{evento.get_fecha}}</p>
+                    <p>Si te has inscripto a la convocatoria te avisaremos por email cuando comienze.</p>
+                {%else%}
+                    <h2>Esta convocatoria no es online</h2>
+                {%endif%}
+            {%endif%}
+        </div>
+    </div>
+</div>
+{%endblock%}

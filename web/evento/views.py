@@ -175,3 +175,7 @@ def Transmitir(request,evento_id):
     else:
         form = EventoTransmitir()
     return render(request,'evento_transmitir.html',{'form':form,'evento':evento})
+
+def Convocatoria(request,evento_id):
+    evento = get_object_or_404(Evento,id=evento_id)
+    return render(request,'evento_convocatoria.html',{"evento":evento})
