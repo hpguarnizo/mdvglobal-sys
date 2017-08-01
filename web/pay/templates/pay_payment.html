@@ -32,7 +32,7 @@
                                                 </p>
                                                 <a class="btn btn-success">
                                                     <i class="fa fa-cc-paypal">
-                                                        Pagar via PayPal
+                                                        {% block btn_paypal%}Pagar via PayPal{%endblock%}
                                                     </i>
                                                 </a>
                                             </div>
@@ -141,7 +141,7 @@
 
                                                 <div class="row">
                                                     <div class="col-xs-12 text-center">
-                                                        <button class="btn btn-primary" style="border-radius:20px;" type="submit"><i class="fa fa-lock"></i> COMPRAR</button>
+                                                        <button class="btn btn-primary" style="border-radius:20px;" type="submit"><i class="fa fa-lock"></i>{%block btn_tar%} COMPRAR{%endblock%}</button>
                                                         <img src="{% static 'pay/img/pay_protegida.png' %}" alt="Compra Protegida"  style="width: 42px; height:42px;">
                                                     </div>
                                                     <div class="col-xs-12 text-center">

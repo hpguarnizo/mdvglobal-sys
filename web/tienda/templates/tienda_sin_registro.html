@@ -35,11 +35,7 @@
         <div class="form-group">
             {{form.direccion}}
         </div>
-        {% if evento.get_tipo.es_pago%}
-            <button type="submit" class="login-btn">Comprar Entrada</button>
-        {%else%}
-            <button type="submit" class="login-btn">Obtener Entrada</button>
-        {%endif%}
+        <button type="submit" class="login-btn">Agregar al Carrito</button>
     </form>
 
 <script>

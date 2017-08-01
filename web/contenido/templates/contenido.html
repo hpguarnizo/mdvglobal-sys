@@ -29,10 +29,10 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-8 md-margin-bottom-10">
-							<input type="text" placeholder="Busca el contenido que necesites" class="form-control rounded-4x">
+							<input type="text" placeholder="Busca el contenido que necesites" value="{{q}}" id="q2_id" class="form-control rounded-4x">
 						</div>
 						<div class="col-sm-4">
-							<button type="button" class="btn-u btn-block btn-u-dark rounded-4x"> Buscar Contenido</button>
+							<button type="button" id="btn-enviar" class="btn-u btn-block btn-u-dark rounded-4x"> Buscar Contenido</button>
 						</div>
 					</div>
 				</div>
@@ -116,7 +116,8 @@
 					<!-- End Team v2 -->
 				   {%endfor%}
 				</div>
-						<!-- Begin Inner Results -->
+					{% if contenido%}
+							<!-- Begin Inner Results -->
 				<div class="margin-bottom-30"></div>
 				<div class="text-center">
 					<ul class="pagination">
@@ -125,6 +126,7 @@
 						<li><a href="#"  class="btn-atras">»</a></li>
 					</ul>
 				</div>
+				{%endif%}
 			</div>
 		</div>
 		<!--=== End Job Team ===-->
@@ -178,6 +180,12 @@ let formulario = document.getElementById("form");
         $("#comienzo_id").val(comienzo);
         formulario.submit();
     });
+    $("#btn-enviar").click(function(){
+        $("#q").val($("#q2_id").val());
+        formulario.submit();
+    });
+
+
 
 });
 </script>

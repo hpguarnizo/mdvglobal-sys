@@ -185,7 +185,7 @@ def ListaVentas(request):
 
     else:
         compras = Compra.objects.all()[comienzo:comienzo+20]
-        if len(compras)==0:
+        if len(compras)==0 and Compra.objects.all().exists():
             comienzo = comienzo-20
             compras = Compra.objects.all()[comienzo:comienzo + 20]
 
@@ -304,7 +304,6 @@ def TiendaSinRegistro(request,producto_id):
             else :
                 compra= Compra.objects.get(email=form.cleaned_data["email"],estado=1)
             request.session["token_compra"] = compra.get_token()
-
             return HttpResponseRedirect(reverse('tienda_agregar_carrito', kwargs={"producto_id": producto_id}))
     else:
         form = CompraForm()

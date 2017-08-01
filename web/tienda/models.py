@@ -331,7 +331,8 @@ class Compra(models.Model):
             return self.total
 
     def set_token(self):
-        self.token = _generate_code()
+        self.token = str(_generate_code())
+        self.token = self.token[2:len(self.token)-1]
 
     def set_user(self,user):
         self.user = user
@@ -340,7 +341,7 @@ class Compra(models.Model):
         self.direccion = direccion
 
     def get_token(self):
-        return self.token
+        return str(self.token)
 
     def agregar_producto(self,producto,cantidad):
         if DetalleCompra.objects.filter(compra=self,producto=producto):

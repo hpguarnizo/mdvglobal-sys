@@ -145,10 +145,10 @@ Nuevo Producto
         function ocultarStock(){
             if($("#id_tipo").val() && $("#id_tipo").val()!="4"){
                 $("#stock").addClass("sr-only");
-                $("#archivo").addClass("sr-only");
+                $("#archivo").removeClass("sr-only");
             }else{
                 $("#stock").removeClass("sr-only");
-                $("#archivo").removeClass("sr-only");
+                $("#archivo").addClass("sr-only");
             }
         }
     });

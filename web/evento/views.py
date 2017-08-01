@@ -42,7 +42,7 @@ def NuevoEvento(request):
             if evento.es_fecha_valida():
                 if evento.es_precio_valido():
                     evento.save()
-                    email_evento_nuevo(evento)
+                    email_evento_nuevo(request,evento)
                     return HttpResponseRedirect(reverse('evento_todos'))
                 else:
                     form.add_error("precio", "El precio debe ser positivo")

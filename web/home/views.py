@@ -76,6 +76,7 @@ def SignupView(request):
         form = SignupForm()
     return render(request,template_name,{'form':form})
 
+
 class SignupEmailSentView(TemplateView):
     template_name = 'home_signup_email_sent.html'
 

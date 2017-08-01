@@ -108,7 +108,7 @@ def ContenidoMostrar(request):
             )
         contenidos = Contenido.objects.filter(qset).distinct()
         results = contenidos[comienzo:comienzo+10]
-        if len(results)==0:
+        if len(results)==0 and len(contenidos)>10:
             comienzo= comienzo-10
             results = contenidos[comienzo:comienzo + 10]
 
