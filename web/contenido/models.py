@@ -97,10 +97,12 @@ class Contenido(models.Model):
         self.acceso = contenido.acceso
 
     def puede_verlo(self,user):
-        if user.get_plan().es_ministerial():
-            return True
-        if user.get_plan().es_premium() and not self.get_acceso().es_ministerial():
-            return True
-        if user.get_plan().es_gratis and not self.get_acceso().es_ministerial() and not self.get_acceso().es_premium():
-            return True
+        if not user.is_anonymous():
+            if user.get_plan().es_ministerial():
+                return True
+            if user.get_plan().es_premium() and not self.get_acceso().es_ministerial():
+                return True
+            if user.get_plan().es_gratis and not self.get_acceso().es_ministerial() and not self.get_acceso().es_premium():
+                return True
+            return False
         return False

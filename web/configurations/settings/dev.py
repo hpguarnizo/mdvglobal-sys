@@ -55,3 +55,4 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, "static/media/")
 #Email default
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+

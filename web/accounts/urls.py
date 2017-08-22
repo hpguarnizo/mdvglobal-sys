@@ -1,12 +1,10 @@
 from django.conf.urls import  url
+from django.contrib.admin.views.decorators import staff_member_required
 from accounts.views import PerfilView, DeleteUser
-from django.contrib.auth.decorators import login_required
-
-
 
 urlpatterns = [
-    url(r'^profile/$', login_required(PerfilView), name='profile'),
-    url(r'^delete/user/$', login_required(DeleteUser), name='delete_user'),
+    url(r'^profile/$', staff_member_required(PerfilView), name='profile'),
+    url(r'^delete/user/$', staff_member_required(DeleteUser), name='delete_user'),
 
 ]
 

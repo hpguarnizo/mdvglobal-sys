@@ -158,10 +158,10 @@ class Producto(models.Model):
 
 
     def get_precio_descuento(self):
-        if self.descuento>0 and self.descuento<100:
-            return round(self.precio*(1-(self.descuento/100)),2)
-        else:
-            return self.precio
+        if self.descuento:
+            if self.descuento>0 and self.descuento<100:
+                return round(self.precio*(1-(self.descuento/100)),2)
+        return self.precio
 
 
 class EstadoCompra(models.Model):

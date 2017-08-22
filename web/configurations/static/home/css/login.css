@@ -69,7 +69,7 @@
 }
 .fondo{
 
-	background-color: #999;
+	background-color: #ccc;
 }
 .body{
 
@@ -102,9 +102,9 @@
 	background-color: #FFF;
 	height: 80%;
 	padding: 30px;
-	border: 2px double #d9d9d9;
+	border: 2px double #fff;
 	border-radius: 6px;
-	box-shadow: 10px 10px 10px 4px #d9d9d9;
+	box-shadow: 10px 10px 10px 4px #aaa;
 	max-height: 600px;
 	min-height: 530px;
 }

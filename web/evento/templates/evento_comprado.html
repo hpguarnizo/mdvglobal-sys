@@ -8,8 +8,11 @@
 						<h1 >¡Felicitaciones!</h1>
 						<p >Ya tienes tu entrada para {{entrada.get_evento.get_nombre}} tu codigo es <strong>{{entrada.get_codigo|upper}}</strong>.<br>
 Tambien hemos enviado un email a {{entrada.get_email}}<br> con tu codigo y te recordaremos 24hs antes del evento.</p>
-						<a class="btn-u btn-brd btn-brd-width-2 btn-brd-hover
-								 btn-u-light btn-u-block rounded-4x margin-right-10" href="{% url 'index' %}" style="margin-top: 30px; ">Volver</a>
+						<a href="{% url 'index' %}" style="margin-top: 30px; ">
+							<button class="btn btn-skype-inversed rounded-4x btn-normal" >
+								Volver
+							</button>
+						</a>
 					</div>
 				</div>
 			</div>

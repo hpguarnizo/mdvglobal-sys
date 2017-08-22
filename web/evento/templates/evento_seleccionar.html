@@ -33,11 +33,17 @@
 				{%endif%}
 				{% if evento.get_estado.es_disponible %}
 					{% if evento.get_tipo.es_pago %}
-						<a href="{% url 'evento_registro' evento_id=evento.id %}" class="btn-u btn-brd btn-brd-width-2 btn-brd-hover
-								 btn-u-light btn-u-block rounded-4x margin-right-10" >Comprar Entrada</a>
+						<a href="{% url 'evento_registro' evento_id=evento.id %}">
+							<button class="btn btn-skype-inversed rounded-4x btn-normal" >
+								Comprar Entrada
+							</button>
+						</a>
 					{%else%}
-						<a href="{% url 'evento_registro' evento_id=evento.id %}" class="btn-u btn-brd btn-brd-width-2 btn-brd-hover
-								 btn-u-light btn-u-block rounded-4x margin-right-10" >Reservar Lugar</a>
+						<a href="{% url 'evento_registro' evento_id=evento.id %}">
+							<button class="btn btn-skype-inversed rounded-4x btn-normal" >
+								Reservar Lugar
+							</button>
+						</a>
 					{%endif%}
 				{%else%}
 					<a class="btn-u btn-brd btn-brd-width-2 btn-brd-hover

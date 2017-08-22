@@ -17,6 +17,7 @@
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
 
+
 	<!-- Web Fonts -->
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin">
 
@@ -39,6 +40,421 @@
 	<!-- CSS Theme -->
 	<link rel="stylesheet" href="{% static 'unify/css/theme-colors/dark-blue.css' %}" id="style_color">
 	<link rel="stylesheet" href="{% static 'unify/css/theme-skins/dark.css' %}">
+	<link rel="stylesheet" href="{% static 'unify/plugins/brand-buttons/brand-buttons.css'%}">
+	<link rel="stylesheet" href="{% static 'unify/plugins/brand-buttons/brand-buttons-inversed.css'%}">
+	    <link href="{% static 'inspinia2/css/plugins/sweetalert/sweetalert.css' %}" rel="stylesheet">
+
+	<style>
+		/*  */
+.g-popup-wrapper {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(62,71,87,.5);
+	z-index: 9992;
+}
+@media (max-width: 600px) {
+  .g-popup-wrapper {
+    display: none !important;
+  }
+}
+
+/* Wait FB Block */
+.g-popup {
+	z-index: 9993;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.g-popup--fb {
+	width: 465px;
+	background: #fff;
+}
+.g-popup--fb-title {
+	background: #4867aa;
+	color: #fff;
+	position: relative;
+}
+.g-popup--fb-title:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  bottom: -20px;
+  left: 52px;
+  width: 0;
+  height: 0;
+  border-left: 0 inset rgba(0,0,0,0);
+  border-right: 22px inset rgba(0,0,0,0);
+  border-top: 22px solid #4867aa;
+}
+.g-popup--fb__logo {
+	display: block;
+	padding: 25px 30px;
+}
+.g-popup--fb-message {
+	border-top: solid 1px rgba(255,255,255,.3);
+	padding: 30px;
+	font-size: 20px;
+	line-height: 1.3;
+}
+.g-popup--fb-widjet {
+	padding: 45px 30px 30px;
+}
+.g-popup__close {
+	color: #333;
+	position: absolute;
+	line-height: .9;
+	font-size: 26px;
+	opacity: 1;
+	top: -13px;
+	right: -13px;
+	border-radius: 50% !important;
+}
+.g-popup__close:hover {
+	text-decoration: none;
+	color: #333;
+}
+.g-popup--fb__close,
+.g-popup--fb__close:hover {
+	color: #4867aa;
+	background: #fff;
+}
+
+/* Wait Subscribe Block */
+.g-popup--subscribe {
+	width: 630px;
+	background: #f7f7f7;
+	padding: 70px 60px 50px;
+	box-shadow: 0 0 5px #bbb;
+}
+.g-popup--subscribe h2 {
+	margin: 0 0 30px;
+}
+.g-popup--subscribe .sky-form {
+	border: none;
+}
+.g-popup--subscribe .sky-form section {
+	margin-bottom: 0;
+}
+.g-popup--subscribe label {
+	width: 100%;
+}
+.g-popup--subscribe .sky-form .input input,
+.g-popup--subscribe .sky-form .input input:active,
+.g-popup--subscribe .sky-form .input input:focus,
+.g-popup--subscribe .sky-form .input input:hover {
+	font-weight: normal;
+}
+.g-popup--subscribe .no-spam {
+	font-size: 13px;
+	color: #aaa;
+	padding-top: 25px;
+}
+.g-popup--subscribe__close,
+.g-popup--subscribe__close:hover {
+	color: #bbb;
+	background: #fff;
+}
+
+/* Wait Subscribe Block */
+.g-popup--subscribe2 {
+	width: 560px;
+	background: #18ba9b;
+	color: #fff;
+}
+.g-popup--subscribe2-message {
+	padding: 50px 50px 40px;
+}
+.g-popup--subscribe2-message .icon {
+	font-size: 62px;
+	float: left;
+	margin: 10px 30px 0 0;
+}
+.g-popup--subscribe2 h3 {
+	color: #fff;
+	font-size: 25px;
+	margin: 0 0 10px;
+}
+.g-popup--subscribe2 p {
+	color: #fff;
+	margin-bottom: 0;
+}
+.g-popup--subscribe2 .sky-form {
+	border: none;
+	background: #15a187;
+	padding: 40px 50px 35px;
+}
+.g-popup--subscribe2 .sky-form section {
+	margin-bottom: 0;
+}
+.g-popup--subscribe2 label {
+	width: 100%;
+}
+.g-popup--subscribe2 .sky-form .input input,
+.g-popup--subscribe2 .sky-form .input input:active,
+.g-popup--subscribe2 .sky-form .input input:focus,
+.g-popup--subscribe2 .sky-form .input input:hover {
+	background: #128772;
+	border-color: #128772;
+	color: #fff;
+	box-shadow: none;
+	height: 36px;
+	font-weight: normal;
+}
+.g-popup--subscribe2 ::-webkit-input-placeholder {
+  color: #fff;
+}
+.g-popup--subscribe2 :-moz-placeholder { /* Firefox 18- */
+  color: #fff;
+}
+.g-popup--subscribe2 ::-moz-placeholder {  /* Firefox 19+ */
+  color: #fff;
+}
+.g-popup--subscribe2 :-ms-input-placeholder {
+  color: #fff;
+}
+
+.g-popup--subscribe2 .btn-default,
+.g-popup--subscribe2 .btn-default.active,
+.g-popup--subscribe2 .btn-default:active,
+.g-popup--subscribe2 .btn-default.hover,
+.g-popup--subscribe2 .btn-default:hover,
+.g-popup--subscribe2 .btn-default.focus,
+.g-popup--subscribe2 .btn-default:focus {
+	color: #18ba9b;
+	border-color: #fff;
+	background: #fff;
+}
+.g-popup--subscribe2__close,
+.g-popup--subscribe2__close:hover {
+	color: #18ba9b;
+	background: #fff;
+}
+
+/* Wait Subscribe Block */
+.g-popup--subscribe3 {
+	width: 460px;
+	height: 460px;
+	background: #18ba9b;
+	color: #fff;
+	border-radius: 50% !important;
+	text-align: center;
+	padding: 110px 80px 80px;
+}
+.g-popup--subscribe3 h3 {
+	color: #fff;
+	font-size: 25px;
+	line-height: 1.4;
+	margin: 0 0 20px;
+}
+.g-popup--subscribe3 p {
+	color: #fff;
+	margin-bottom: 30px;
+}
+.g-popup--subscribe3 .sky-form {
+	border: none;
+}
+.g-popup--subscribe3 .sky-form section {
+	margin-bottom: 0;
+}
+.g-popup--subscribe3 label {
+	width: 100%;
+}
+.g-popup--subscribe3 .sky-form .input input,
+.g-popup--subscribe3 .sky-form .input input:active,
+.g-popup--subscribe3 .sky-form .input input:focus,
+.g-popup--subscribe3 .sky-form .input input:hover {
+	color: #fff;
+	height: 36px;
+	box-shadow: none;
+	background: #128772;
+	font-weight: normal;
+	border-color: #128772;
+}
+.g-popup--subscribe3 ::-webkit-input-placeholder {
+  color: #fff;
+}
+.g-popup--subscribe3 :-moz-placeholder { /* Firefox 18- */
+  color: #fff;
+}
+.g-popup--subscribe3 ::-moz-placeholder {  /* Firefox 19+ */
+  color: #fff;
+}
+.g-popup--subscribe3 :-ms-input-placeholder {
+  color: #fff;
+}
+
+.g-popup--subscribe3 .btn-default,
+.g-popup--subscribe3 .btn-default.active,
+.g-popup--subscribe3 .btn-default:active,
+.g-popup--subscribe3 .btn-default.hover,
+.g-popup--subscribe3 .btn-default:hover,
+.g-popup--subscribe3 .btn-default.focus,
+.g-popup--subscribe3 .btn-default:focus {
+	color: #18ba9b;
+	border-color: #fff;
+	background: #fff;
+}
+.g-popup--subscribe3__close,
+.g-popup--subscribe3__close:hover {
+	color: #18ba9b;
+	background: #fff;
+	top: 55px;
+	right: 55px;
+}
+
+/* Wait Discount Block */
+.g-popup--discount {
+	width: 380px;
+	height: 380px;
+	background: #18ba9b;
+	color: #fff;
+	text-align: center;
+	padding: 62px 52px 20px;
+}
+.g-popup--discount h3 {
+	color: #fff;
+	font-size: 64px;
+	font-weight: 800;
+	line-height: 1;
+	margin: 0 0 7px;
+	text-transform: uppercase;
+}
+.g-popup--discount p {
+	color: #fff;
+	font-size: 17px;
+}
+.g-popup--discount .sky-form {
+	border: none;
+}
+.g-popup--discount .sky-form section {
+	margin-bottom: 0;
+}
+.g-popup--discount label {
+	width: 100%;
+}
+.g-popup--discount .sky-form .input input,
+.g-popup--discount .sky-form .input input:active,
+.g-popup--discount .sky-form .input input:focus,
+.g-popup--discount .sky-form .input input:hover {
+	background: #128772;
+	border-color: #128772;
+	color: #fff;
+	box-shadow: none;
+	height: 36px;
+	font-weight: normal;
+}
+.g-popup--discount ::-webkit-input-placeholder {
+  color: #fff;
+}
+.g-popup--discount :-moz-placeholder { /* Firefox 18- */
+  color: #fff;
+}
+.g-popup--discount ::-moz-placeholder {  /* Firefox 19+ */
+  color: #fff;
+}
+.g-popup--discount :-ms-input-placeholder {
+  color: #fff;
+}
+
+.g-popup--discount .btn-default,
+.g-popup--discount .btn-default.active,
+.g-popup--discount .btn-default:active,
+.g-popup--discount .btn-default.hover,
+.g-popup--discount .btn-default:hover,
+.g-popup--discount .btn-default.focus,
+.g-popup--discount .btn-default:focus {
+	color: #18ba9b;
+	border-color: #fff;
+	background: #fff;
+}
+.g-popup--discount__close,
+.g-popup--discount__close:hover {
+	color: #18ba9b;
+	background: #fff;
+}
+
+/* Wait Discount2 Block */
+.g-popup--discount2 {
+	width: 680px;
+	background: #18ba9b;
+	color: #fff;
+}
+.g-popup--discount2 img {
+	float: right;
+}
+.g-popup--discount2-message {
+	width: 410px;
+	padding: 75px 50px 50px;
+	float: left;
+}
+.g-popup--discount2 h3,
+.g-popup--discount2 h4 {
+	color: #fff;
+	font-size: 35px;
+	line-height: 1.4;
+	margin: 0 0 15px;
+}
+.g-popup--discount2 h3 {
+	text-transform: uppercase;
+}
+.g-popup--discount2 h4 {
+	font-size: 18px;
+	margin-bottom: 5px;
+}
+.g-popup--discount2 p {
+	color: #fff;
+	margin-bottom: 30px;
+}
+.g-popup--discount2 label {
+	width: 100%;
+}
+.g-popup--discount2 .sky-form .input input,
+.g-popup--discount2 .sky-form .input input:active,
+.g-popup--discount2 .sky-form .input input:focus,
+.g-popup--discount2 .sky-form .input input:hover {
+	background: #128772;
+	border-color: #128772;
+	color: #fff;
+	box-shadow: none;
+	height: 36px;
+	font-weight: normal;
+}
+.g-popup--discount2 ::-webkit-input-placeholder {
+  color: #fff;
+}
+.g-popup--discount2 :-moz-placeholder { /* Firefox 18- */
+  color: #fff;
+}
+.g-popup--discount2 ::-moz-placeholder {  /* Firefox 19+ */
+  color: #fff;
+}
+.g-popup--discount2 :-ms-input-placeholder {
+  color: #fff;
+}
+.g-popup--discount2 .btn-default,
+.g-popup--discount2 .btn-default.active,
+.g-popup--discount2 .btn-default:active,
+.g-popup--discount2 .btn-default.hover,
+.g-popup--discount2 .btn-default:hover,
+.g-popup--discount2 .btn-default.focus,
+.g-popup--discount2 .btn-default:focus {
+	color: #18ba9b;
+	border-color: #fff;
+	background: #fff;
+}
+.g-popup--discount2__close,
+.g-popup--discount2__close:hover {
+	color: #18ba9b;
+	background: #fff;
+}
+
+	</style>
 	{%block head%}{%endblock%}
 
 	{% google_analytics %}
@@ -53,11 +469,11 @@
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="menu-container">
-						<button type="button" class="navbar-toggle sliding-panel__btn sliding-panel__btn--dark">
+						<button type="button" class="navbar-toggle sliding-panel__btn ">
 							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
+							<span class="icon-bar" style="background-color:#00a2ed ;"></span>
+							<span class="icon-bar" style="background-color:#00a2ed ;"></span>
+							<span class="icon-bar" style="background-color:#00a2ed ;"></span>
 						</button>
 
 						<!-- Navbar Brand -->
@@ -154,11 +570,25 @@
 			</div>
 			<!-- End Navbar -->
 		</div>
+
+		<style>
+			.bg-img{
+				background-image:url('{% static 'common/img/1.jpg'%}');
+				 background-repeat: no-repeat;
+			  		background-size:  cover;
+
+			}
+
+			.btn-normal{
+				width:150px;
+				height:40px
+			}
+		</style>
 		<!--=== End Header v6 ===-->
 		{% block contenido %}
 
 		<!-- Promo Block -->
-		<div class="promo-bg-pattern-v1-dark promo-bg-fixed content-xlg parallaxBg">
+		<div class="bg-img promo-bg-fixed content-xlg ">
 			<div class="container text-center" data-start="opacity: 1;" data-320="opacity: 0;">
 				<div class="margin-bottom-20">
 					<a class="promo-video-icon-wrap color-light rounded-x animated fadeInUp wow cbp-lightbox"
@@ -174,11 +604,12 @@
 					MDV GLOBAL
 				</span>
 
-				<h2 class="promo-text-v2 color-light animated fadeInUp wow margin-bottom-20" data-wow-duration="1.5s" data-wow-delay="1.5s"><strong>TIEMPO DEL SER ESPIRITUAL</strong></h2>
+				<h2 class="promo-text-v2 animated fadeInUp wow margin-bottom-20" data-wow-duration="1.5s" data-wow-delay="1.5s"><strong style="color:#FFF !important;">TIEMPO DEL SER ESPIRITUAL</strong></h2>
 
-				<div class="animated fadeInUp wow" data-wow-duration="1.2s" data-wow-delay="2s">
-					<a href="{% url 'tienda_productos' %}" class="btn-u btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block rounded-4x margin-right-10" style="width:120px;">Tienda&nbsp;</a>
-					<a href="{% url 'donacion_mas' %}" class="btn-u btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block rounded-4x " style="width:120px;">&nbsp;Donar</a>
+				<div class="animated fadeInUp wow"  data-wow-duration="1.2s" data-wow-delay="2s">
+
+					<a href="{% url 'tienda_productos' %}" ><button class="btn btn-skype-inversed rounded-4x btn-normal" >Tienda&nbsp;</button></a>
+					<a href="{% url 'donacion_mas' %}" ><button class="btn  btn-skype rounded-4x btn-normal">&nbsp;Donar</button></a>
 				</div>
 			</div>
 		</div>
@@ -210,7 +641,7 @@
 						<i class="icon-custom icon-md rounded icon-color-light icon-line fa fa-shopping-cart"></i>
 						<h2 class="heading-md font-light text-white ">Recursos</h2>
 						<p class="no-margin-bottom font-light"  style="color:white;">Puedes acceder a nuestra tienda digital y comprar audios, videos y libros tanto fisicos como digitales. Si compras productos digitales recibiras el contenido al instante.
-							<a href="{% url 'tienda_productos' %}" style="font-weight:bold; color:#FFF;">Ver productos</a></p>
+							<br><a href="{% url 'tienda_productos' %}" style="font-weight:bold; color:#FFF;">Ver productos</a></p>
 					</div>
 				</div>
 			</div>
@@ -330,7 +761,7 @@
 						<span>Juan Ballistreri</span>
 					</div>
 				</div>
-				<div class="col-md-6 equal-height-column-v2" data-image-src="{% static 'unify/img/bg/img13.jpg' %}"></div>
+				<div class="col-md-6 equal-height-column-v2" data-image-src="{% static 'common/img/2.jpg' %}"></div>
 			</div>
 		</div>
 		<!-- End Full Width Section -->
@@ -470,7 +901,7 @@
 								<li><a href="{% url 'tienda_productos' %}">Tienda</a></li>
 								<li><a href="{% url 'contenido_mostrar' %}">Contenido</a></li>
 								<li><a href="{% url 'evento_en_vivo'%}">Transmision en Vivo</a></li>
-								<li><a href="#">Blog</a></li>
+								<li><a href="https://blogmdvglobal.wordpress.com/">Blog</a></li>
 							</ul>
 						</div>
 						<!-- End Useful Links -->
@@ -537,20 +968,34 @@
 		</div>
 		<!--=== End Footer v6 ===-->
 	</div><!--/wrapper-->
-
+	<style>
+		.color-menu:hover{
+			color:#00a2ed !important;
+		}
+	</style>
 	<!-- Sliding Panel -->
 	<div class="sliding-panel bg-color-darker">
 		<div class="sliding-panel-inner sliding-panel-scrollable fullscreen">
 			<ul class="sliding-navigation">
-				<li><a href="{% url 'index'%}">Inicio</a></li>
-				<li><a href="{% url 'login_page' %}">Iniciar Sesion</a></li>
-				<li><a href="{% url 'signup_page' %}">Registrarse</a></li>
-				<li><a href="{% url 'evento_lista' %}">Convocatorias</a></li>
-				<li><a href="{% url 'evento_en_vivo'%}">Transmision en Vivo</a></li>
-				<li><a href="{% url 'donacion_mas' %}">Donaciones</a></li>
-				<li><a href="{% url 'tienda_productos' %}">Tienda</a></li>
-				<li><a href="{% url 'contenido_mostrar' %}">Contenido</a></li>
-				<li><a href="">Blog</a></li>
+				<li><a class="color-menu" href="{% url 'index'%}">Inicio</a></li>
+				{% if user.is_authenticated%}
+				<li><a class="color-menu" href="{% url 'home_panel'%}">Mi cuenta</a></li>
+				<li><a class="color-menu" href="{% url 'logout_page'%}">Cerrar Sesion</a></li>
+				{%else%}
+				<li><a class="color-menu" href="{% url 'login_page' %}">Iniciar Sesion</a></li>
+				{%endif%}
+				{%if user.is_staff%}
+				<li><a class="color-menu" href="{% url 'home'%}">Administrar</a></li>
+				{%endif%}
+				<li><a class="color-menu" href="{% url 'evento_lista' %}">Convocatorias</a></li>
+				<li><a class="color-menu" href="{% url 'evento_en_vivo'%}">Transmision en Vivo</a></li>
+				<li><a class="color-menu" href="{% url 'donacion_mas' %}">Donaciones</a></li>
+				<li><a class="color-menu" href="{% url 'tienda_productos' %}">Tienda</a></li>
+				<li><a class="color-menu" href="{% url 'contenido_mostrar' %}">Contenido</a></li>
+				<li><a class="color-menu" href="https://blogmdvglobal.wordpress.com/">Blog</a></li>
+				{% if not user.is_authenticated%}
+				<li><a class="color-menu" href="{% url 'signup_page' %}"><button class="btn btn-skype ">Registrarse</button></a></li>
+				{%endif%}
 			</ul>
 
 			<h4>Contacto</h4>
@@ -558,7 +1003,7 @@
 				Suipacha 2357<br>
 				Córdoba Capital, Argentina<br><br>
 				+54 (351) 4515833<br>
-				<a href="mailto:mdv@manantialdevidaonline.com">mdv@manantialdevidaonline.com</a><br>
+				<a class="color-menu" href="mailto:mdv@manantialdevidaonline.com">mdv@manantialdevidaonline.com</a><br>
 			</address>
 
 			<ul class="list-inline social-icons-v1 social-icons-v1--dark">
@@ -572,7 +1017,9 @@
 		<a href="javascript:void(0);" class="sliding-panel__close">Close</a>
 	</div>
 	<!-- End Sliding Panel -->
-
+	{% if not user.is_authenticated %}
+		{% include 'popup_newsteller.html'%}
+	{%endif%}
 
 	<!-- JS Global Compulsory -->
 	<script src="{% static 'unify/plugins/jquery/jquery.min.js' %}"></script>
@@ -591,7 +1038,11 @@
 	<script src="{% static 'unify/plugins/owl-carousel/owl-carousel/owl.carousel.js' %}"></script>
 	<script src="{% static 'unify/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js' %}"></script>
 	<!-- JS Page Level -->
+	<script src="{% static 'unify-ecommerce/js/shop.app.js' %}"></script>
+
 	<script src="{% static 'unify/js/app.js' %}"></script>
+	<script src="{% static 'unify-ecommerce/js/shop.app.js' %}"></script>
+
 	<script src="{% static 'unify/js/plugins/owl-carousel.js' %}"></script>
 	<script src="{% static 'unify/js/plugins/cube-portfolio/masonry-v1.js' %}"></script>
 	<!-- JS Customization -->
@@ -611,7 +1062,41 @@
 		<script src="{% static 'unify/plugins/respond.js' %}"></script>
 		<script src="{% static 'unify/plugins/html5shiv.js' %}"></script>
 		<script src="{% static 'unify/plugins/placeholder-IE-fixes.js' %}"></script>
+
 	<![endif]-->
+
+		<script src="{% static 'inspinia2/js/plugins/sweetalert/sweetalert.min.js' %}"></script>
+
+	<script>
+		$(document).ready(function(){
+			$("#btn-popup").click(function(){
+				let email = $("#email-popup").val();
+				if(email){
+			 		let request = $.ajax({
+						type: "GET",
+						url: "{%url 'suscribirse' %}",
+						data:{
+							"email": email
+						},
+					});
+					request.done(function(response){
+						if(response.suscripto==="true"){
+							swal("Felicitaciones", "Se ha suscripto para recibir nuestras ultimas novedades", "success");
+
+						}else{
+							swal("Error", "No hemos podido suscribirlo", "error");
+						}
+					})
+				}else{
+					 swal({
+						title: "Debe ingresar un correo",
+						text: "Ingrese el correo con el que desea suscribirse."
+					});
+				}
+			});
+		});
+	</script>
+
 	{%block javascript%}
 	{%endblock%}
 </body>

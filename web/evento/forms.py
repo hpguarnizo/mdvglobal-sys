@@ -65,4 +65,4 @@ class EntradaForm(forms.ModelForm):
         self.fields["provincia"].choices = Region.objects.none()
 
 class EventoTransmitir(forms.Form):
-    url = forms.URLField(widget=forms.URLInput(attrs={"class":"form-control b-r-xl","required":True}))
+    url = forms.TextInput(attrs={"class":"form-control b-r-xl","required":True})

@@ -36,17 +36,17 @@
                                 <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 text-center">
                                     <p class="login-titulo">{% block titulo %}Iniciar Sesión{% endblock %}</p>
                                     {%block redes_sociales %}
-                                    <a href="{% url 'social:begin' 'google-oauth2' %}?next={% block next_google %}{% url 'home' %}{% endblock %}"
+                                    <a href="{% url 'social:begin' 'google-oauth2' %}?next={% block next_google %}{% url 'home_panel' %}{% endblock %}"
                                        class="btn btn-block btn-social btn-google red-social center-block">
                                         <span class="fa fa-google"></span>
                                         {% block name_google %} Ingresa con Google {% endblock %}
                                     </a>
-                                    <a href="{% url 'social:begin' 'twitter' %}?next={% block next_twitter %}{% url 'home' %}{% endblock %}"
+                                    <a href="{% url 'social:begin' 'twitter' %}?next={% block next_twitter %}{% url 'home_panel' %}{% endblock %}"
                                        class="btn btn-block btn-social btn-twitter red-social center-block ">
                                         <span class="fa fa-twitter"></span>
                                         {% block name_twitter %} Ingresa con Twitter {% endblock %}
                                     </a>
-                                    <a href="{% url 'social:begin' 'facebook' %}?next={% block next_facebook %}{% url 'home' %}{% endblock %}"
+                                    <a href="{% url 'social:begin' 'facebook' %}?next={% block next_facebook %}{% url 'home_panel' %}{% endblock %}"
                                        class="btn btn-block btn-social btn-facebook red-social center-block">
                                         <span class="fa fa-facebook"></span>
                                         {% block name_facebook %} Ingresa con Facebook {% endblock %}

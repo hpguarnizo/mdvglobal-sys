@@ -193,7 +193,7 @@ class EnVivo(EstadoEvento):
 class Evento(models.Model):
     nombre = models.CharField(max_length=256)
     descripcion = models.TextField()
-    imagen = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
+    imagen = S3DirectField(dest="autoturno",null=True,blank=True)
     fecha = models.DateField()
     cupo = models.PositiveIntegerField(blank=True,null=True)
     asistentes = models.PositiveIntegerField(default=0)
@@ -204,7 +204,7 @@ class Evento(models.Model):
     ciudad = models.ForeignKey(City,blank=True,null=True)
     tipo_evento = models.ForeignKey(TipoEvento)
     estado = models.ForeignKey(EstadoEvento,default=1)
-    url = models.URLField(null=True,blank=True)
+    url = models.TextField(null=True,blank=True)
 
     def finalizar_transmision(self):
         self.get_estado().finalizar_transmision(self)

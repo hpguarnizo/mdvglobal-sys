@@ -1,6 +1,5 @@
 from cities_light.models import City
 from django import forms
-
 from tienda.models import CategoriaProducto, Compra
 from tienda.models import Producto
 

@@ -41,6 +41,9 @@
 
 	<!-- CSS Customization -->
 	<link rel="stylesheet" href="{% static 'unify-ecommerce/css/custom.css' %}">
+	<link rel="stylesheet" href="{% static 'unify/plugins/brand-buttons/brand-buttons.css'%}">
+	<link rel="stylesheet" href="{% static 'unify/plugins/brand-buttons/brand-buttons-inversed.css'%}">
+
 
 	{%block head %}
 	{%endblock%}
@@ -353,28 +356,9 @@
 	<!--=== End Footer v4 ===-->
 </div><!--/wrapper-->
 
-<!--&lt;!&ndash; Wait Block &ndash;&gt;-->
-<!--<div class="g-popup-wrapper">-->
-	<!--<div class="g-popup g-popup&#45;&#45;discount2">-->
-		<!--<div class="g-popup&#45;&#45;discount2-message">-->
-			<!--<h3>¿Quiere ganar un 10% de descuento?</h3>-->
-			<!--<h4>You Are Fabulous!</h4>-->
-			<!--<p>Get 10% Off Your Next Purchase! Just Type Email Below!</p>-->
-
-			<!--<form action="#" class="sky-form">-->
-				<!--<label class="input">-->
-					<!--<input type="email" placeholder="Email" class="form-control">-->
-				<!--</label>-->
-				<!--<label class="input">-->
-					<!--<button class="btn btn-default" type="button">Subscribe</button>-->
-				<!--</label>-->
-			<!--</form>-->
-		<!--</div>-->
-		<!--<img src="{% static 'unify-ecommerce/img/blog/26.jpg' %}" alt="ALT" width="270">-->
-		<!--<a href="javascript:void(0);" class="g-popup__close g-popup&#45;&#45;discount2__close"><span class="icon-close" aria-hidden="true"></span></a>-->
-	<!--</div>-->
-<!--</div>-->
-<!-- End Wait Block -->
+	{% if not user.is_authenticated %}
+	{% include 'popup_newsteller.html'%}
+	{%endif%}
 
 <!-- JS Global Compulsory -->
 <script src="{% static 'unify-ecommerce/plugins/jquery/jquery.min.js' %}"></script>
