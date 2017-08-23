@@ -491,7 +491,7 @@
 								{% if not en_vivo%}
 								<li class="menu-icons" >
 									<a href="{% url 'evento_en_vivo'%}">
-										<button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										<button class="hidden-xs btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
 										 rounded-4x margin-right-10"
 												style="font-family:sans-serif;">
 											<i class="fa fa-circle"></i> En Vivo
@@ -501,7 +501,7 @@
 								{%else%}
 								<li class="menu-icons" >
 									<a href="{% url 'evento_en_vivo'%}">
-										<button class="btn-u  btn-en-vivo btn-brd btn-brd-width-2 btn-u-light btn-u-block
+										<button class="btn-u hidden-xs btn-en-vivo btn-brd btn-brd-width-2 btn-u-light btn-u-block
 										 rounded-4x margin-right-10">
 											<i class="fa fa-play" style="color:#FFF;"></i> Transmision en Vivo
 										</button>
@@ -522,7 +522,7 @@
 									}
 								</style>
 								{%endif%}
-								<li class="menu-icons shopping-cart" >
+								<li class="menu-icons shopping-cart {% if en_vivo%}hidden-xs{%endif%} " >
 									<i class="menu-icons-style radius-x fa fa-shopping-cart"  style="color:#FFF"></i>
 									<span class="badge">{{compra.get_detalle|length}}</span>
 									<div class="shopping-cart-open">
@@ -552,8 +552,8 @@
 										{%endif%}
 									</div>
 								</li>
-								<li class="menu-icons">
-									<i class="menu-icons-style search search-close search-btn fa fa-search" style="color:#FFF"></i>
+								<li class="menu-icons ">
+									<i class="menu-icons-style search search-close search-btn fa fa-search " style="color:#FFF"></i>
 									<div class="search-open" style="background-color:#2a2b2b">
 										{%block form%}
 										<form action="{% url 'tienda_productos_busqueda' %}" method="GET">
@@ -562,6 +562,13 @@
 										{%endblock%}
 									</div>
 								</li>
+								{% if en_vivo%}
+								<li class="menu-icons hidden-sm hidden-md hidden-lg">
+									<a href="{% url 'evento_en_vivo'%}">
+									<i class="menu-icons-style fa fa-play" style="color:#e50914 ;"></i>
+									</a>
+								</li>
+								{%endif%}
 							</ul>
 						</div>
 						<!-- End Header Inner Right -->
@@ -604,7 +611,7 @@
 					MDV GLOBAL
 				</span>
 
-				<h2 class="promo-text-v2 animated fadeInUp wow margin-bottom-20" data-wow-duration="1.5s" data-wow-delay="1.5s"><strong style="color:#FFF !important;">TIEMPO DEL SER ESPIRITUAL</strong></h2>
+				<h2 class="promo-text-v2 animated fadeInUp wow margin-bottom-20" data-wow-duration="1.5s" data-wow-delay="1.5s"><strong style="color:#FFF !important;">TIEMPO <span class="hidden-md hidden-sm hidden-lg">&nbsp;</span>DEL SER ESPIRITUAL</strong></h2>
 
 				<div class="animated fadeInUp wow"  data-wow-duration="1.2s" data-wow-delay="2s">
 
