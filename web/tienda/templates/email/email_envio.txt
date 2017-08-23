@@ -1,5 +1,5 @@
 Felicidades tu(s) producto(s) estan en camino
-Hemos enviado tu(s) producto(s) puedes seguir su camino entrando
+Hemos enviado tu(s) producto(s) y te recordamos que puedes seguir su camino entrando a
 <a href="{{compra.get_url_envio}}">{{compra.get_url_envio}}</a> con
 el siguiente codigo de seguimiento: {{compra.get_codigo}}.
 {%for detalle in compra.get_detalle%}

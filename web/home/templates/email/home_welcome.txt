@@ -2,9 +2,9 @@
 
 Hola, {{name}}:
 
-Gracias por regístrate en {{company}}. ¡Estamos encantados de poder darte la bienvenida!
+Gracias por regístrate en {{company}}. ¡Estamos felices de poder darte la bienvenida!
 
-Accede al panel de administracion de tus turnos ahora mismo haciendo click en el siguiente enlace:
+Ya puedes acceder a tu panel de administración.
 <a href="{{url_panel}}">INICIAR AHORA</a>
 
 {% include 'email/home_footer.txt' %}

@@ -1,12 +1,13 @@
 ¡BIENVENIDO A {{company}}!
 
-Gracias por suscribirte en a las actualizaciones de {{company}}.
+Gracias por suscribirte a las actualizaciones de {{company}}.
 ¡Estamos encantados de poder darte la bienvenida!
+¡Estamos felices de poder darte la bienvenida!
 ¿Te gustaría registrarte a nuestros eventos sin dejar tus datos cada vez
 que lo hagas?
-Prueba Gratis regisrarte en nuestra plataforma.
-Para registrarte en nuestra plataforma accede al siguiente enlace:
-<a href="{{site_root}}reverse('signup_page')">REGISTRARME</a>
+Registrate de forma gratuita en nuestra plataforma.
+ Para registrarte ahora mismo accede a través siguiente enlace:
+ <a href="{{site_root}}reverse('signup_page')">REGISTRARME</a>
 
 
 {% include 'email/home_footer.txt' %}

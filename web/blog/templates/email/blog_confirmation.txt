@@ -1,12 +1,11 @@
 ¡CONFIRMA TU CORREO ELECTRÓNICO!
 
 Hola, por favor confirma tu correo electrónico.
-Gracias por suscribirte a las notificaciones de {{company}}. Para empezar, por favor confirma tu correo electrónico.
+Gracias por suscribirte a las actualizaciones de {{company}}. Para empezar, por favor confirma tu correo electrónico.
 Para confirmar, por favor haz click en el siguiente enlace:
 <a href="{{site_root}}{% url 'blog_verify_email'%}?code={{code}}">Confirmar Correo Electrónico</a>
-
-Después de hacer click en el enlace recibirás inmediatamente un correo electrónico en el que confirmaremos tu
-solicitud y la activación de tu suscripción.
-
+Después de hacer click en el enlace recibirás inmediatamente un correo electrónico en el que confirmaremos tu solicitud y la activación de tu suscripción.
+Gracias!
+Equipo Digital de MDV Global
 
 {% include 'email/home_footer.txt' %}

@@ -1,6 +1,6 @@
 {{evento.get_nombre}}
 {{evento.get_descripcion}}
-Puedes ver mas de la convocatoria haciendo click en el siguiente boton
+Puedes ver mas de la convocatoria haciendo click en el siguiente botón
 <a href="{{evento.get_url}}">VER MAS</a>
 
 

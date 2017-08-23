@@ -1,15 +1,14 @@
 {%if digital%}
     Felicidades aqui tiene sus productos
 {%else%}
-    Felicidades por su compra
+    Gracias por tu compra
 {%endif%}
 
 {% if digital%}
-Aqui tienes tu(s) producto(s) digitales. Si ademas ordenaste productos fisicos,
-luego te avisaremos cuando esten en camino, con su codigo de seguimiento.
+Aquí tienes tu(s) producto(s) digitales. Si ademas ordenaste productos físicos,
+luego te avisaremos cuando esten en camino, recuerda que puedes seguirlos con su código de seguimiento.
 {%else%}
-Pronto le enviaremos un email con su codigo de seguimiento para que seguir a
-su(s) producto(s). Tambien puede revisar su compra si es usuario en su
+Pronto le enviaremos un email con el código de seguimiento para que puedas seguir tu(s) producto(s). También puede revisar tu compra si es usuario en tu
 <a  href="{{site_root}}{% url 'home_panel'%}">Panel
 de Administracion.</a>
 {%endif%}

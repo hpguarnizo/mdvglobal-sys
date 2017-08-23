@@ -44,7 +44,7 @@ def email_evento_inicia(request,evento):
         context = {'entrada':entrada,}
         message_html = render_to_string("email/evento_inicia.html",context,request)
         message = render_to_string("email/evento_inicia.txt",context,request)
-        subject = "Apresurate %s que ya comenzo la convocatoria." %(entrada.get_nombre())
+        subject = "Apresúrate %s que ya comenzó la convocatoria." %(entrada.get_nombre())
 
         send_email_hola(email=entrada.get_email(), subject=subject, message=message, message_html=message_html)
 

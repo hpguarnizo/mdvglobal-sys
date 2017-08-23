@@ -1,7 +1,10 @@
-Felicitaciones {{entrada.get_nombre}} aqui tienes tu entrada!
-Este es tu codigo de entrada por si te lo piden {{entrada.get_codigo|upper}} para
-{{entrada.get_evento.get_nombre}} te avisaremos 24hs antes para que no te olvides.
- Podras ver la convocatoria desde el siguiente link
- <a style="color: #fff; font-size: 12px; font-weight: bold; text-decoration: none; font-family: Arial, sans-serif; text-alight: center;" href="{{site_root}}{% url 'evento_convocatoria' evento_id=evento.id %}">VER CONVOCATORIA</a>
+Felicitaciones {{entrada.get_nombre}} aquí tienes tu entrada!
+
+Este es tu código de acceso por si por alguna razón te lo pedimos en la entrada del evento {{entrada.get_codigo|upper}} para
+{{entrada.get_evento.get_nombre}} Te avisaremos 24hs antes para que no te olvides.
+
+Podrás ver todas tus convocatoria desde el siguiente link
+  <a style="color: #fff; font-size: 12px; font-weight: bold; text-decoration: none; font-family: Arial, sans-serif;
+   text-alight: center;" href="{{site_root}}{% url 'home_panel' %}">VER CONVOCATORIA</a>
 
 {% include 'email/home_footer.txt' %}
