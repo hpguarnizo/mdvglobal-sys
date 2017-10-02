@@ -1,0 +1,9 @@
+{% if tipo.es_audio or cont.get_tipo.es_audio%}
+    <i class="fa fa-play"></i>
+{%endif%}
+{% if tipo.es_video or cont.get_tipo.es_video%}
+    <i class="fa fa-film"></i>
+{%endif%}
+{% if tipo.es_documento or cont.get_tipo.es_documento%}
+    <i class="fa fa-file-text"></i>
+{%endif%}

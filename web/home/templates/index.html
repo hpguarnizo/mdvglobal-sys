@@ -615,8 +615,8 @@
 
 				<div class="animated fadeInUp wow"  data-wow-duration="1.2s" data-wow-delay="2s">
 
-					<a href="{% url 'tienda_productos' %}" ><button class="btn btn-skype-inversed rounded-4x btn-normal" >Tienda&nbsp;</button></a>
-					<a href="{% url 'donacion_mas' %}" ><button class="btn  btn-skype rounded-4x btn-normal">&nbsp;Donar</button></a>
+					<a href="{% url 'contenido_mostrar' %}" ><button class="btn btn-skype rounded-4x btn-normal" >Recursos&nbsp;</button></a>
+					<a href="{% url 'pay_plans' %}" ><button class="btn btn-skype-inversed rounded-4x btn-normal">&nbsp;Suscribirse</button></a>
 				</div>
 			</div>
 		</div>
@@ -630,25 +630,28 @@
 						<i class="icon-custom icon-md rounded icon-color-light icon-line icon-plus"></i>
 						<h2 class="heading-md font-light text-white ">Convocatorias</h2>
 						<p class="no-margin-bottom font-light" style="color:white;">Transmisiones online todas las semanas: miercoles 19:00hs y domingos 9:00hs.
-							Aqui tambien podes reservar tu lugar para asisitir a nuestras convocatorias prescenciales. Ver proximas convocatorias
-							<a href="{% url 'evento_lista'%}" style="font-weight:bold; color:#FFF;">click aqui.</a></p>
+							Aqui tambien podes reservar tu lugar para asisitir a nuestras convocatorias prescenciales.
+							<br><a href="{% url 'evento_lista'%}" style="font-weight:bold; color:#FFF;" class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x margin-right-10 margin-top-20">Ver convocatorias</a></p>
 					</div>
 				</div>
 				<div class="col-sm-4 promo-bg-img-v5">
 					<div class="service-block rgba-red no-margin-bottom content-sm equal-height-column">
 						<i class="icon-custom icon-md rounded icon-color-light icon-line icon-badge"></i>
-						<h2 class="heading-md font-light text-white ">Contenidos</h2>
+						<h2 class="heading-md font-light text-white ">Recursos</h2>
 						<p class="no-margin-bottom font-light"  style="color:white;">Accede a una gran cantidad de videos, libros y audios que ayudaran a tu
 							crecimiento continuo. Podras elegir entre contenido OnDemand Gratuito, Premium o Ministerial segun tu suscripcion.
-							<br><a href="{% url 'contenido_mostrar'%}" style="font-weight:bold; color:#FFF;">Ver contenido</a></p>
+							<br><a href="{% url 'contenido_mostrar'%}"  class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x margin-right-10 margin-top-20" style="font-weight:bold; color:#FFF; width: 163px;">Ver recursos</a></p>
 					</div>
 				</div>
 				<div class="col-sm-4 promo-bg-img-v4">
 					<div class="service-block rgba-blue no-margin-bottom content-sm equal-height-column">
 						<i class="icon-custom icon-md rounded icon-color-light icon-line fa fa-shopping-cart"></i>
-						<h2 class="heading-md font-light text-white ">Recursos</h2>
+						<h2 class="heading-md font-light text-white ">Tienda</h2>
 						<p class="no-margin-bottom font-light"  style="color:white;">Puedes acceder a nuestra tienda digital y comprar audios, videos y libros tanto fisicos como digitales. Si compras productos digitales recibiras el contenido al instante.
-							<br><a href="{% url 'tienda_productos' %}" style="font-weight:bold; color:#FFF;">Ver productos</a></p>
+							<br><a href="{% url 'tienda_productos' %}" class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x margin-right-10 margin-top-20" style="font-weight:bold; color:#FFF; width: 163px;">Ver productos</a></p>
 					</div>
 				</div>
 			</div>
@@ -662,8 +665,8 @@
 
 
 		<!-- Services Blocks -->
-		<div class="bg-color-light">
-			<div class="container content-md">
+		<div class="bg-color-light" >
+			<div class="container content-md" >
 				<div class="text-center margin-bottom-60">
 					<h2 class="title-v2 title-center">HERRAMIENTAS</h2>
 					<p class="space-lg-hor">Accede a todas nuestras herramientas de crecimiento ministerial desde un mismo lugar,
@@ -768,7 +771,9 @@
 						<span>Juan Ballistreri</span>
 					</div>
 				</div>
-				<div class="col-md-6 equal-height-column-v2" data-image-src="{% static 'common/img/2.jpg' %}"></div>
+				<div class="col-md-6 " data-image-src="{% static 'common/img/herramientas.jpg' %}">
+					<img src="{% static 'common/img/herramientas.jpg' %}" class="img-responsive" alt="juan" >
+				</div>
 			</div>
 		</div>
 		<!-- End Full Width Section -->
@@ -779,48 +784,53 @@
 			<div class="container">
 				<div class="text-center margin-bottom-50">
 					<h2 class="title-v2 title-center">Testimonios</h2>
-					<p class="space-lg-hor">If you are going to use a <span class="color-green">passage of Lorem Ipsum</span>,
-						you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum
-						generators on the Internet tend to repeat predefined chunks as necessary, making <span class="color-green">
-							this the first</span> true generator on the Internet.</p>
+					<p class="space-lg-hor">Día a día compartimos la vida con miles de personas alrededor del mundo,
+						debido a que en algún momento determinamos creer que es imposible construir en solitario aquello
+						que se nos ha sido confiado; estos son algunos de los comentarios que recibimos de personas que amamos.</p>
 				</div>
 
 				<div class="row">
 					<!-- Testimonials Item BEGIN -->
 					<div class="col-sm-4 testimonials-item">
 						<blockquote>
-							<p>"Zenim you haven't heard of. Lorem ipsum dolor met consectetur adipisicing sit amet,
-								consectetur adipisicing elit, of them jean shorts sed magna aliqua. Lorem ipsum dolor met
-								consectetur adipisicing sit amet do eiusmod dolore."</p>
+							<p>"Cuando lo escuché por primera vez me llamó la atención su estilo de predicación claro
+								y la falta de prejuicios para tratar temas de las Escrituras que pocos se atrevían a tocar.
+								No dudo en afirmar que el Apóstol Juan Ballistreri es una de las voces que los hijos de Dios
+								deben oír en este tiempo para tomar las decisiones correctas y prepararse para recibir el próximo
+								mover de Dios".</p>
 						</blockquote>
 						<div class="testimonials-info">
-							<img src="{% static 'unify/img/testimonials/img2.jpg'%}" alt="Nick Adams">
-							<strong>Lewis Dean</strong>
-							<em>MDV Cuba.</em>
+							<img src="{% static 'common/img/blad.jpg'%}" alt="Nick Adams">
+							<strong>Bladimiro Wojtovicz</strong>
+							<em>MDV Global.</em>
 						</div>
 					</div>
 					<!-- Testimonials Item END -->
 					<!-- Testimonials Item BEGIN -->
 					<div class="col-sm-4 testimonials-item">
 						<blockquote>
-							<p>"Dolore you probably haven't heard of. Lorem ipsum consectetur adipisicing elit,
-								of them jean shorts sed magna aliqua. Lorem adipisicing sit amet do eiusmod dolore
-								consectetur adipisicing easfve eiusmod dolore."</p>
+								<p>"No con mucha frecuencia las personas podemos decir que hemos podido caminar en algún momento
+								de la vida, con alguien que en gracia tiene la facilidad de despertar nuestro entendimiento a la
+								luz del estado Pleno de todas las cosas. Estaré siempre agradecido por poder tocar a Cristo a través
+									de la vida del Apóstol Juan Ballistreri".</p>
+
 						</blockquote>
 						<div class="testimonials-info">
-							<img src="{% static 'unify/img/testimonials/img3.jpg'%}" alt="Nick Adams">
-							<strong>Julia Cooper</strong>
-							<em>MDV Maimi.</em>
+							<img src="{% static 'common/img/samir.jpg'%}" alt="Nick Adams">
+							<strong>Samir Angulo</strong>
+							<em>MDV Global.</em>
 						</div>
 					</div>
 					<!-- Testimonials Item END -->
 					<!-- Testimonials Item BEGIN -->
 					<div class="col-sm-4 testimonials-item">
 						<blockquote>
-							<p>"Lorem ipsum dolor met consectetur adipisicing sit amet, consectetur adipisicing elit.
-								Denim you probably haven't heard of. Of them jean shorts sed magna aliqua. Lorem ipsum
-								dolor met consectetur consectetur adipisicing elit."</p>
-						</blockquote>
+								<p>"Cuando lo escuché por primera vez me llamó la atención su estilo de predicación claro
+								y la falta de prejuicios para tratar temas de las Escrituras que pocos se atrevían a tocar.
+								No dudo en afirmar que el Apóstol Juan Ballistreri es una de las voces que los hijos de Dios
+								deben oír en este tiempo para tomar las decisiones correctas y prepararse para recibir el próximo
+								mover de Dios".</p>
+					</blockquote>
 						<div class="testimonials-info">
 							<img src="{% static 'unify/img/testimonials/img4.jpg'%}" alt="Nick Adams">
 							<strong>Jack Powell</strong>
