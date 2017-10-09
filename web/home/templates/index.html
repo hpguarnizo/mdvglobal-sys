@@ -14,6 +14,13 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
+	<meta property="og:url" content="{{site_root}}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="{{site_root}}{% static 'common/img/meta.png' %}" />
+
+
 	<!-- Favicon -->
 	<link rel="icon" type="image/png" href="{% static 'common/img/favicon.png' %}" />
 
@@ -42,7 +49,7 @@
 	<link rel="stylesheet" href="{% static 'unify/css/theme-skins/dark.css' %}">
 	<link rel="stylesheet" href="{% static 'unify/plugins/brand-buttons/brand-buttons.css'%}">
 	<link rel="stylesheet" href="{% static 'unify/plugins/brand-buttons/brand-buttons-inversed.css'%}">
-	    <link href="{% static 'inspinia2/css/plugins/sweetalert/sweetalert.css' %}" rel="stylesheet">
+	<link href="{% static 'inspinia2/css/plugins/sweetalert/sweetalert.css' %}" rel="stylesheet">
 
 	<style>
 		/*  */
@@ -601,7 +608,7 @@
 					<a class="promo-video-icon-wrap color-light rounded-x animated fadeInUp wow cbp-lightbox"
 					   data-wow-duration="2s" data-wow-delay=".5s"
 					   data-title="Video Presentation"
-					   href="https://www.youtube.com/watch?v=cSJMpeTBhKM?&rel=0&autoplay=1">
+					   href="https://www.youtube.com/watch?v=WCm2WUCS9x8?&rel=0&autoplay=1">
 						<i class="promo-video-icon icon-control-play"></i>
 					</a>
 					<div id="cbp-lightbox" class="dp-none"></div>
@@ -730,7 +737,7 @@
 
 				<!-- Service Block v8 -->
 				<div class="row">
-					<a href="#">
+					<a target="_blank" href="blog.mdvglobal.org">
 					<div class="col-sm-6 sm-margin-bottom-50 animated fadeIn wow" data-wow-duration="1.5s" data-wow-delay="0.7s">
 						<div class="service-block-v8">
 							<i class="icon-paper-plane"></i>
@@ -744,7 +751,7 @@
 					<a href="{% url 'juan_ballistreri' %}">
 					<div class="col-sm-6 sm-margin-bottom-20 animated fadeIn wow" data-wow-duration="1.5s" data-wow-delay="0.8s">
 						<div class="service-block-v8">
-							<i class="icon-present"></i>
+							<i class="fa fa-user"></i>
 							<div class="service-block-desc">
 								<h3>Juan Ballistreri</h3>
 								<p>Aprende a ser espiritual con el mejor consejero.</p>
@@ -825,16 +832,15 @@
 					<!-- Testimonials Item BEGIN -->
 					<div class="col-sm-4 testimonials-item">
 						<blockquote>
-								<p>"Cuando lo escuché por primera vez me llamó la atención su estilo de predicación claro
-								y la falta de prejuicios para tratar temas de las Escrituras que pocos se atrevían a tocar.
-								No dudo en afirmar que el Apóstol Juan Ballistreri es una de las voces que los hijos de Dios
-								deben oír en este tiempo para tomar las decisiones correctas y prepararse para recibir el próximo
-								mover de Dios".</p>
+								<p>"Damos testimonio del fruto tan hermoso y edificante que ha sido para nosotros el testimonio de
+									vida del Apóstol Juan, le conocemos desde hace Más de 20 Años y siempre hemos sido participantes
+									de su inagotable sabiduría y revelación en la enseñanza de la Palabra, de su vida personal y
+									familiar".</p><br>
 					</blockquote>
 						<div class="testimonials-info">
 							<img src="{% static 'unify/img/testimonials/img4.jpg'%}" alt="Nick Adams">
-							<strong>Jack Powell</strong>
-							<em>MDV Mendoza.</em>
+							<strong>Pastores Luis y Paty Lucy</strong>
+							<em>MDV Global.</em>
 						</div>
 					</div>
 					<!-- Testimonials Item END -->
@@ -846,30 +852,25 @@
 		<div class="parallax-counter parallaxBg1">
 			<div class="container content">
 				<div class="row">
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-4 col-xs-6">
 						<div class="counters">
 							<span class="counter">{{cant_eventos}}</span>
 							<h4>Proximas Convocatorias</h4>
 						</div>
 					</div>
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-4 col-xs-6">
 						<div class="counters">
 							<span class="counter">{{cant_productos}}</span>
 							<h4>Recursos disponibles</h4>
 						</div>
 					</div>
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-4 col-xs-12">
 						<div class="counters">
 							<span class="counter">{{cant_contenido}}</span>
 							<h4>Herramientas Ministeriales</h4>
 						</div>
 					</div>
-					<div class="col-sm-3 col-xs-6">
-						<div class="counters">
-							<span class="counter">{{cant_donaciones}}</span>
-							<h4>Donaciones realizadas</h4>
-						</div>
-					</div>
+
 				</div>
 			</div>
 		</div>
@@ -885,7 +886,7 @@
 						<!-- About Us -->
 						<div class="col-md-3 sm-margin-bottom-40">
 							<div class="heading-footer"><h2>Nosotros</h2></div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit ut metus a commodo. Pellentesque congue tellus sed enim sollicitudin, id blandit mauris eleifend.</p>
+							<p>MDV Global es la plataforma internacional de Entrenamiento Ministerial y Liderazgo de Avanzada, liderada por el Apóstol Juan Ballistreri.</p>
 						</div>
 						<!-- End About Us -->
 
@@ -918,7 +919,7 @@
 								<li><a href="{% url 'tienda_productos' %}">Tienda</a></li>
 								<li><a href="{% url 'contenido_mostrar' %}">Contenido</a></li>
 								<li><a href="{% url 'evento_en_vivo'%}">Transmision en Vivo</a></li>
-								<li><a href="https://blogmdvglobal.wordpress.com/">Blog</a></li>
+								<li><a target="_blank" href="blog.mdvglobal.org">Blog</a></li>
 							</ul>
 						</div>
 						<!-- End Useful Links -->
@@ -1009,7 +1010,7 @@
 				<li><a class="color-menu" href="{% url 'donacion_mas' %}">Donaciones</a></li>
 				<li><a class="color-menu" href="{% url 'tienda_productos' %}">Tienda</a></li>
 				<li><a class="color-menu" href="{% url 'contenido_mostrar' %}">Contenido</a></li>
-				<li><a class="color-menu" href="https://blogmdvglobal.wordpress.com/">Blog</a></li>
+				<li><a class="color-menu" href="blog.mdvglobal.org" target="_blank">Blog</a></li>
 				{% if not user.is_authenticated%}
 				<li><a class="color-menu" href="{% url 'signup_page' %}"><button class="btn btn-skype ">Registrarse</button></a></li>
 				{%endif%}

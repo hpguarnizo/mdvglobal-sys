@@ -11,9 +11,10 @@
 						<h2 class="heading-md">Convocatorias</h2>
 						<p>
                             {% if entradas %}
-                            Aqui se puede ver las convocatorias que se ha inscripto.</p>
+                            Aqui se puede ver las convocatorias que se ha inscripto.</p><br><br>
                             {%else%}
-                            Aun no se ha inscripto a ninguna convocatoria, puede unirse a una haciendo <a href="{% url 'evento_lista'%}" style="color:#FFF;"><strong>click aqui.</strong></a>
+                            Aun no se ha inscripto a ninguna convocatoria, puede unirse a una haciendo<br> <a href="{% url 'evento_lista'%}" style="color:#FFF;" class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x margin-right-10 margin-top-20">click aqui</a>
                             {%endif%}
 					</div>
 					<!-- End Our Services -->
@@ -62,7 +63,8 @@
                             {%if productos %}
                             Aqui estan se mostraran su(s) ultimo(s) productos adquiridos.
                             {%else%}
-                            No ha comprado ningun producto puede visitar la tienda haciendo <a href="{%url 'tienda_productos'%}" style="color:#FFF;"><strong>click aqui</strong></a>
+                            No ha comprado ningun producto puede visitar la tienda haciendo <br><a href="{%url 'tienda_productos'%}"  style="font-weight:bold; color:#FFF;" class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x">click aqui</a>
                             {%endif%}
                         </p>
 					</div>
@@ -125,7 +127,8 @@
                                 Usuario de prueba con suscripcion ilimitada
                             {%endif%}
                         {%else%}
-                            No tiene suscripcion puede adquirir una haciendo <a href="{% url 'pay_plans'%}" style="color:#FFF;"><strong>click aqui</strong></a>
+                            No tiene suscripcion puede adquirir una haciendo <br><br><a href="{% url 'pay_plans'%}"  style="font-weight:bold; color:#FFF;" class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x">click aqui</a>
                         {%endif%}
                         </p>
 					</div>
