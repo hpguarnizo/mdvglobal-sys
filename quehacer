@@ -1,0 +1,102 @@
+Cambia precio planes
+Crear Correo
+Hacer blog
+Poner un cartel de “Nuevo” en cada convocatoria Nueva 
+Cuando pones suscribirte te manda a iniciar sesión y no a cuenta nueva y ninguno de los accesos de cuenta funciona
+igual cuando quiero iniciar sesión tampoco funcionan  creo que debería haber un botón de iniciar sesión mas visible para los que ya están subscritos.
+ Lupa de buscador al lado del carrito no funciona.
+Debemos de alguna forma darles acceso a la base de datos de sus usuarios y clientes 
+Probar transmisión en vivo porque no pudimos hacerlo 
+No se pueden subir las imagenes
+Imagen Pastores
+En contenido hacer mas visible el adquirir suscripcion y revisar que cuando el contenido sea gratis no muestre que debe actualizar la suscripcion
+Configurar api mercado libre
+Configuar api paypal
+Poner pagos suscipcion con mercado libre
+Poner pagos suscripcion con paypal
+Verificar cuando esta en vivo que se deba poner el codigo para ingresar cuando es pago
+Verificar cuaenta de amazon
+- Suscripción por Facebook, Twitter y Google tira error 
+
+
+- Cuando me suscribo a newletear no envía el correo 
+
+
+- En tienda se pone el logro en gigante al hacer scroll, desconfigurado
+
+
+- Borrar todos los contenidos de la tienda de prueba
+
+
+- Blog  poner en construcción hasta que hagamos un blog mejor 
+
+
+- Poner en el contador del home las Horas de conferencia 15.000
+
+
+- El buscador del lado del carrito que está en el home no funciona
+
+
+- Cambiar frase del apóstol que está en el home a: “Lo mas costoso de la ignorancia se llama perdida de Tiempo”
+
+
+- Cambiar fotos del home de los Dres Lucy
+
+
+- Poner debajo del nombre de cada comentario país de origen en lugar de MDV Global. Vladimiro: Argentina, Samir: Colombia, Dres Lucy: México 
+
+
+- El contador de recursos del home se quedó tildado en 6 
+
+
+- Poner un botón de Iniciar sesión más vistoso (como el botón de “en vivo”)
+
+
+- Cuando ingreso al carrito el logo tambien se hace grande - desconfigurado 
+
+
+- El logo de mdv a La izquierda debe siempre llevarme al home desde cualquier página 
+
+
+- Las tres categorías de suscripción solo salen cuando se ingresa como administrador
+
+
+- No independizar suscripción con usuario (cuando género mi usuario ahí mismo elijo el tipo de suscripción, en el mismo paso), es decir, cuando hago clic en registrarme deben aparecerme las 3 opciones de suscripción primero (Gratis, Premiun y Ministerial) Escojo la que quiero y luego pongo logueo.
+
+
+- En el home en vez de "testimonios", poner Reconocimientos.
+
+
+- Cuando quiero comprar producto me sale la opción de tipo de DNI, no sale ningún tipo. Debe ser tipo de documento y las opciones.
+
+
+- La versión para dispositivos móviles no es lo mismo que la versión de la web, no se actualizo simultáneamente. 
+
+
+- Sacar de todas las categorías los módulos de prueba (donaciones, recursos, tienda, etc)
+
+
+- Cuando quiero agregar al carrito, necesitamos que se agreguen, sin llevarme al carrito a finalizar la compra, cuando estoy en el carrito, poner un botón que diga “ver más recursos ” y me lleve a la página de contenidos nuevamente.
+
+
+- En las categorías de suscripción, intercambiar el icono de gratis con el de premium
+
+
+- Corregir la redacción de testimonios de los Dres Lucy, redunda varias veces las palabra "Testimonio"
+
+
+- Cuando hago click en el correo, no lleva a ningún lado, ni Outlook, ni Gmail, etc.
+
+
+- Configurar URL para streaming, ahora figura " Django" y no da la opción de introducir la URL de facebook o youtube.
+
+
+- Tener en cuenta que cuando se largue la plataforma debemos redireccionar la actual web de manantialdevidaOnline.com con la web de MDVGLOBAL... Que necesitamos para hacerlo?
+
+
+- Una vez solucionado lo de la suscripción, avisarnos para poder probar la experiencia de usuario del proceso de compra y que funcione la compra a través de paypal y mercado pago.
+
+
+- Debemos dejar algún espacio en el dashboard en donde ellos puedan ver la cantidad de suscriptores, la base de datos del administrador, que sea fácil de entrar y descargar.
+
+
