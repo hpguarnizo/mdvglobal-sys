@@ -995,13 +995,19 @@
 	<div class="sliding-panel bg-color-darker">
 		<div class="sliding-panel-inner sliding-panel-scrollable fullscreen">
 			<ul class="sliding-navigation">
-				<li><a class="color-menu" href="{% url 'index'%}">Inicio</a></li>
 				{% if user.is_authenticated%}
-				<li><a class="color-menu" href="{% url 'home_panel'%}">Mi cuenta</a></li>
-				<li><a class="color-menu" href="{% url 'logout_page'%}">Cerrar Sesion</a></li>
+				<li><a class="color-menu" href="{% url 'home_panel'%}"><button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x margin-right-10 ">Mi cuenta</button></a></li>
+				<li><a class="color-menu" href="{% url 'logout_page'%}"><button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x margin-right-10 ">Cerrar Sesion</button></a></li>
 				{%else%}
-				<li><a class="color-menu" href="{% url 'login_page' %}">Iniciar Sesion</a></li>
+				<li><a class="color-menu" href="{% url 'login_page' %}"><button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x margin-right-10 ">Iniciar Sesion</button></a></li>
 				{%endif%}
+			</ul>
+			<ul class="sliding-navigation">
+				<li><a class="color-menu" href="{% url 'index'%}">Inicio</a></li>
+				
 				{%if user.is_staff%}
 				<li><a class="color-menu" href="{% url 'home'%}">Administrar</a></li>
 				{%endif%}
