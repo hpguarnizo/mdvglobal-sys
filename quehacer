@@ -57,9 +57,6 @@ Verificar cuaenta de amazon
 - No independizar suscripción con usuario (cuando género mi usuario ahí mismo elijo el tipo de suscripción, en el mismo paso), es decir, cuando hago clic en registrarme deben aparecerme las 3 opciones de suscripción primero (Gratis, Premiun y Ministerial) Escojo la que quiero y luego pongo logueo.
 
 
-- En el home en vez de "testimonios", poner Reconocimientos.
-
-
 - Cuando quiero comprar producto me sale la opción de tipo de DNI, no sale ningún tipo. Debe ser tipo de documento y las opciones.
 
 
@@ -73,12 +70,6 @@ Verificar cuaenta de amazon
 
 
 - En las categorías de suscripción, intercambiar el icono de gratis con el de premium
-
-
-- Corregir la redacción de testimonios de los Dres Lucy, redunda varias veces las palabra "Testimonio"
-
-
-- Cuando hago click en el correo, no lleva a ningún lado, ni Outlook, ni Gmail, etc.
 
 
 - Configurar URL para streaming, ahora figura " Django" y no da la opción de introducir la URL de facebook o youtube.
