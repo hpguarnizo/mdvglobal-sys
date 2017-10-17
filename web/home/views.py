@@ -20,7 +20,7 @@ from .forms import SignupForm, LoginForm, SupportForm
 
 
 def IndexView(request):
-    cant_eventos = Evento.objects.filter(estado=1).__len__
+    cant_eventos = Evento.objects.filter(estado=3).__len__
     cant_productos = Producto.objects.all().__len__
     cant_donaciones = Donacion.objects.all().__len__
     cant_contenido = Contenido.objects.all().__len__

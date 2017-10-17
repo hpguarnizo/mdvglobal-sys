@@ -4,7 +4,7 @@ Hacer blog
 Poner un cartel de “Nuevo” en cada convocatoria Nueva 
 Cuando pones suscribirte te manda a iniciar sesión y no a cuenta nueva y ninguno de los accesos de cuenta funciona
 igual cuando quiero iniciar sesión tampoco funcionan  creo que debería haber un botón de iniciar sesión mas visible para los que ya están subscritos.
- Lupa de buscador al lado del carrito no funciona.
+Lupa de buscador al lado del carrito no funciona.
 Debemos de alguna forma darles acceso a la base de datos de sus usuarios y clientes 
 Probar transmisión en vivo porque no pudimos hacerlo 
 No se pueden subir las imagenes
@@ -16,13 +16,11 @@ Poner pagos suscipcion con mercado libre
 Poner pagos suscripcion con paypal
 Verificar cuando esta en vivo que se deba poner el codigo para ingresar cuando es pago
 Verificar cuaenta de amazon
+
 - Suscripción por Facebook, Twitter y Google tira error 
 
 
 - Cuando me suscribo a newletear no envía el correo 
-
-
-- En tienda se pone el logro en gigante al hacer scroll, desconfigurado
 
 
 - Borrar todos los contenidos de la tienda de prueba
@@ -31,16 +29,11 @@ Verificar cuaenta de amazon
 - Blog  poner en construcción hasta que hagamos un blog mejor 
 
 
-- Poner en el contador del home las Horas de conferencia 15.000
-
 
 - El buscador del lado del carrito que está en el home no funciona
 
 
 - Cambiar frase del apóstol que está en el home a: “Lo mas costoso de la ignorancia se llama perdida de Tiempo”
-
-
-- Cambiar fotos del home de los Dres Lucy
 
 
 - Poner debajo del nombre de cada comentario país de origen en lugar de MDV Global. Vladimiro: Argentina, Samir: Colombia, Dres Lucy: México 
@@ -98,5 +91,3 @@ Verificar cuaenta de amazon
 
 
 - Debemos dejar algún espacio en el dashboard en donde ellos puedan ver la cantidad de suscriptores, la base de datos del administrador, que sea fácil de entrar y descargar.
-
-
