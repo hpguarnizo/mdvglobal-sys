@@ -11,8 +11,6 @@ Poner pagos suscripcion con paypal
 Verificar cuando esta en vivo que se deba poner el codigo para ingresar cuando es pago
 Verificar cuaenta de amazon
 
-- Suscripción por Facebook, Twitter y Google tira error 
-
 
 - El buscador del lado del carrito que está en el home no funciona 
 
@@ -38,3 +36,5 @@ Verificar cuaenta de amazon
 Cosas para hablar con samir:
 -Tener en cuenta que cuando se largue la plataforma debemos redireccionar la actual web de manantialdevidaOnline.com con la web de MDVGLOBAL... Que necesitamos para hacerlo? Haria falta el dominio, donde esta cargado
 -Hacer blog
+-El email si hace algo cuando lo clickeas, te lleva al email en el movil y en descktop si lo tenes instalado abre el outlock
+-Probar login
