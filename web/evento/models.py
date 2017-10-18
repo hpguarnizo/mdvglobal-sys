@@ -1,6 +1,7 @@
 import os
 import random
 
+import datetime
 from django.contrib.sites.models import Site
 from django.urls import reverse
 from django.utils.functional import SimpleLazyObject
@@ -300,6 +301,12 @@ class Evento(models.Model):
 
     def get_url(self):
         return Site.objects.get_current().domain + reverse('evento_seleccionar',kwargs={'evento_id':self.id})
+
+    def es_nuevo(self):
+        if (datetime.datetime.now().date() - self.fecha) < datetime.timedelta(days=8):
+            return True
+        else:
+            return False
 
 class EstadoEntrada(models.Model):
     nombre = models.CharField(max_length=20)

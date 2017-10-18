@@ -1,6 +1,20 @@
 {% extends 'index.html' %}
 {% load staticfiles %}
 {% block contenido %}
+
+<style>
+                .etiqueta{
+                    top:20px;
+                    right:-5px;
+                    color:#fff;
+                    font-size:14px;
+                    padding: 3px 8px;
+                    font-weight:600;
+                    position:absolute;
+                    text-transform: uppercase;
+                    background-color:rgba(0,162,237,0.5)
+                }
+</style>
 <!--=== Breadcrumbs ===-->
 <div class="breadcrumbs">
     <div class="container">
@@ -16,6 +30,10 @@
             <li class="col-sm-4 col-xs-12 md-margin-bottom-30">
                 <div class="team-img">
                     <img class="img-responsive" src="{{evento.get_imagen_url}}" alt="{{evento.get_nombre}}">
+                    {%if evento.es_nuevo%}
+                    <div class="etiqueta">Nuevo</div>
+                {% else %}
+                {% endif %}
                     <ul>
                         <li><a href="{% url 'evento_seleccionar' evento_id=evento.id %}">
                             VER MAS</a>
