@@ -559,7 +559,7 @@
 										{%endif%}
 									</div>
 								</li>
-								<li class="menu-icons ">
+								<li class="menu-icons">
 									<i class="menu-icons-style search search-close search-btn fa fa-search " style="color:#FFF"></i>
 									<div class="search-open" style="background-color:#2a2b2b">
 										{%block form%}
@@ -737,7 +737,7 @@
 
 				<!-- Service Block v8 -->
 				<div class="row">
-					<a target="_blank" href="blog.mdvglobal.org">
+					<a target="_blank" href="{% url 'home_blog' %}">
 					<div class="col-sm-6 sm-margin-bottom-50 animated fadeIn wow" data-wow-duration="1.5s" data-wow-delay="0.7s">
 						<div class="service-block-v8">
 							<i class="icon-paper-plane"></i>
@@ -919,7 +919,7 @@
 								<li><a href="{% url 'tienda_productos' %}">Tienda</a></li>
 								<li><a href="{% url 'contenido_mostrar' %}">Contenido</a></li>
 								<li><a href="{% url 'evento_en_vivo'%}">Transmision en Vivo</a></li>
-								<li><a target="_blank" href="blog.mdvglobal.org">Blog</a></li>
+								<li><a target="_blank" href="{% url 'home_blog' %}">Blog</a></li>
 							</ul>
 						</div>
 						<!-- End Useful Links -->
@@ -996,18 +996,15 @@
 		<div class="sliding-panel-inner sliding-panel-scrollable fullscreen">
 			<ul class="sliding-navigation">
 				{% if user.is_authenticated%}
-				<li><a class="color-menu" href="{% url 'home_panel'%}"><button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
-										 rounded-4x margin-right-10 ">Mi cuenta</button></a></li>
-				<li><a class="color-menu" href="{% url 'logout_page'%}"><button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
-										 rounded-4x margin-right-10 ">Cerrar Sesion</button></a></li>
+				<li><a class="color-menu" href="{% url 'logout_page'%}"><button class="rounded-4x btn-u btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block ">Cerrar Sesion</button></a></li>
 				{%else%}
-				<li><a class="color-menu" href="{% url 'login_page' %}"><button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
-										 rounded-4x margin-right-10 ">Iniciar Sesion</button></a></li>
+				<li><a class="color-menu" href="{% url 'login_page' %}"><button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block rounded-4x">Iniciar Sesion</button></a></li>
 				{%endif%}
 			</ul>
 			<ul class="sliding-navigation">
 				<li><a class="color-menu" href="{% url 'index'%}">Inicio</a></li>
-				
+				<li><a class="color-menu" href="{% url 'home_panel'%}">Mi cuenta</a></li>
+
 				{%if user.is_staff%}
 				<li><a class="color-menu" href="{% url 'home'%}">Administrar</a></li>
 				{%endif%}
@@ -1016,7 +1013,7 @@
 				<li><a class="color-menu" href="{% url 'donacion_mas' %}">Donaciones</a></li>
 				<li><a class="color-menu" href="{% url 'tienda_productos' %}">Tienda</a></li>
 				<li><a class="color-menu" href="{% url 'contenido_mostrar' %}">Contenido</a></li>
-				<li><a class="color-menu" href="blog.mdvglobal.org" target="_blank">Blog</a></li>
+				<li><a class="color-menu" href="{% url 'home_blog' %}" target="_blank">Blog</a></li>
 				{% if not user.is_authenticated%}
 				<li><a class="color-menu" href="{% url 'signup_page' %}"><button class="btn btn-skype ">Registrarse</button></a></li>
 				{%endif%}
