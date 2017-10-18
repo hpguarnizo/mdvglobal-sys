@@ -18,6 +18,9 @@ from home.emails import email_verify_password, email_welcome, email_contact_tech
 from tienda.models import Producto, Compra
 from .forms import SignupForm, LoginForm, SupportForm
 
+def Usuarios(request):
+    return render(request,'home_clientes.html',{'usuarios':MyUser.objects.all()})
+
 
 def IndexView(request):
     cant_eventos = Evento.objects.filter(estado=3).__len__

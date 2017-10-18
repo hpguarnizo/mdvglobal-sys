@@ -88,6 +88,12 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     def get_provincia(self):
         return self.provincia
 
+    def get_receive_newsletter(self):
+        return self.receive_newsletter
+
+    def get_date_joined(self):
+        return self.date_joined
+
     def set_provincia(self,provincia):
         self.provincia=provincia
 

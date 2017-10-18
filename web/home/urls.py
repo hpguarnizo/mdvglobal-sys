@@ -35,5 +35,6 @@ urlpatterns = [
     url(r'home/$',staff_member_required(Home.as_view()),name='home'),
     url(r'juan/ballistreri/$',JuanBallistreri,name='juan_ballistreri'),
     url(r'panel/$',login_required(PanelUsuario),name='home_panel'),
+    url(r'usuarios/$',staff_member_required(Usuarios),name='home_usuarios'),
     url(r'blog/$',TemplateView.as_view(template_name='en_construccion.html'),name='home_blog')
 ]

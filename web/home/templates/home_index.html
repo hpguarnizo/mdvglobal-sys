@@ -127,9 +127,15 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="{%block usuarios%}{%endblock%}">
+                        <a  href="{% url 'home_usuarios'%}" >
+                            <i class="fa fa-user"></i>
+                            <span class="nav-label">Usuarios</span>
+                        </a>
+                    </li>
                     <li class="">
-                        <a  href="https://wordpress.com/people/team/blogmdvglobal.wordpress.com" target="_blank">
-                            <i class="fa fa-support"></i>
+                        <a  href="{% url 'home_blog'%}" target="_blank">
+                            <i class="fa fa-send"></i>
                             <span class="nav-label">Blog</span>
                         </a>
                     </li>

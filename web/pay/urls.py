@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^entrada/(?P<entrada_id>(\d*))/$', buy_my_entrada,name='pay_entrada'),
     url(r'^return/$', login_required(return_url_premium), name='pay_return_url_premium'),
     url(r'^cancel/$', login_required(cancel_return_premium), name='pay_cancel_return_premium'),
-    url(r'^plans/$', login_required(HomePayView.as_view()), name='pay_plans'),
+    url(r'^plans/$', HomePayView.as_view(), name='pay_plans'),
 
 ]
 
