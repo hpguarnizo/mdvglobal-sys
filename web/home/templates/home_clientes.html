@@ -36,7 +36,6 @@ active
                             <th>Registro</th>
                             <th>Provincia</th>
                             <th>Administrador</th>
-                            <th>Registro</th>
                             <th>Newsletter</th>
                             <th>Suscripcion</th>
                         </tr>
@@ -46,9 +45,7 @@ active
                         <tr class="gradeX">
                             <td>{{user.get_full_name}}</td>
                             <td>{{user.get_email}}</td>
-                            <td>
-                                {{user.get_date_joined}}
-                            </td>
+                            <td>{{user.get_date_joined}}</td>
                             <td>{{user.get_provincia}}</td>
                             <td>
                                 {%if user.is_staff%}
@@ -64,7 +61,8 @@ active
                                     <i class="fa fa-times fa-2x"></i>
                                 {%endif%}
                             </td>
-                            <td>{%if user.get_plan.es_gratis%}
+                            <td>
+                                {%if user.get_plan.es_gratis%}
                                     <span class="label label-default">Gratis</span>
                                 {%elif user.get_plan.es_premium%}
                                     <span class="label label-primary">Premium</span>
@@ -82,7 +80,6 @@ active
                             <th>Registro</th>
                             <th>Provincia</th>
                             <th>Administrador</th>
-                            <th>Registro</th>
                             <th>Newsletter</th>
                             <th>Suscripcion</th>
                         </tr>

@@ -15,6 +15,7 @@
     <input type="hidden" name="tipo" id="tipo_id" value="{{tipo_q}}">
     <input type="hidden" name="categoria" id="categoria_id" value="{{categoria_q}}">
     <input type="hidden" name="comienzo" id="comienzo_id" value="{{comienzo}}">
+    <input type="hidden" name="acceso" id="acceso_id" value="{{acceso}}">
 </form>
 {%endblock%}
 
@@ -81,19 +82,22 @@
 					<ul class="list-unstyled categories">
 						<li>
 							<a href="#">
-							<input type="checkbox" id="ministerial" class="btn-r-categoria" name="checkbox"/>
+							<input type="checkbox" id="Ministerial" class="btn-r-acceso" name="checkbox"
+								{% if acceso == 'Ministerial' %} checked {%endif%}/>
 								Ministerial
 							</a>
 						</li>
 						<li>
 							<a href="#">
-							<input type="checkbox" id="premium" class="btn-r-categoria" name="checkbox" />
+							<input type="checkbox" id="Premium" class="btn-r-acceso" name="checkbox"
+							{% if acceso == 'Premium' %} checked {%endif%}/>
 								Premium
 							</a>
 						</li>
 						<li>
 							<a href="#">
-							<input type="checkbox" id="gratis" class="btn-r-categoria" name="checkbox"/>
+							<input type="checkbox" id="Gratis" class="btn-r-acceso" name="checkbox"
+							{% if acceso == 'Gratis' %} checked {%endif%}/>
 								Gratis
 							</a>
 						</li>
@@ -128,7 +132,7 @@
 				<div class="row">
 					{%for cont in contenido%}
 					<!-- Team v2 -->
-					<div class="col-md-4 col-sm-6 col-xs-12">
+					<div class="col-md-4 col-sm-4 col-xs-12">
 						<div class="team-v2">
 							<a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}">
 								<img class="img-responsive" src="{{cont.get_imagen}}" alt="{{cont.get_nombre}}" />
@@ -160,7 +164,7 @@
 					<ul class="pagination">
 						<li><a href="#" class="btn-atras">«</a></li>
 						<li class="active"><a href="#" >{{pagina}}</a></li>
-						<li><a href="#"  class="btn-atras">»</a></li>
+						<li><a href="#"  class="btn-sig">»</a></li>
 					</ul>
 				</div>
 				{%endif%}
@@ -200,20 +204,25 @@ let formulario = document.getElementById("form");
         formulario.submit();
     });
     $(".btn-r-tipo").click(function(){
-        $("#tipo_id").val("");
+        $("#tipo_id").val(this.id);
         formulario.submit();
     });
     $(".btn-r-categoria").click(function(){
-        $("#categoria_id").val("");
+        $("#categoria_id").val(this.id);
+        formulario.submit();
+    });
+
+    $(".btn-r-acceso").click(function(){
+        $("#acceso_id").val(this.id);
         formulario.submit();
     });
     $(".btn-sig").click(function(){
-        let comienzo = parseInt($("#comienzo_id").val()) + parseInt(10);
+        let comienzo = parseInt($("#comienzo_id").val()) + parseInt(9);
         $("#comienzo_id").val(comienzo);
         formulario.submit();
     });
     $(".btn-atras").click(function(){
-        let comienzo = parseInt($("#comienzo_id").val()) - parseInt(10);
+        let comienzo = parseInt($("#comienzo_id").val()) - parseInt(9);
         $("#comienzo_id").val(comienzo);
         formulario.submit();
     });

@@ -3,7 +3,7 @@
 <div class="promo-bg-pattern-v1-dark promo-bg-fixed content-xlg parallaxBg">
     <div class="row">
         <div class="col-md-12 text-center">
-            {% if evento.get_estado.es_en_vivo%}
+            {% if evento.get_estado.es_en_vivo %}
                 {% autoescape off %}{{evento.get_transmision}}{% endautoescape %}
             {%else%}
                 {% if evento.get_tipo.es_prescencial%}

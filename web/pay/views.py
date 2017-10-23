@@ -5,13 +5,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 import mercadopago
 import json
-
 from donacion.models import Donacion, Pagina
 from evento.emails import email_entrada_nueva
 from evento.models import Entrada
-from pay.models import Customer, Premium
+from pay.forms import PlanesConfigForm
+from pay.models import Customer, Premium, Gratis, Ministerial
 import os
-
 from tienda.models import Compra
 
 
@@ -19,8 +18,19 @@ class HomePayView(TemplateView):
     template_name = 'pay_plans.html'
 
 
-def buy_my_item(request):
+def PlanesForm(request):
+    if request.method=="POST":
+        form = PlanesConfigForm(request.POST)
+        if form.is_valid():
+            pass
+    else:
+        form=PlanesConfigForm(initial={"gratis":Gratis.objects.all().first().get_cost(),
+                                       "premium":Premium.objects.all().first().get_cost(),
+                                       "ministerial":Ministerial.objects.all().first().get_cost()})
+    return render(request,'pay_configuracion.html',{'form':form})
 
+
+def buy_my_item(request):
     code = None
     description = None
     user = request.user

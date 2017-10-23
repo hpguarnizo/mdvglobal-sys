@@ -768,14 +768,14 @@
 		<!-- Full Width Section -->
 		<div class="container-fluid bg-color-darker">
 			<div class="row equal-height-columns-v2 no-gutter">
-				<div class="col-md-6 equal-height-column-v2 text-center dp-table">
-					<div class="content-boxes-v3 dp-table-cell quote-v1 parallaxBg">
+				<div class="col-md-6 equal-height-column-v2 text-center dp-table parallax-counter align-vert" style="height:534px;">
+					<div class="content-boxes-v3 dp-table-cell">
 						<div class="margin-bottom-10">
-							<img class="rounded-x img-width-60" src="{% static 'unify/img/testimonials/img5.jpg' %}" alt="">
+							<img class="rounded-x img-width-80" src="{% static 'unify/img/testimonials/img5.jpg' %}" alt="">
 						</div>
-						<div class="margin-bottom-10">....</div>
-						<p>Lo mas costoso de la ignorancia se llama perdida de Tiempo.</p>
-						<span>Juan Ballistreri</span>
+						<div class="margin-bottom-10">&nbsp;</div>
+						<h3><b>"Lo mas costoso de la ignorancia se llama perdida de Tiempo."</b></h3>
+						<h5>Juan Ballistreri</h5>
 					</div>
 				</div>
 				<div class="col-md-6 " data-image-src="{% static 'common/img/herramientas.jpg' %}">
@@ -861,7 +861,7 @@
 					<div class="col-sm-4 col-xs-6">
 						<div class="counters">
 							<span class="counter">{{cant_productos}}</span>
-							<h4>Recursos disponibles</h4>
+							<h4>Productos disponibles</h4>
 						</div>
 					</div>
 					<div class="col-sm-4 col-xs-12">
@@ -894,17 +894,24 @@
 						<div class="col-md-3 sm-margin-bottom-40">
 							<div class="heading-footer"><h2>Noticias</h2></div>
 							<ul class="list-unstyled link-news">
+								{% if evento %}
 								<li>
-									<a href="#">Ultima Conferencia</a>
-									<small>24 Julio, 2017</small>
+									<a href="{% url 'evento_seleccionar' evento_id=evento.id %}">{{evento.get_nombre}}</a>
+									<small>{{evento.get_fecha}}</small>
+								</li>
+								{%else%}
+								<li>
+									<a href="{% url 'evento_lista' %}">Convocatorias disponibles</a>
+									<small class="fecha"></small>
+								</li>
+								{%endif%}
+								<li>
+									<a href="{% url 'donacion_mas' %}">{{donacion.get_titulo}}</a>
+									<small class="fecha"></small>
 								</li>
 								<li>
-									<a href="#">Como ayudar a otros</a>
-									<small>12 Julio, 2017</small>
-								</li>
-								<li>
-									<a href="#">Nuevo sitio</a>
-									<small>10 Julio, 2017</small>
+									<a href="{% url 'contenido_ver_mas' contenido_id=contenido.id%}">{{contenido.get_nombre}}</a>
+									<small>{{contenido.get_fecha}}</small>
 								</li>
 							</ul>
 						</div>
@@ -1115,6 +1122,8 @@
 					});
 				}
 			});
+			let f = new Date();
+			$(".fecha").html(f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear())
 		});
 	</script>
 

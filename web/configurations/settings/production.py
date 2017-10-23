@@ -26,8 +26,12 @@ ADMINS=[('Support', EMAIL_HOST_USER_SOPORTE)]
 ALLOWED_HOSTS = ['mdvglobal.herokuapp.com','www.mdvglobal.org']
 
 INSTALLED_APPS += [
-     'django.contrib.staticfiles',
+      'django.contrib.staticfiles',
 ]
+#
+# MIDDLEWARE_CLASSES += [
+#     'whitenoise.middleware.WhiteNoiseMiddleware',
+# ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
@@ -37,8 +41,8 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, 'static'),
 ]
 
-#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #Facebook Keys
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')

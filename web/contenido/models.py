@@ -66,6 +66,9 @@ class Contenido(models.Model):
     def get_nombre(self):
         return self.nombre
 
+    def get_fecha(self):
+        return "%i/%i/%i" %(self.fecha.day,self.fecha.month,self.fecha.year)
+
     def get_descripcion(self):
         return self.descripcion
 

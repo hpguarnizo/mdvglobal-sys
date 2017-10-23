@@ -15,10 +15,12 @@
                     <p >{{donacion.get_descripcion}}</p>
                     <form action="." method="POST" class="margin-top-60">
                     {% csrf_token %}
-                    <input type="number" min="1" name="cantidad" id="cantidad_id" class="form-control center-block" style="background-color:#FFF;color:#000;margin-top:15px;border-radius:10px;margin-bottom:15px;" placeholder="Introduce la cantidad a donar"><br>
-                      <button class="btn btn-skype-inversed rounded-4x btn-normal" style="width:120px;">
-                          <i class="fa fa-plus-sign"></i>¡Donar!
-                      </button>
+                    <input type="number" min="1" name="cantidad" id="cantidad_id" class="form-control center-block" style="background-color:#FFF;color:#000;margin-top:15px;border-radius:10px;margin-bottom:15px;" placeholder="Introduce la cantidad a donar" required><br>
+                        <a href="{% url 'pay_donacion' %}">
+                            <button class="btn btn-skype-inversed rounded-4x btn-normal" style="width:120px;">
+                              <i class="fa fa-plus-sign"></i>¡Donar!
+                            </button>
+                        </a>
                       </form>
                 </div>
             </div>

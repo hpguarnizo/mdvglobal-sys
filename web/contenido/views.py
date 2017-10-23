@@ -65,26 +65,67 @@ def ContenidoMostrar(request):
     query = request.GET.get("q", "")
     tipo = request.GET.get("tipo", "")
     categoria = request.GET.get("categoria", "")
+    acceso = request.GET.get("acceso", "")
     comienzo = request.GET.get("comienzo", "")
     if comienzo and int(comienzo)>0:
         comienzo = int(comienzo)
     else:
         comienzo=0
-    if query or tipo or categoria:
-        if query and tipo and categoria:
+    if query or tipo or categoria or acceso:
+        if query and tipo and categoria and acceso:
+            qset = (
+                Q(nombre__icontains=query) &
+                Q(tipo__nombre__exact=tipo) &
+                Q(categoria__nombre__exact=categoria) &
+                Q(acceso__name__exact=acceso)
+            )
+        elif tipo and categoria and acceso:
+            qset = (
+                Q(tipo__nombre__exact=tipo) &
+                Q(categoria__nombre__exact=categoria) &
+                Q(acceso__name__exact=acceso)
+            )
+        elif query and tipo and categoria:
             qset = (
                 Q(nombre__icontains=query) &
                 Q(tipo__nombre__exact=tipo) &
                 Q(categoria__nombre__exact=categoria)
+            )
+        elif query and acceso and categoria:
+            qset = (
+                Q(nombre__icontains=query) &
+                Q(acceso__name__exact=acceso) &
+                Q(categoria__nombre__exact=categoria)
+            )
+        elif query and tipo and acceso:
+            qset = (
+                Q(nombre__icontains=query) &
+                Q(tipo__nombre__exact=tipo) &
+                Q(acceso__name__exact=acceso)
             )
         elif query and tipo:
             qset = (
                 Q(nombre__icontains=query) &
                 Q(tipo__nombre__exact=tipo)
             )
+        elif acceso and tipo:
+            qset = (
+                Q(acceso__name__exact=acceso) &
+                Q(tipo__nombre__exact=tipo)
+            )
+        elif query and acceso:
+            qset = (
+                Q(nombre__icontains=query) &
+                Q(acceso__name__exact=acceso)
+            )
         elif query and categoria:
             qset = (
                 Q(nombre__icontains=query) &
+                Q(categoria__nombre__exact=categoria)
+            )
+        elif acceso and categoria:
+            qset = (
+                Q(acceso__name__exact=acceso) &
                 Q(categoria__nombre__exact=categoria)
             )
         elif categoria and tipo:
@@ -106,21 +147,29 @@ def ContenidoMostrar(request):
             qset = (
                 Q(categoria__nombre__exact=categoria)
             )
+        elif acceso:
+            qset = (
+                Q(acceso__name__exact=acceso)
+            )
         contenidos = Contenido.objects.filter(qset).distinct()
-        results = contenidos[comienzo:comienzo+10]
-        if len(results)==0 and len(contenidos)>10:
-            comienzo= comienzo-10
-            results = contenidos[comienzo:comienzo + 10]
-
-        pagina = int((comienzo+10)/10)
+        results = contenidos[comienzo:comienzo+9]
+        if len(results)==0 and comienzo>0:
+            comienzo = comienzo-9
+            results = contenidos[comienzo:comienzo + 9]
+        pagina = int((comienzo+9)/9)
         return render(request, 'contenido.html',
                       {'tipos': TipoContenido.objects.all(), 'categorias': CategoriaContenido.objects.all(),
                        'contenido': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo,
-                       "compra":get_compra(request),"cantidad":len(contenidos),"pagina":pagina})
-    pagina = int((comienzo+10)/10)
+                       "compra":get_compra(request),"cantidad":len(contenidos),"pagina":pagina,"acceso":acceso})
+
+    contenido = Contenido.objects.all().order_by("-fecha")[comienzo:comienzo+9]
+    if len(contenido)==0:
+        comienzo-=9
+        contenido = Contenido.objects.all().order_by("-fecha")[comienzo:comienzo + 9]
+    pagina = int((comienzo+9)/9)
     return render(request,'contenido.html',{'tipos':TipoContenido.objects.all(),
                                             'categorias':CategoriaContenido.objects.all(),
-                                            'contenido':Contenido.objects.all().order_by("-fecha")[comienzo:comienzo+10],
+                                            'contenido':contenido,
                                             "compra":get_compra(request),"comienzo":comienzo,"pagina":pagina})
 
 

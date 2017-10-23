@@ -194,7 +194,7 @@ class EnVivo(EstadoEvento):
 class Evento(models.Model):
     nombre = models.CharField(max_length=256)
     descripcion = models.TextField()
-    imagen = S3DirectField(dest="autoturno",null=True,blank=True)
+    imagen = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'),null=True,blank=True)
     fecha = models.DateField()
     cupo = models.PositiveIntegerField(blank=True,null=True)
     asistentes = models.PositiveIntegerField(default=0)

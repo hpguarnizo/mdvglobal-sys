@@ -22,6 +22,8 @@ STATICFILES_FINDERS=[
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
 INSTALLED_APPS += [
     #Debug
     'django_extensions',

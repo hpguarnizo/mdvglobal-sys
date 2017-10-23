@@ -8,11 +8,17 @@ from model_utils.managers import InheritanceManager
 class Plan(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=254)
-
+    cost= models.FloatField(default=100)
     objects = InheritanceManager()
 
     def __str__(self):
         return self.name
+
+    def get_cost(self):
+        return self.concrete_model
+
+    def set_cost(self,cost):
+        self.cost= cost
 
     def is_free(self):
         return False
@@ -29,6 +35,7 @@ class Plan(models.Model):
     def es_gratis(self):
         return True
 
+
 class Gratis(Plan):
     def is_free(self):
         return True
@@ -41,6 +48,7 @@ class Gratis(Plan):
 
     def es_ministerial(self):
         return False
+
 
 class Premium(Plan):
     def es_premium(self):

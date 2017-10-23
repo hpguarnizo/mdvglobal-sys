@@ -11,7 +11,7 @@ from django.views.generic.base import View
 from django.views.generic.edit import FormView
 
 from contenido.models import Contenido
-from donacion.models import Donacion
+from donacion.models import Donacion, Pagina
 from evento.models import Evento, Entrada
 from home.emails import email_verify_password, email_welcome, email_contact_technical, \
     email_contact_commercial
@@ -21,15 +21,16 @@ from .forms import SignupForm, LoginForm, SupportForm
 def Usuarios(request):
     return render(request,'home_clientes.html',{'usuarios':MyUser.objects.all()})
 
-
 def IndexView(request):
     cant_eventos = Evento.objects.filter(estado=3).__len__
     cant_productos = Producto.objects.all().__len__
-    cant_donaciones = Donacion.objects.all().__len__
     cant_contenido = Contenido.objects.all().__len__
+    evento = Evento.objects.filter(estado_id=1).order_by("-fecha").first()
+    donacion = Pagina.objects.all().first()
+    contenido=Contenido.objects.all().order_by("-fecha").first()
     return render(request,'index.html',{'cant_eventos':cant_eventos,'cant_productos':cant_productos,
-                                        'cant_donaciones':cant_donaciones,'cant_contenido':cant_contenido,})
-    return render(request, 'index.html')
+                                        'cant_contenido':cant_contenido,"evento":evento, "donacion":donacion,
+                                        "contenido":contenido})
 
 
 def JuanBallistreri(request):

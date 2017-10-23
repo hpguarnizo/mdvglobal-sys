@@ -1,9 +1,11 @@
 from django.conf.urls import  url
+from django.contrib.admin.views.decorators import staff_member_required
+
 from pay.views import *
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
-
+    url(r'^planes/form/$', staff_member_required(PlanesForm), name='pay_planes_form'),
     url(r'^payment/$', login_required(buy_my_item),name='pay_payment'),
     url(r'^tienda/(?P<compra_id>(\d*))$', buy_my_productos,name='pay_tienda'),
     url(r'^donacion/$', buy_my_donacion,name='pay_donacion'),

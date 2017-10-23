@@ -1,10 +1,3 @@
-Crear Correo 
-Cuando pones suscribirte te manda a iniciar sesión y no a cuenta nueva y ninguno de los accesos de cuenta funciona
-igual cuando quiero iniciar sesión tampoco funcionan 
-Lupa de buscador al lado del carrito no funciona.
-Debemos de alguna forma darles acceso a la base de datos de sus usuarios y clientes 
-No se pueden subir las imagenes
-Configurar api mercado libre
 Configuar api paypal
 
 Poner pagos suscipcion con mercado libre
@@ -13,19 +6,30 @@ Poner pagos suscripcion con paypal
 
 Verificar cuando esta en vivo que se deba poner el codigo para ingresar cuando es pago
 
-Lupa de buscador al lado del carrito no funciona.
-- El buscador del lado del carrito que está en el home no funciona 
-
 
 - Cuando quiero agregar al carrito, necesitamos que se agreguen, sin llevarme al carrito a finalizar la compra, cuando estoy en el carrito, poner un botón que diga “ver más recursos ” y me lleve a la página de contenidos nuevamente.
 
 
-- Debemos dejar algún espacio en el dashboard en donde ellos puedan ver la cantidad de suscriptores, la base de datos del administrador, que sea fácil de entrar y descargar.
+* La lupa del lado del carrito no funciona
+
+*con tarjeta me tira un error 2060, no pude comprar en ningun caso
+
+*en convocatoria, q me de una opcion de  borrarme....o cancelar la misma si aun no pague
+
+*y cdo cargo la convocatoria no me deja subir imagen
+
 
 
 Cosas para hablar con samir:
--Tener en cuenta que cuando se largue la plataforma debemos redireccionar la actual web de manantialdevidaOnline.com con la web de MDVGLOBAL... Que necesitamos para hacerlo? Haria falta el dominio, donde esta cargado
+*cambiar mail de contacto- a cual email
 -Hacer blog
--El email si hace algo cuando lo clickeas, te lleva al email en el movil y en descktop si lo tenes instalado abre el outlock
--Probar login
-- Una vez solucionado lo de la suscripción, avisarnos para poder probar la experiencia de usuario del proceso de compra y que funcione la compra a través de paypal y mercado pago.
+-comillas en la frase de Juan, falta cerrarlas-> Es asi el landing no lo puedo modificar
+-en suscripcion cambiar icono de ministeria x el de premium- Ya lo hize es tu cache
+-la foto de los Dres- ya lo hize es tu cache
+*el mail de bienvenida del new letter me da un boton para registrarme pero no funciona - ya esta
+*contador de recursos no actualiza - porque decia recursos pero era productos
+*donaciones: sacar CUBA y boton de donar no funciona - ya saque cuba, esto se actualiza del dashboard - se debe ingresar el monto a donar para que funcione, agrege el required para que te pida el monto
+*hay productos prueba, libros - no habia cargado ningun producto
+*los link de noticias no llevan a ningun lado y tienen fecha de julio- ya esta cambiado
+* y solo muestra 10 recursos siendo q hay mas, pero no da la opcion de pasar de hoja -arreglado para pasar de hoja y la disposicion de lo mismo
+*en recursos, no filtra x categorias ni tipo de suscripcion - arreglado
