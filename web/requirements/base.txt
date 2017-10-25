@@ -11,7 +11,7 @@ django-celery
 django-analytical
 django-s3direct<1.0
 mercadopago
-social-auth-app-django==1.0.0
-django-cities-light
-
+sudo dockerdjango-cities-light
+social-core==1.2.0
+social-app-django==1.1.0
 
