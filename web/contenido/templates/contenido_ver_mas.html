@@ -10,11 +10,11 @@
         <div class="col-md-12">
             {%if permitido%}
                 {% if contenido.get_tipo.es_audio%}
-                    <audio src="{{contenido.get_archivo}}"></audio>
+                    <audio controls><source type="audio/mpeg" src="{{contenido.get_archivo}}">Tu navegador no soporta este elemento</audio>
                 {% elif contenido.get_tipo.es_documento%}
                     <a href="{{contenido.get_archivo}}" target="_blank">Ver Documento</a>
                 {%else%}
-                    <video src="{{contenido.get_archivo}}"></video>
+                    <video controls><source type="video/mp4" src="{{contenido.get_archivo}}"></video>
                 {%endif%}
             {%else%}
                 <a href="{%url 'pay_plans'%}"><span class="label label-danger">Para ver el contenido debe actualizar su Suscripcion haciendo click aqui</span></a>

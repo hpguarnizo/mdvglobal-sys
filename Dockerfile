@@ -1,9 +1,8 @@
-FROM python:3.6.1
+FROM codi0/python:latest
 
 # Install python and pip
 ADD ./web/requirements/base.txt /tmp/base.txt
 ADD ./web/requirements/production.txt /tmp/requirements.txt
-
 
 # Install dependencies
 RUN pip install -r /tmp/requirements.txt
