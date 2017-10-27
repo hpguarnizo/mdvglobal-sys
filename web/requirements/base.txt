@@ -13,4 +13,3 @@ django-s3direct<1.0
 mercadopago
 django-cities-light
 social-auth-app-django==1.2.0
-
