@@ -1,4 +1,4 @@
-FROM codi0/python:latest
+FROM codi0/python
 
 ARG DJANGO_ENV
 

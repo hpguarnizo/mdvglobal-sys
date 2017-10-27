@@ -20,6 +20,7 @@ def Configurar(request):
             if len(pagina)>0:
                 pagina = pagina.first()
                 pagina.set_data(form.save(commit=False))
+                pagina.save()
             else:
                 form.save()
             guardado=True
