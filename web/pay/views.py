@@ -19,15 +19,24 @@ class HomePayView(TemplateView):
 
 
 def PlanesForm(request):
+    edit=False
     if request.method=="POST":
         form = PlanesConfigForm(request.POST)
         if form.is_valid():
-            pass
+            gratis = Gratis.objects.all().first()
+            premium = Premium.objects.all().first()
+            ministerial = Ministerial.objects.all().first()
+
+            gratis.set_cost(form.cleaned_data["gratis"])
+            premium.set_cost(form.cleaned_data["premium"])
+            ministerial.set_cost(form.cleaned_data["ministerial"])
+
+            edit = True
     else:
         form=PlanesConfigForm(initial={"gratis":Gratis.objects.all().first().get_cost(),
                                        "premium":Premium.objects.all().first().get_cost(),
                                        "ministerial":Ministerial.objects.all().first().get_cost()})
-    return render(request,'pay_configuracion.html',{'form':form})
+    return render(request,'pay_configuracion.html',{'form':form,"edit":edit})
 
 
 def buy_my_item(request):

@@ -10,6 +10,7 @@ RUN pip install -r /tmp/requirements.txt
 # Add our code
 ADD ./web /opt/webapp/
 WORKDIR /opt/webapp
+RUN python manage.py collecstatic 
 
 # Expose is NOT supported by Heroku
 # EXPOSE 5000 		

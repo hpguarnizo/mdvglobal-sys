@@ -52,6 +52,39 @@
 	<link href="{% static 'inspinia2/css/plugins/sweetalert/sweetalert.css' %}" rel="stylesheet">
 
 	<style>
+		.color-menu:hover{
+			color:#00a2ed !important;
+		}
+	
+			.text-white{
+				color:#FFF !important;
+			}
+		
+		.bg-img{
+				background-image:url('{% static 'common/img/1.jpg'%}');
+				 background-repeat: no-repeat;
+			  		background-size:  cover;
+
+			}
+
+			.btn-normal{
+				width:150px;
+				height:40px
+			}
+		
+
+		.btn-en-vivo{
+			font-family:sans-serif;
+			border-color:#e50914 !important;
+			color:#FFF;
+			background-color:#e50914 !important;
+		}
+
+		.btn-en-vivo:hover{
+			border-color:#f50914 !important;
+			background-color:#f50914 !important;
+		}
+	
 		/*  */
 .g-popup-wrapper {
 	display: none;
@@ -476,21 +509,22 @@
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
 					<div class="menu-container">
-						<button type="button" class="navbar-toggle sliding-panel__btn ">
+						<button type="button" class="navbar-toggle sliding-panel_btn sliding-panel_btn--dark">
 							<span class="sr-only">Toggle navigation</span>
 							<span class="icon-bar" style="background-color:#00a2ed ;"></span>
 							<span class="icon-bar" style="background-color:#00a2ed ;"></span>
 							<span class="icon-bar" style="background-color:#00a2ed ;"></span>
 						</button>
-
+		
 						<!-- Navbar Brand -->
 						<div class="navbar-brand">
-							<a href="{% url 'index'%}">
-								<img class="default-logo" src="{% static 'unify/img/logo3-dark.png' %}" alt="Logo">
+							<a href="#">
+								<img class="default-logo" src="{% static 'unify/img/logo3-light.png' %}" alt="Logo">
 								<img class="shrink-logo" src="{% static 'unify/img/logo3-dark.png' %}" alt="Logo">
 							</a>
 						</div>
 						<!-- ENd Navbar Brand -->
+
 
 						<!-- Header Inner Right -->
 						<div class="header-inner-right">
@@ -498,9 +532,7 @@
 								{% if not en_vivo%}
 								<li class="menu-icons" >
 									<a href="{% url 'evento_en_vivo'%}">
-										<button class="hidden-xs btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
-										 rounded-4x margin-right-10"
-												style="font-family:sans-serif;">
+										<button class="hidden-xs btn-u btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block rounded-4x margin-right-10" style="font-family:sans-serif;">
 											<i class="fa fa-circle"></i> En Vivo
 										</button>
 									</a>
@@ -515,21 +547,8 @@
 									</a>
 								</li>
 
-								<style>
-									.btn-en-vivo{
-										font-family:sans-serif;
-										border-color:#e50914 !important;
-										color:#FFF;
-										background-color:#e50914 !important;
-									}
-
-									.btn-en-vivo:hover{
-										border-color:#f50914 !important;
-										background-color:#f50914 !important;
-									}
-								</style>
 								{%endif%}
-								<li class="menu-icons shopping-cart {% if en_vivo%}hidden-xs{%endif%} " >
+									<li class="menu-icons shopping-cart" >
 									<i class="menu-icons-style radius-x fa fa-shopping-cart"  style="color:#FFF"></i>
 									<span class="badge">{{compra.get_detalle|length}}</span>
 									<div class="shopping-cart-open">
@@ -560,7 +579,7 @@
 									</div>
 								</li>
 								<li class="menu-icons">
-									<i class="menu-icons-style search search-close search-btn fa fa-search " style="color:#FFF"></i>
+									<i class="menu-icons-style search search-close search-btn fa fa-search" style="color:#FFF"></i>
 									<div class="search-open" style="background-color:#2a2b2b">
 										{%block form%}
 										<form action="{% url 'tienda_productos_busqueda' %}" method="GET">
@@ -583,21 +602,8 @@
 				</div>
 			</div>
 			<!-- End Navbar -->
+
 		</div>
-
-		<style>
-			.bg-img{
-				background-image:url('{% static 'common/img/1.jpg'%}');
-				 background-repeat: no-repeat;
-			  		background-size:  cover;
-
-			}
-
-			.btn-normal{
-				width:150px;
-				height:40px
-			}
-		</style>
 		<!--=== End Header v6 ===-->
 		{% block contenido %}
 
@@ -663,11 +669,6 @@
 				</div>
 			</div>
 		</div>
-		<style>
-			.text-white{
-				color:#FFF !important;
-			}
-		</style>
 		<!-- Colorfull Block -->
 
 
@@ -768,7 +769,7 @@
 		<!-- Full Width Section -->
 		<div class="container-fluid bg-color-darker">
 			<div class="row equal-height-columns-v2 no-gutter">
-				<div class="col-md-6 equal-height-column-v2 text-center dp-table parallax-counter align-vert" style="height:530px;">
+				<div class="col-md-6 equal-height-column-v2 text-center dp-table parallax-counter align-vert" style="height:534px;">
 					<div class="content-boxes-v3 dp-table-cell">
 						<div class="margin-bottom-10">
 							<img class="rounded-x img-width-80" src="{% static 'unify/img/testimonials/img5.jpg' %}" alt="">
@@ -990,11 +991,6 @@
 		</div>
 		<!--=== End Footer v6 ===-->
 	</div><!--/wrapper-->
-	<style>
-		.color-menu:hover{
-			color:#00a2ed !important;
-		}
-	</style>
 	<!-- Sliding Panel -->
 	<div class="sliding-panel bg-color-darker">
 		<div class="sliding-panel-inner sliding-panel-scrollable fullscreen">
@@ -1063,11 +1059,15 @@
 	<script src="{% static 'unify/plugins/owl-carousel/owl-carousel/owl.carousel.js' %}"></script>
 	<script src="{% static 'unify/plugins/cube-portfolio/cubeportfolio/js/jquery.cubeportfolio.min.js' %}"></script>
 	<!-- JS Page Level -->
+	<script src="{% static 'unify-ecommerce/js/shop.app.js' %}"></script>
 
 	<script src="{% static 'unify/js/app.js' %}"></script>
+	<script src="{% static 'unify-ecommerce/js/shop.app.js' %}"></script>
 
 	<script src="{% static 'unify/js/plugins/owl-carousel.js' %}"></script>
 	<script src="{% static 'unify/js/plugins/cube-portfolio/masonry-v1.js' %}"></script>
+	<!-- JS Customization -->
+	<script src="{% static 'unify/js/custom.js' %}"></script>
 	<!-- JS Initialization -->
 	<script type="text/javascript">
 		jQuery(document).ready(function() {

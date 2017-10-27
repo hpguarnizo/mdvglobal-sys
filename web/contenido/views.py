@@ -67,6 +67,7 @@ def ContenidoMostrar(request):
     categoria = request.GET.get("categoria", "")
     acceso = request.GET.get("acceso", "")
     comienzo = request.GET.get("comienzo", "")
+    
     if comienzo and int(comienzo)>0:
         comienzo = int(comienzo)
     else:
@@ -163,7 +164,7 @@ def ContenidoMostrar(request):
                        "compra":get_compra(request),"cantidad":len(contenidos),"pagina":pagina,"acceso":acceso})
 
     contenido = Contenido.objects.all().order_by("-fecha")[comienzo:comienzo+9]
-    if len(contenido)==0:
+    if len(contenido)==0 and comienzo>=9:
         comienzo-=9
         contenido = Contenido.objects.all().order_by("-fecha")[comienzo:comienzo + 9]
     pagina = int((comienzo+9)/9)
