@@ -12,6 +12,4 @@ django-analytical
 django-s3direct<1.0
 mercadopago
 django-cities-light
-social-auth-core==1.2.0
-social-app-django==1.1.0
-
+social-auth-app-django==1.0.0
