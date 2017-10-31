@@ -25,7 +25,7 @@ from home.views import IndexView
 handler404 = 'home.views.handler404'
 
 urlpatterns = [
-    url(r'^.well-known/acme-challenge/CUOJ7SfjHL-snRR7Mjvqgejkcgz6gaHh2CX8POPohO4/$', TemplateView.as_view(template_name='home_ssl.html')),
+    url(r'^.well-known/acme-challenge/koy5RjDYG6ZAIB-lLR06Rt206H-Ks5xAekUvIfe67g4/$', TemplateView.as_view(template_name='home_ssl.html')),
     #Admin
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT,'show_indexes':settings.DEBUG}),
     url(r'^admin/', admin.site.urls),
