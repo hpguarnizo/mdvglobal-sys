@@ -75,7 +75,7 @@ def BuscarProductos(request):
     }
     productos = Producto.objects.order_by(orden_dic[orden]).filter(qset).distinct()
     results = productos[comienzo:comienzo+9]
-    if len(results)==0:
+    if len(results)==0 and comienzo>8:
         comienzo = comienzo - 9
         results = productos[comienzo:comienzo + 9]
     pagina = int((comienzo+9)/9)

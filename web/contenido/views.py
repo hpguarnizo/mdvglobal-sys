@@ -154,12 +154,14 @@ def ContenidoMostrar(request):
             )
         contenidos = Contenido.objects.filter(qset).distinct()
         results = contenidos[comienzo:comienzo+9]
-        if len(results)==0 and comienzo>0:
+        if len(results)==0:
             comienzo = comienzo-9
             results = contenidos[comienzo:comienzo + 9]
         pagina = int((comienzo+9)/9)
+        tipos = TipoContenido.objects.all()
+        categorias=CategoriaContenido.objects.all()
         return render(request, 'contenido.html',
-                      {'tipos': TipoContenido.objects.all(), 'categorias': CategoriaContenido.objects.all(),
+                      {'tipos': tipos, 'categorias': categorias,
                        'contenido': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo,
                        "compra":get_compra(request),"cantidad":len(contenidos),"pagina":pagina,"acceso":acceso})
 
