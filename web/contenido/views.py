@@ -67,6 +67,8 @@ def ContenidoMostrar(request):
     categoria = request.GET.get("categoria", "")
     acceso = request.GET.get("acceso", "")
     comienzo = request.GET.get("comienzo", "")
+
+    request.user.finalizo_suscripcion()
     
     if comienzo and int(comienzo)>0:
         comienzo = int(comienzo)
@@ -177,6 +179,9 @@ def ContenidoMostrar(request):
 
 
 def ContenidoVerMas(request, contenido_id):
+    user = request.user
+    if user.is_authenticated:
+        request.user.finalizo_suscripcion()
     contenido = get_object_or_404(Contenido, id=contenido_id)
     return render(request,'contenido_ver_mas.html',{'contenido':contenido,'permitido':contenido.puede_verlo(request.user),
                                                     "compra":get_compra(request)})

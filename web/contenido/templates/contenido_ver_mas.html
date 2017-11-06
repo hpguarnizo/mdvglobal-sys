@@ -17,7 +17,11 @@
                     <video controls><source type="video/mp4" src="{{contenido.get_archivo}}"></video>
                 {%endif%}
             {%else%}
-                <a href="{%url 'pay_plans'%}"><span class="label label-danger">Para ver el contenido debe actualizar su Suscripcion haciendo click aqui</span></a>
+                {% if user.is_authenticated %}
+                <h3 >Para ver el contenido debe actualizar su Suscripcion haciendo <a href="{%url 'pay_plans'%}">click aqui </a></h3>
+                {%else%}
+                <h3>Para ver el contenido debe registarse haciendo <a href="{% url 'pay_plans'%}">click aqui</a></h3>
+                {%endif%}
                 <a href="{%url 'pay_plans'%}">
                     <img width="400" height="440" class="img-responsive center-block" src="{{contenido.get_imagen}}" alt="">
                 </a>

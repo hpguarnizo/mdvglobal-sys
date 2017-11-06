@@ -121,7 +121,7 @@
  								<div class="product-img product-img-brd">
  									<a href="#"><img class="full-width img-responsive" src="{% static 'unify-ecommerce/img/blog/14.jpg'%}" alt=""></a>
  									<a class="product-review" href="{% url 'producto_ver_mas' producto_id=producto.id %}">Ver mas</a>
- 									<a class="add-to-cart" href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
+ 									<a class="add-to-cart" href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}?next={%url 'tienda_productos_busqueda'%}?q={{q}}.-.tipo={{tipo_q}}.-.categoria={{categoria_q}}.-.comienzo={{comienzo}}.-.orden={{orden}}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
  									{% if not producto.hay_stock_s %}
                                     <div class="shop-rgba-red rgba-banner">Sin stock</div>
                                     {%elif producto.subido_este_mes %}

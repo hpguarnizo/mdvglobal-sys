@@ -8,14 +8,24 @@ from model_utils.managers import InheritanceManager
 class Plan(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=254)
-    cost= models.FloatField(default=100)
+    cost= models.FloatField(default=0)
     objects = InheritanceManager()
+    id_mp= models.CharField(max_length=256,blank=True,null=True)
 
     def __str__(self):
         return self.name
 
     def get_cost(self):
-        return self.concrete_model
+        return self.cost
+
+    def set_id_mp(self,id_mp):
+        self.id_mp=id_mp
+
+    def get_id_mp(self):
+        return self.id_mp
+
+    def esta_creado(self):
+        return self.id_mp!=None
 
     def set_cost(self,cost):
         self.cost= cost
@@ -81,8 +91,23 @@ class Ministerial(Plan):
 class Customer(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name="user_customer", blank=True,null=True)
     subscr_date = models.DateField(auto_now_add=True)
-    days = models.IntegerField(default=365)
+    days = models.IntegerField(default=32)
     plan = models.ForeignKey(Plan,blank=True,null=True)
+    suscripto=models.BooleanField(default=True)
+
+    def finalizo_suscripcion(self):
+        if self.is_finish():
+            self.delete()
+
+    def get_suscripto(self):
+        return self.suscripto
+
+    def get_renueve(self):
+        return self.subscr_date.day
+
+    def desuscribir(self):
+        self.suscripto=False
+        self.save()
 
     def get_plan(self):
         return Plan.objects.get_subclass(id=self.plan.id)

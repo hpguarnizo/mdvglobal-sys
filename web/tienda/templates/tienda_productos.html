@@ -215,7 +215,7 @@
 						 alt="{{producto.get_nombre}}">
 				</a>
 				<a class="product-review" href="{% url 'producto_ver_mas' producto_id=producto.id %}">Ver mas</a>
-				<a class="add-to-cart" href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
+				<a class="add-to-cart" href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}?next={%url 'tienda_productos'%}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
 				{% if not producto.hay_stock_s %}
 				<div class="shop-rgba-red rgba-banner">Sin stock</div>
 				{%elif producto.subido_este_mes %}

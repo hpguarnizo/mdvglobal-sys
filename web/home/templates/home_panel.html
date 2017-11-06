@@ -119,13 +119,18 @@
 						<i class="icon-custom icon-color-light rounded-x icon-line icon-fire"></i>
 						<h2 class="heading-md">Suscripcion</h2>
 						<p>
+						{%if exito%}
+							<strong>Se ha desuscripto correctamente</strong>
+						{%endif%}
                         {% if not user.get_plan.es_gratis%}
-                            {% if user.get_customer.remaining_days %}
-                                Tu suscripción {{user.get_plan}} finaliza en {{user.get_customer.remaining_days}} días. El
-                                {{user.get_customer.date_finish}}
-                            {% else %}
-                                Usuario de prueba con suscripcion ilimitada
-                            {%endif%}
+							{% if user.esta_suscripto %}
+									Tienes una suscripcion {{user.get_plan}}, se renueva el {{user.get_customer.get_renueve}}
+									<a href="{% url 'pay_desuscribir'%}"  style="font-weight:bold; color:#FFF;" class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
+										 rounded-4x">Cancelar Suscripcion</a>
+							{%else%}
+								    Tu suscripción {{user.get_plan}} finaliza en {{user.get_customer.remaining_days}} días. El
+                            	    {{user.get_customer.date_finish}}
+							{%endif%}
                         {%else%}
                             No tiene suscripcion puede adquirir una haciendo <br><br><a href="{% url 'pay_plans'%}"  style="font-weight:bold; color:#FFF;" class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block
 										 rounded-4x">click aqui</a>

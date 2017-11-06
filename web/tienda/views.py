@@ -226,6 +226,8 @@ def ProductoVerMas(request,producto_id):
 def AgregarCarrito(request,producto_id):
     producto = get_object_or_404(Producto,id=producto_id)
     cantidad = int(request.GET.get("cantidad","1"))
+    next = request.GET.get("next").replace(".-.", "&")
+
     if not producto.hay_stock(cantidad):
         return HttpResponseRedirect(reverse("producto_ver_mas",kwargs={"producto_id":producto_id})+"?sin_stock=True")
     user = request.user
@@ -237,13 +239,13 @@ def AgregarCarrito(request,producto_id):
             compra.save()
 
         compra.agregar_producto(producto,cantidad)
-        return HttpResponseRedirect(reverse("tienda_carrito"))
+        return HttpResponseRedirect(next)
 
     elif "token_compra" in request.session:
         token =request.session["token_compra"]
         compra = Compra.objects.get(token=token)
         compra.agregar_producto(producto,cantidad)
-        return HttpResponseRedirect(reverse("tienda_carrito"))
+        return HttpResponseRedirect(next)
 
     else:
         return HttpResponseRedirect(reverse('tienda_login_producto',kwargs={"producto_id":producto_id}))
