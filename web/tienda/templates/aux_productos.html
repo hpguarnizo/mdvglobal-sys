@@ -10,7 +10,7 @@
         <li class="thumb-product-price line-through">${{producto.get_precio}}</li>
         {%endif%}
         <li class="thumb-product-price">${{producto.get_precio_descuento}}</li>
-        <li class="thumb-product-purchase"><a href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}"><i class="fa fa-shopping-cart"></i></a></li>
+        <li class="thumb-product-purchase"><a href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}?next={%url 'tienda_productos'%}"><i class="fa fa-shopping-cart"></i></a></li>
     </ul>
 </div>
 </a>

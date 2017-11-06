@@ -11,7 +11,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
 from s3direct.fields import S3DirectField
 from home.emails import email_welcome
-from pay.models import Customer, Gratis
+from pay.models import Customer, Gratis, Premium, Ministerial
 
 
 def _generate_code():
@@ -77,6 +77,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     customer = models.OneToOneField(Customer,blank=True,null=True)
     subscribe_email = models.NullBooleanField(default=True,blank=True,null=True)
     provincia = models.ForeignKey(Region, null=True, blank=True)
+    customer_id_mp= models.CharField(max_length=256, null=True, blank=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', ]
@@ -84,6 +85,34 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+
+    def finalizo_suscripcion(self):
+        if self.customer:
+            self.customer.finalizo_suscripcion()
+
+    def desuscribir(self):
+        self.customer.desuscribir()
+
+    def esta_suscripto(self):
+        return self.customer.get_suscripto()
+
+    def premium(self):
+        customer = Customer(user=self,plan=Premium.objects.all().first())
+        customer.save()
+        self.customer=customer
+        self.save()
+
+    def ministerial(self):
+        customer = Customer(user=self,plan=Ministerial.objects.all().first())
+        customer.save()
+        self.customer=customer
+        self.save()
+
+    def set_customer_id(self,customer_id):
+        self.customer_id_mp =customer_id
+
+    def get_customer_id(self):
+        return self.customer_id_mp
 
     def get_provincia(self):
         return self.provincia

@@ -42,8 +42,10 @@ def JuanBallistreri(request):
 
 def PanelUsuario(request):
     user = request.user
+    request.user.finalizo_suscripcion()
+    exito=request.GET.get("exito","")
     return render(request,'home_panel.html',{'entradas':Entrada.objects.filter(user=user,evento__estado__in=[1,2]),
-                                             'productos':Compra.objects.filter(user=user).order_by("-fecha")})
+                                             'productos':Compra.objects.filter(user=user).order_by("-fecha"),"exito":exito})
 
 def SignupView(request):
     template_name = 'home_signup.html'
