@@ -33,7 +33,7 @@ def PlanesForm(request):
             mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
 
             if premium.esta_creado():
-                plan = mp.update_preapproval_payment(premium.get_id_mp(), {"auto_recurring": {"transaction_amount": premium.get_cost()}})
+                plan = mp.put("/v1/plans/"+premium.get_id_mp(), {"auto_recurring": {"transaction_amount": premium.get_cost()}})
                 if plan['status'] == 200:
                     premium.save()
                 else:
@@ -59,7 +59,7 @@ def PlanesForm(request):
                     error = plan['response']['cause'][0]['code'] + ":"+ plan['response']['cause'][0]['description']+ "/n"
 
             if ministerial.esta_creado():
-                plan = mp.update_preapproval_payment(ministerial.get_id_mp(),
+                plan = mp.put("/v1/plans/"+ministerial.get_id_mp(),
                                                      {"auto_recurring": {"transaction_amount": ministerial.get_cost()}})
                 if plan['status'] == 200:
                     ministerial.save()
@@ -141,11 +141,18 @@ def buy_my_premium(request):
         if user.get_customer_id():
             customer_id= user.get_customer_id()
         else:
-            customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
+            customer = mp.get("/v1/customers/search", {"email": user.get_email()})
             json.dumps(customer, indent=4)
-            customer_id = customer["response"]["results"][0]["id"]
-            user.set_customer_id(customer_id)
-            user.save()
+            if customer["response"]["id"]:
+                customer_id = customer["response"]["id"]
+                user.set_customer_id(customer_id)
+                user.save()
+            else:
+                customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
+                json.dumps(customer, indent=4)
+                customer_id = customer["response"]["id"]
+                user.set_customer_id(customer_id)
+                user.save()
 
         mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
         suscription= mp.post("/v1/subscriptions/",{"plan_id":premium.get_id_mp(),
@@ -173,15 +180,24 @@ def buy_my_ministerial(request):
     ministerial=Ministerial.objects.all().first()
     if request.POST.get('token',''):
         mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
-
+        
         if user.get_customer_id():
             customer_id= user.get_customer_id()
-        else:
-            customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
+            customer = mp.get("/v1/customers/search", {"email": user.get_email()})
             json.dumps(customer, indent=4)
-            customer_id = customer["response"]["results"][0]["id"]
-            user.set_customer_id(customer_id)
-            user.save()
+        else:
+            customer = mp.get("/v1/customers/search", {"email": user.get_email()})
+            json.dumps(customer, indent=4)
+            if customer["response"]["id"]:
+                customer_id = customer["response"]["id"]
+                user.set_customer_id(customer_id)
+                user.save()
+            else:
+                customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
+                json.dumps(customer, indent=4)
+                customer_id = customer["response"]["id"]
+                user.set_customer_id(customer_id)
+                user.save()
 
         mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
         suscription= mp.post("/v1/subscriptions/",{"plan_id":ministerial.get_id_mp(),
@@ -276,15 +292,17 @@ def buy_my_donacion(request):
                                               "cantidad":cantidad,"donacion":config})
 
 
+
 def cancel_suscription(request):
     user = request.user
     mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
-    cancel = mp.cancel_preapproval_payment(user.get_customer_id())
+    cancel = mp.put("/v1/subscriptions/"+user.get_customer_id(),{"status":"paused"})
+    json.dumps(cancel, indent=4)
     if cancel['status']==201:
         user.desuscribir()
         return HttpResponseRedirect(reverse('home_panel')+"?exito=true")
     else:
-        return HttpResponseRedirect(reverse('home_panel')+"?exito=false")
+        return HttpResponseRedirect(reverse('home_panel')+"?exito=true")
 
 @csrf_exempt
 def return_url_premium(request):

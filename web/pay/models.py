@@ -15,6 +15,9 @@ class Plan(models.Model):
     def __str__(self):
         return self.name
 
+    def get_cost_int(self):
+        return int(self.cost)
+
     def get_cost(self):
         return self.cost
 
