@@ -2,7 +2,8 @@
 {% load staticfiles %}
     {% block contenido %}
   <div class="promo-bg-pattern-v1-dark promo-bg-fixed content-lg parallaxBg">
-		          <div class="row blog-page">
+      <div class="container">
+      <div class="row blog-page">
             <div class="col-md-6 ">
                 <div class="blog margin-bottom-40">
                     <div class="blog-img">
@@ -10,14 +11,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 text-center">
                     <h2><strong>{{donacion.get_titulo}}</strong></h2>
                     <p >{{donacion.get_descripcion}}</p>
                     <form action="." method="POST" class="margin-top-60">
                     {% csrf_token %}
                     <input type="number" min="1" name="cantidad" id="cantidad_id" class="form-control center-block" style="background-color:#FFF;color:#000;margin-top:15px;border-radius:10px;margin-bottom:15px;" placeholder="Introduce la cantidad a donar" required><br>
                         <a href="{% url 'pay_donacion' %}">
-                            <button class="btn btn-skype-inversed rounded-4x btn-normal" style="width:120px;">
+                            <button class="btn btn-skype-inversed rounded-4x btn-normal center-block" style="width:120px;">
                               <i class="fa fa-plus-sign"></i>¡Donar!
                             </button>
                         </a>
@@ -25,5 +26,6 @@
                 </div>
             </div>
         </div>
+      </div>
     </div>
 {% endblock %}

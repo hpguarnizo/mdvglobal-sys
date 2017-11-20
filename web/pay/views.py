@@ -251,12 +251,11 @@ def buy_my_productos(request,compra_id):
         else:
             code = payment['response']['cause'][0]['code']
             description = payment['response']['cause'][0]['description']
-
     return render(request,'pay_tienda.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
                                               "compra":compra})
 
 def buy_my_donacion(request):
-    cantidad = request.GET.get("donacion","100")
+    cantidad = float(request.GET.get("cantidad","100"))
     config = Pagina.objects.all().first()
     code = None
     description = None

@@ -767,19 +767,19 @@
 
 		<!-- Full Width Section -->
 		<div class="container-fluid bg-color-darker">
-			<div class="row equal-height-columns-v2 no-gutter">
-				<div class="col-md-6 equal-height-column-v2 text-center dp-table parallax-counter align-vert" style="height:530px;">
-					<div class="content-boxes-v3 dp-table-cell">
+			<div class="row equal-height-columns-v2 no-gutter" >
+				<div class="col-md-6 equal-height-column-v2 text-center dp-table parallax-counter align-vert panel-juan">
+					<div class="content-boxes-v3 dp-table-cell juan-frase">
 						<div class="margin-bottom-10">
-							<img class="rounded-x img-width-80" src="{% static 'unify/img/testimonials/img5.jpg' %}" alt="">
+							<img class="rounded-x img-width-80" src="{% static 'unify/img/testimonials/img5.jpg' %}" alt="Juan Ballistreri">
 						</div>
 						<div class="margin-bottom-10">&nbsp;</div>
 						<h3><b>"Lo mas costoso de la ignorancia se llama perdida de Tiempo."</b></h3>
 						<h5>Juan Ballistreri</h5>
 					</div>
 				</div>
-				<div class="col-md-6 " data-image-src="{% static 'common/img/herramientas.jpg' %}">
-					<img src="{% static 'common/img/herramientas.jpg' %}" class="img-responsive" alt="juan" >
+				<div class="col-md-6 " data-image-src="{% static 'common/img/herramientas.jpg' %}" >
+					<img src="{% static 'common/img/herramientas.jpg' %}" class="img-responsive juan"  alt="juan" >
 				</div>
 			</div>
 		</div>
@@ -994,6 +994,12 @@
 		.color-menu:hover{
 			color:#00a2ed !important;
 		}
+		@media (max-width: 768px) {
+			.panel-juan{
+				width:100%;
+				heigth:auto;
+			}
+		}
 	</style>
 	<!-- Sliding Panel -->
 	<div class="sliding-panel bg-color-darker">
@@ -1090,6 +1096,8 @@
 
 	<script>
 		$(document).ready(function(){
+			$(".juan-frase").height($(".juan").height()-60);
+
 			$("#btn-popup").click(function(){
 				let email = $("#email-popup").val();
 				if(email){

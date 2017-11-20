@@ -1,4 +1,4 @@
-FROM codi0/python:latest
+FROM python:3.5
 
 # Install python and pip
 ADD ./web/requirements/base.txt /tmp/base.txt
@@ -11,6 +11,11 @@ RUN pip install -r /tmp/requirements.txt
 ADD ./web /opt/webapp/
 WORKDIR /opt/webapp
 
+#Archivos estaticos se suben al servidor
+ENV DJANGO_SETTINGS_MODULE=configurations.settings.production
+ENV DJANGO_SECRET_KEY='ynozdacxox8=yt*o9+m#6*371a1+x_t2)lsff%j-59vlv#ityz'
+RUN python manage.py collectstatic --clear --noinput
+
 # Expose is NOT supported by Heroku
 # EXPOSE 5000 		
 
@@ -21,4 +26,3 @@ USER myuser
 # Run the app.  CMD is required to run on Heroku
 # $PORT is set by Heroku			
 CMD gunicorn --bind 0.0.0.0:$PORT wsgi 
-

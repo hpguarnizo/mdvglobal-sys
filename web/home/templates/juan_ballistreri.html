@@ -84,7 +84,7 @@
 						<a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}" class="cbp-caption cbp-singlePageInline"
 							data-title="{{contenido.get_nombre}}">
 							<div class="cbp-caption-defaultWrap">
-								<img src="{%if contenido.get_imagen%}{{contenido.get_imagen}}{%else%}{% static 'unify/img/portfolio/20.jpg' %}{%endif%}" alt="">
+								<img src="{%if contenido.get_imagen%}{{contenido.get_imagen}}{%else%}{% static 'unify/img/portfolio/20.jpg' %}{%endif%}" class="img-responsive" alt="">
 							</div>
 							<div class="cbp-caption-activeWrap">
 								<div class="cbp-l-caption-alignLeft">

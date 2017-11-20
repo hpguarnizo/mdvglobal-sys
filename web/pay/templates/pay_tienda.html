@@ -54,13 +54,13 @@
                     <div class="form-group">
                         <label class="col-sm-4 no-col-space control-label">Codigo de Seguridad</label>
                         <div class="col-sm-8 input-small-field">
-                            <input type="text" name="number" maxlength="3" id="securityCode" data-checkout="securityCode" required placeholder="123" class="form-control required">
+                            <input type="text" maxlength="3" id="securityCode" data-checkout="securityCode" required placeholder="123" class="form-control required">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 no-col-space control-label">N° de Documento</label>
                         <div class="col-sm-8 ">
-                            <input type="text" name="number" id="docNumber" data-checkout="docNumber" placeholder="12345678" maxlength="20" required class="form-control required">
+                            <input type="text" id="docNumber" data-checkout="docNumber" placeholder="12345678" maxlength="20" required class="form-control required">
                         </div>
                     </div>
                     <div class="form-group">
@@ -69,7 +69,7 @@
                             <select id="docType" data-checkout="docType" class="form-control" required></select>
                         </div>
                     </div>
-                    <input id="email" class="form-control" name="email" value="{{user.email}}" type="hidden" placeholder="Su email"/>
+                    <input id="email" class="form-control" name="email" value="{{compra.get_email}}" type="hidden" placeholder="Su email"/>
                     <button type="submit" class="btn btn-warning center-block" style="border-radius:30px;">COMPRAR</button>
                 </div>
             </div>
@@ -105,7 +105,7 @@
 </script>
 
   <!--Mercado Pago-->
-    <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+  <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
 
 <script>
     Mercadopago.setPublishableKey("{{PUBLIC_KEY_MP}}");
