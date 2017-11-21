@@ -124,6 +124,9 @@ class Producto(models.Model):
     def get_stock(self):
         return self.stock
 
+    def quitar_stock(self,cantidad):
+        self.stock = self.stock-cantidad
+
     def hay_stock_s(self):
         if self.tipo.es_libro_fisico and self.stock==0:
             return False
@@ -210,6 +213,7 @@ class Incompleta(EstadoCompra):
 
     def pagar(self,compra):
         compra.set_estado(Pagado.objects.all().first())
+        compra.quitar_stock()
         compra.save()
 
     def envio(self,compra,codigo,url):
@@ -283,6 +287,11 @@ class Compra(models.Model):
 
     def enviar_email_envio(self,request):
         email_envio(request,self)
+
+    def verificar_libros(self):
+        for detalle in self.get_detalle():
+            if not detalle.hay_stock():
+                detalle.delete()
 
     def get_url_envio(self):
         return self.url_envio
@@ -370,6 +379,10 @@ class Compra(models.Model):
     def set_estado(self,estado):
         self.estado = estado
 
+    def quitar_stock(self):
+        for detalle in self.get_detalle():
+            detalle.quitar_stock()
+
     def enviar(self,codigo,url):
         self.get_estado().enviar(self,codigo,url)
 
@@ -401,3 +414,10 @@ class DetalleCompra(models.Model):
     def quitar(self):
         if self.cantidad>1:
             self.cantidad = self.cantidad-1
+
+    def quitar_stock(self):
+        if self.producto.get_tipo().es_libro_fisico():
+            if self.producto.get_stock()-self.cantidad>0:
+                self.producto.quitar_stock(self.cantidad)
+            return False
+        return True

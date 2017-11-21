@@ -20,57 +20,90 @@
                         </h4>
                     </div>
                     <form role="form" id="pay" name="pay" method="post" action="">
-                    {% csrf_token %}
-                    {% include "home_form_errors.html" %}
-                    {% if code %}
-                        <div class="alert alert-danger alert-dismissable">
-                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                            {{description}} <a class="alert-link" href="#">{{code}}</a>.
-                        </div>
-                    {% endif %}
-                    <div id="collapseOne" class="panel-collapse collapse in">
-                        <div class="panel-body cus-form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-4 no-col-space control-label">Nombre en la Tarjeta</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control required" maxlength="255"  id="cardholderName" data-checkout="cardholderName" required>
-                                </div>
-                            </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 no-col-space control-label">Numero de la Tarjeta</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control required" id="cardNumber" data-checkout="cardNumber" placeholder="4509953566233704" required maxlength="16">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4">Fecha de Vencimiento</label>
-                            <div class="col-sm-8 input-small-field">
-                                <input type="text" id="cardExpirationMonth" data-checkout="cardExpirationMonth" placeholder="12" maxlength="2" required class="form-control required sm-margin-bottom-20">
-                                <span class="slash">/</span>
-                                <input type="text" id="cardExpirationYear" data-checkout="cardExpirationYear" placeholder="2019" maxlength="4" required class="form-control required">
-                            </div>
-                       </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 no-col-space control-label">Codigo de Seguridad</label>
-                            <div class="col-sm-8 input-small-field">
-                                <input type="text" maxlength="3" id="securityCode" data-checkout="securityCode" required placeholder="123" class="form-control required">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                        <label class="col-sm-4 no-col-space control-label">N° de Documento</label>
-                        <div class="col-sm-8 ">
-                            <input type="text" id="docNumber" data-checkout="docNumber" placeholder="12345678" maxlength="20" required class="form-control required">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 no-col-space control-label">Tipo de Documento</label>
-                        <div class="col-sm-8">
-                            <select id="docType" data-checkout="docType" class="form-control" required></select>
-                        </div>
-                    </div>
-                    <input id="email" class="form-control" name="email" value="{{compra.get_email}}" type="hidden" placeholder="Su email"/>
-                    <button type="submit" class="btn btn-warning center-block" style="border-radius:30px;">COMPRAR</button>
-                </div>
+                                                {% csrf_token %}
+                                                {% include "home_form_errors.html" %}
+                                                {% if code %}
+                                                    <div class="alert alert-danger alert-dismissable">
+                                                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                                                        {{description}} <a class="alert-link" href="#">{{code}}</a>.
+                                                    </div>
+                                                {% endif %}
+
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="form-group">
+                                                            <label>NUMERO DE TARJETA</label>
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" id="cardNumber" data-checkout="cardNumber" placeholder="4509953566233704" required maxlength="16"/>
+                                                                <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-7 col-md-7">
+                                                        <div class="form-group">
+                                                            <label>FECHA DE VENCIMIENTO</label></br>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <input type="text" id="cardExpirationMonth" data-checkout="cardExpirationMonth" placeholder="12" maxlength="2" class="form-control"/>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <input type="text" id="cardExpirationYear" data-checkout="cardExpirationYear" placeholder="2019" maxlength="4" class="form-control"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-5 col-md-5 pull-right">
+                                                        <div class="form-group">
+                                                            <label>CODIGO DE SEGURIDAD</label>
+                                                            <input type="text" class="form-control" maxlength="3" id="securityCode" data-checkout="securityCode" placeholder="123" required/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12">
+                                                        <div class="form-group">
+                                                            <label>NOMBRE EN LA TARJETA</label>
+                                                            <input type="text" class="form-control"  maxlength="255"  id="cardholderName" data-checkout="cardholderName" placeholder="GASTON ZARATE" required/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-7 col-md-7">
+                                                        <div class="form-group">
+                                                            <label>NUMERO DE DOCUMENTO</label></br>
+                                                            <input type="text" id="docNumber" data-checkout="docNumber" placeholder="12345678" maxlength="20"  class="form-control"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-5 col-md-5 pull-right">
+                                                        <div class="form-group">
+                                                            <label>TIPO DE DOCUMENTO</label>
+                                                             <select id="docType" data-checkout="docType" class="form-control"></select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12">
+                                                        <div class="form-group">
+                                                            <label>EMAIL</label>
+                                                            <input id="email" class="form-control" name="email" value="{%block email%}{{user.email}}{%endblock%}" type="email" placeholder="Su email"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12 text-center">
+                                                        <button class="btn btn-primary" style="border-radius:20px;" type="submit"><i class="fa fa-lock"></i>{%block btn_tar%} COMPRAR{%endblock%}</button>
+                                                        <img src="{% static 'pay/img/pay_protegida.png' %}" alt="Compra Protegida"  style="width: 42px; height:42px;">
+                                                    </div>
+                                                    <div class="col-xs-12 text-center">
+                                                        <small style="color:#555;;">Pago protegido con mercado pago</small>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        </div>
             </div>
             </form>
         </div>

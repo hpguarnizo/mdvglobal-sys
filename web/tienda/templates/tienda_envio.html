@@ -1,5 +1,24 @@
 {%extends 'tienda_carrito.html' %}
 
+{%block envio_carrito%}
+<div class="shop-badge badge-icons pull-right">
+    <a href="#"><i class="fa fa-shopping-cart"></i></a>
+    <span class="badge badge-sea rounded-x">0</span>
+    <div class="badge-open">
+        <ul class="list-unstyled mCustomScrollbar" data-mcs-theme="minimal-dark">
+        </ul>
+        <div class="subtotal">
+            <div class="overflow-h margin-bottom-10">
+                <span>Total</span>
+                <span class="pull-right subtotal-cost">$0</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Shopping Cart -->
+
+{%endblock%}
+
 
 {% block btn_comprar%}
 {%endblock%}
@@ -9,6 +28,8 @@
 {%endblock%}
 
 {%block envio%}
+
+<h2>¡Felicitaciones, su compra se realizo con exito!</h2>
 {% ifequal compra.get_user user%}
     {%for detalle in compra.get_detalle%}
     <p><strong>{{detalle.get_producto.get_nombre}}:</strong>

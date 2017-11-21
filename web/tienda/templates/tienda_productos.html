@@ -115,7 +115,7 @@
 							<img id="logo-header" class="img-responsive" width="35" height="47" src="{% static 'unify-ecommerce/img/logo.png' %}" alt="Logo" style="max-width:35px; max-height:47px;">
 						</a>
 					</div>
-
+					{% block envio_carrito%}
 					<!-- Shopping Cart -->
 					<div class="shop-badge badge-icons pull-right">
 						<a href="#"><i class="fa fa-shopping-cart"></i></a>
@@ -152,7 +152,7 @@
 						</div>
 					</div>
 					<!-- End Shopping Cart -->
-
+					{%endblock%}
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse navbar-responsive-collapse ">
 						<!-- Nav Menu -->

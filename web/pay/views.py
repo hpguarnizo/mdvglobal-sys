@@ -221,7 +221,7 @@ def buy_my_ministerial(request):
 
 def buy_my_productos(request,compra_id):
     compra = get_object_or_404(Compra,id=compra_id)
-
+    compra.verificar_libros()
     code = None
     description = None
     if request.POST.get('token',''):
