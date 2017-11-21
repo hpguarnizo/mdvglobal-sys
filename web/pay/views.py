@@ -223,8 +223,6 @@ def buy_my_productos(request,compra_id):
     compra = get_object_or_404(Compra,id=compra_id)
     if not compra.verificar_libros():
         return HttpResponseRedirect(reverse('tienda_carrito'))
-    compra.pagar()
-    return HttpResponseRedirect(reverse('tienda_envio', kwargs={"compra_id": compra.id}))
 
     code = None
     description = None
