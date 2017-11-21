@@ -69,13 +69,13 @@
                 {% endif%}
                 <div class="margin-bottom-40">
                     <form name="f1" class="product-quantity sm-margin-bottom-20" method="GET" action="{% url 'tienda_agregar_carrito' producto_id=producto.id%}">
+                        <input type="hidden" id="next_id" name="next" value="{%url 'producto_ver_mas' producto_id=producto.id%}">
                         {% if producto.get_tipo.es_libro_fisico%}
                         <button type='button' class="quantity-button" name='subtract' onclick='javascript: subtractQty();' value='-'>-</button>
                         <input type='text' class="quantity-field" name='cantidad' value="1" id='qty'/>
-                        <input type="hidden" name="next" value="{%url 'producto_ver_mas' producto_id=producto.id%}">
-                        <button type='button' class="quantity-button" name='add' onclick='javascript: document.getElementById("qty").value++;' value='+'>+</button>
+                        <button type='button' class="quantity-button" name='add' value='+'>+</button>
                         {% endif%}
-                    <button type="submit" class="btn-u btn-u-sea-shop btn-u-lg">Agregar al carrito</button>
+                        <button type="submit" class="btn-u btn-u-sea-shop btn-u-lg">Agregar al carrito</button>
                     </form>
                 </div><!--/end product quantity-->
                 <br>
@@ -126,7 +126,7 @@
 <!--=== Illustration v2 ===-->
 <div class="container">
     <div class="heading heading-v1 margin-bottom-20">
-        <h2>Productos que mas gustan</h2>
+        <h2>Mas buscados</h2>
     </div>
 
     <div class="illustration-v2 margin-bottom-60">
@@ -141,7 +141,7 @@
                 <a href="{% url 'producto_ver_mas' producto_id=producto.id %}"><img class="img-responsive" width="180" height="180" src="{{producto.get_imagen2_url}}" alt="{{producto.get_nombre}}"></a>
                 <div class="product-description-v2">
                     <div class="margin-bottom-5">
-                        <h4 class="title-price"><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
+                        <h4 class="title-price"><a href="{% url 'producto_ver_mas' producto_id=producto.id %}" style="width:30px;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;">{{producto.get_nombre_corto}}</a></h4>
                         {% if producto.get_descuento %}
                         <span class="title-price">${{producto.get_precio_descuento}}</span>
                         <span class="title-price line-through">${{producto.get_precio}}</span>
@@ -167,6 +167,12 @@
     <script>
 		jQuery(document).ready(function() {
 			MasterSliderShowcase2.initMasterSliderShowcase2();
-		});
+
+            $("button[name=add]").click(function(){
+                if($("#qty").val()<{{producto.get_stock}}){
+                    document.getElementById("qty").value++;
+                }
+            })
+			});
 	</script>
 {%endblock%}

@@ -90,7 +90,7 @@ Contenidos
                                     <span class="label label-primary">{{cont.get_acceso}}</span>
                                 {%endif%}
                             </td>
-                            <td><a href=""><button><i class="fa fa-file"></i></button></a></td>
+                            <td><a href="{% url 'contenido_ver_mas' contenido_id=cont.id %}" target="__blank"><button><i class="fa fa-file"></i></button></a></td>
                         </tr>
                         {% endfor %}
                         </tbody>

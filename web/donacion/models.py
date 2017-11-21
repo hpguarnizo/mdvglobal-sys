@@ -20,6 +20,9 @@ class Donacion(models.Model):
     def get_monto(self):
         return self.monto
 
+    def is_nombre(self):
+        return self.nombre!="Sin Nombre"
+
 
 class Pagina(models.Model):
     titulo = models.CharField(max_length=256)

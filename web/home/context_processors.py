@@ -1,7 +1,8 @@
 import os
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.functional import SimpleLazyObject
-
+from contenido.models import Contenido
+from donacion.models import Pagina
 from evento.models import Evento
 from tienda.views import get_compra
 
@@ -44,3 +45,11 @@ def compra(request):
     return {
         'compra':get_compra(request)
     }
+
+def pagina_inicio(request):
+    return {
+        'evento':Evento.objects.filter(estado_id=1).order_by("-fecha").first(),
+        'donacion': Pagina.objects.all().first(),
+        'contenido':Contenido.objects.all().order_by("-fecha").first()
+    }
+

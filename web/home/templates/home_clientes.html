@@ -46,7 +46,7 @@ active
                             <td>{{user.get_full_name}}</td>
                             <td>{{user.get_email}}</td>
                             <td>{{user.get_date_joined}}</td>
-                            <td>{{user.get_provincia}}</td>
+                            <td>{% if user.get_provincia %}{{user.get_provincia}}{%else%}S/D{%endif%}</td>
                             <td>
                                 {%if user.is_staff%}
                                     <i class="fa fa-check fa-2x"></i>

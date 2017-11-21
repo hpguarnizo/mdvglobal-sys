@@ -50,14 +50,14 @@
 					<h3 class="heading-md"><strong>Tipo</strong></h3>
 					<ul class="list-unstyled categories">
 						{%for tipo in tipos%}
-						<li><a href="#">
+						<li>
 							{%ifequal tipo.get_nombre tipo_q%}
 								<input type="checkbox" class="btn-r-tipo" id="{{tipo}}" name="checkbox" checked/>
 							{%else%}
 								<input type="checkbox" class="btn-tipo" id="{{tipo}}" name="checkbox"/>
 							{%endifequal%}
 							{% include 'tipo.html'%}
-							{{tipo}}</a>
+							{{tipo}}
 							<small class="hex">({{tipo.get_cantidad}} contenidos)</small>
 						</li>
 						{%endfor%}
@@ -67,12 +67,12 @@
 					<h3 class="heading-md"><strong>Categoria</strong></h3>
 					<ul class="list-unstyled categories">
 						{%for cat in categorias %}
-						<li><a href="#">{%ifequal cat.get_nombre categoria_q%}
+						<li>{%ifequal cat.get_nombre categoria_q%}
 										<input type="checkbox" id="{{cat}}" class="btn-r-categoria" name="checkbox" checked/>
 									{%else%}
 										<input type="checkbox" id="{{cat}}" class="btn-categoria" name="checkbox" />
 									{%endifequal%}
-									{{cat}}</a> <small class="hex">({{cat.get_cantidad}} contenidos)</small>
+									{{cat}}<small class="hex">({{cat.get_cantidad}} contenidos)</small>
 						</li>
 						{%endfor%}
 					</ul>
@@ -81,37 +81,33 @@
 					<h3 class="heading-md"><strong>Acceso</strong></h3>
 					<ul class="list-unstyled categories">
 						<li>
-							<a href="#">
-							<input type="checkbox" id="Ministerial" class="btn-r-acceso" name="checkbox"
-								{% if acceso == 'Ministerial' %} checked {%endif%}/>
+							<input type="checkbox" id="Ministerial" name="checkbox"
+								{% if acceso == 'Ministerial' %} checked class="btn-r-acceso" {%else%} class="btn-acceso" {%endif%}/>
 								Ministerial
-							</a>
 						</li>
 						<li>
-							<a href="#">
-							<input type="checkbox" id="Premium" class="btn-r-acceso" name="checkbox"
-							{% if acceso == 'Premium' %} checked {%endif%}/>
+							<input type="checkbox" id="Premium" name="checkbox"
+							{% if acceso == 'Premium' %}  checked class="btn-r-acceso" {%else%} class="btn-acceso"  {%endif%}/>
 								Premium
-							</a>
 						</li>
 						<li>
-							<a href="#">
-							<input type="checkbox" id="Gratis" class="btn-r-acceso" name="checkbox"
-							{% if acceso == 'Gratis' %} checked {%endif%}/>
+							<input type="checkbox" id="Gratis" name="checkbox"
+							{% if acceso == 'Gratis' %}  checked class="btn-r-acceso" {%else%} class="btn-acceso"  {%endif%}/>
 								Gratis
-							</a>
 						</li>
 					</ul>
 				</div>
 			</div>
 			<!-- End Job Content -->
 			</div>
+
+
 			<div class="col-md-9">
 		<!--=== Job Team ===-->
 		<div class="bg-color-light">
 				<div class="title-box-v2">
 					<div class="headline">
-						<h2>{%if q%}Resultados de busqueda
+						<h2>{%if q%}Resultados de busqueda:
 							<span class="color-green">{{q}}{%else%}Ultimos Contenidos{%endif%}</span>
 						</h2>
 					</div>
@@ -129,9 +125,10 @@
 					background-color:rgba(0,162,237,0.5)
 				}
 			</style>
+			{% if contenido%}
 				{%for cont in contenido%}
-				{% if forloop.counter|divisibleby:3 %}
-				<div class="row">
+				{% if forloop.first %}
+					<div class="row">
 				{%endif%}
 					<!-- Team v2 -->
 					<div class="col-md-4 col-sm-4 col-xs-12">
@@ -141,10 +138,10 @@
 								<div class="etiqueta">{{cont.get_acceso}}</div>
 							</a>
 							<div class="inner-team">
-								<a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}"><h3>{{cont.get_nombre}}</h3></a>
+								<a href="{% url 'contenido_ver_mas' contenido_id=cont.id%}"><h3 style="max-width:230px;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;">{{cont.get_nombre}}</h3></a>
 								<small class="color-green" style="color:rgb(0,162,237)">{% include 'tipo.html'%} {{cont.get_categoria}}</small>
 								<div class="pull-left">
-									<p style="max-width:240px;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;">
+									<p style="max-width:230px;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;">
 										{{cont.get_descripcion}}
 									</p>
 								</div>
@@ -156,15 +153,19 @@
 							</div>
 						</div>
 					</div>
-					<!-- End Team v2 -->
 				{% if forloop.counter|divisibleby:3 %}
-				</div>
+					</div>
+					<div class="row">
 				{%endif%}
+
+					<!-- End Team v2 -->
 			   {%endfor%}
-				{% if contenido|length|divisibleby:3 %}
+				{% if not contenido|length|divisibleby:3 %}
 				</div>
 				{%endif%}
-			
+			{%else%}
+				<p class="text-center">No se encontraron resultados</p>
+			{%endif%}
 					{% if contenido%}
 							<!-- Begin Inner Results -->
 				<div class="margin-bottom-30"></div>
@@ -212,16 +213,28 @@ let formulario = document.getElementById("form");
         formulario.submit();
     });
     $(".btn-r-tipo").click(function(){
-        $("#tipo_id").val(this.id);
+        $("#tipo_id").val("");
         formulario.submit();
     });
     $(".btn-r-categoria").click(function(){
-        $("#categoria_id").val(this.id);
+        $("#categoria_id").val("");
+        formulario.submit();
+    });
+
+    $('body').keydown(function(e) {
+		if(e.keyCode == 13) {
+			$('#btn-enviar').focus();
+			formulario.submit();
+		}
+	});
+
+	$(".btn-acceso").click(function(){
+        $("#acceso_id").val(this.id);
         formulario.submit();
     });
 
     $(".btn-r-acceso").click(function(){
-        $("#acceso_id").val(this.id);
+        $("#acceso_id").val("");
         formulario.submit();
     });
     $(".btn-sig").click(function(){

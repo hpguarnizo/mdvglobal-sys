@@ -139,9 +139,7 @@ def ContenidoMostrar(request):
             )
         elif query:
             qset = (
-                Q(nombre__icontains=query) |
-                Q(tipo__nombre__icontains=tipo) |
-                Q(categoria__nombre__icontains=categoria)
+                Q(nombre__icontains=query)
             )
         elif tipo:
             qset = (
@@ -159,10 +157,13 @@ def ContenidoMostrar(request):
         results = contenidos[comienzo:comienzo+9]
         if len(results)==0:
             comienzo = comienzo-9
+            if comienzo<0:
+                comienzo=0
             results = contenidos[comienzo:comienzo + 9]
         pagina = int((comienzo+9)/9)
         tipos = TipoContenido.objects.all()
         categorias=CategoriaContenido.objects.all()
+
         return render(request, 'contenido.html',
                       {'tipos': tipos, 'categorias': categorias,
                        'contenido': results,"q":query,"tipo_q":tipo,"categoria_q":categoria,"comienzo":comienzo,
@@ -176,7 +177,7 @@ def ContenidoMostrar(request):
     return render(request,'contenido.html',{'tipos':TipoContenido.objects.all(),
                                             'categorias':CategoriaContenido.objects.all(),
                                             'contenido':contenido,
-                                            "compra":get_compra(request),"comienzo":comienzo,"pagina":pagina})
+                                            "compra":get_compra(request),"comienzo":comienzo,"pagina":pagina,"acceso":acceso})
 
 
 def ContenidoVerMas(request, contenido_id):

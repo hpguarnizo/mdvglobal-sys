@@ -8,176 +8,171 @@
 
 {%block contenido%}
 
- 		<!--=== Content Part ===-->
- 		<div class="content container">
- 			<div class="row">
- 				<div class="col-md-3 filter-by-block md-margin-bottom-60">
- 					<h1>Filtar Por</h1>
- 					<div class="panel-group" id="accordion">
- 						<div class="panel panel-default">
- 							<div class="panel-heading">
- 								<h2 class="panel-title">
- 									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
- 										Tipo
- 										<i class="fa fa-angle-down"></i>
- 									</a>
- 								</h2>
- 							</div>
- 							<div id="collapseOne" class="panel-collapse collapse in">
- 								<div class="panel-body">
- 									<ul class="list-unstyled checkbox-list">
- 										{%for tipo in tipos%}
-                                        <li>
- 											<label class="checkbox">
-                                                {%ifequal tipo.get_nombre tipo_q %}
- 												<input type="checkbox" class="btn-r-tipo" id="{{tipo}}" name="checkbox" checked/>
-                                                {%else%}
- 												<input type="checkbox" class="btn-tipo" id="{{tipo}}" name="checkbox"/>
-                                                {%endifequal%}
- 												<i></i>
- 												{{tipo}}
- 											</label>
- 										</li>
-                                        {%endfor%}
- 									</ul>
- 								</div>
- 							</div>
- 						</div>
- 					</div><!--/end panel group-->
+<!--=== Content Part ===-->
+<div class="content container">
+	<div class="row">
+		<div class="col-md-3 filter-by-block md-margin-bottom-60">
+			<h1>Filtar Por</h1>
+			<div class="panel-group" id="accordion">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h2 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+								Tipo
+								<i class="fa fa-angle-down"></i>
+							</a>
+						</h2>
+					</div>
+					<div id="collapseOne" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<ul class="list-unstyled checkbox-list">
+								{%for tipo in tipos%}
+								<li>
+									<label class="checkbox">
+										{%ifequal tipo.get_nombre tipo_q %}
+										<input type="checkbox" class="btn-r-tipo" id="{{tipo}}" name="checkbox" checked/>
+										{%else%}
+										<input type="checkbox" class="btn-tipo" id="{{tipo}}" name="checkbox"/>
+										{%endifequal%}
+										<i></i>
+										{{tipo}}
+									</label>
+								</li>
+								{%endfor%}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div><!--/end panel group-->
 
- 					<div class="panel-group" id="accordion-v2">
- 						<div class="panel panel-default">
- 							<div class="panel-heading">
- 								<h2 class="panel-title">
- 									<a data-toggle="collapse" data-parent="#accordion-v2" href="#collapseTwo">
- 										Categoria
- 										<i class="fa fa-angle-down"></i>
- 									</a>
- 								</h2>
- 							</div>
- 							<div id="collapseTwo" class="panel-collapse collapse in">
- 								<div class="panel-body">
- 									<ul class="list-unstyled checkbox-list">
- 										{%for cat in categorias %}
-                                        <li>
- 											<label class="checkbox">
-                                                {%ifequal cat.get_nombre categoria_q %}
- 												<input type="checkbox" id="{{cat}}" class="btn-r-categoria" name="checkbox" checked/>
-                                                {%else%}
- 												<input type="checkbox" id="{{cat}}" class="btn-categoria" name="checkbox" />
-                                                {%endifequal%}
- 												<i></i>
- 												{{cat}}
- 											</label>
- 										</li>
-                                        {%endfor%}
- 									</ul>
- 								</div>
- 							</div>
- 						</div>
- 					</div><!--/end panel group-->
- 				</div>
+			<div class="panel-group" id="accordion-v2">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h2 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion-v2" href="#collapseTwo">
+								Categoria
+								<i class="fa fa-angle-down"></i>
+							</a>
+						</h2>
+					</div>
+					<div id="collapseTwo" class="panel-collapse collapse in">
+						<div class="panel-body">
+							<ul class="list-unstyled checkbox-list">
+								{%for cat in categorias %}
+								<li>
+									<label class="checkbox">
+										{%ifequal cat.get_nombre categoria_q %}
+										<input type="checkbox" id="{{cat}}" class="btn-r-categoria" name="checkbox" checked/>
+										{%else%}
+										<input type="checkbox" id="{{cat}}" class="btn-categoria" name="checkbox" />
+										{%endifequal%}
+										<i></i>
+										{{cat}}
+									</label>
+								</li>
+								{%endfor%}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div><!--/end panel group-->
+		</div>
 
- 				<div class="col-md-9">
- 					<div class="row margin-bottom-5">
- 						<div class="col-sm-4 result-category">
- 							<h2>{%if q%}{{q}}{%else%}...{%endif%}</h2>
- 							<small class="shop-bg-red badge-results">{{cantidad}} Resultados</small>
- 						</div>
- 						<div class="col-sm-8">
- 							<ul class="list-inline clear-both">
- 								<li class="sort-list-btn">
- 									<h3>Ordenar Por :</h3>
- 									<div class="btn-group">
-										<select name="orden_select" id="id_orden_select" class="form-control">
-											<option value="1" id="1">Popularidad</option>
-											<option value="2" id="2">Mayor Precio</option>
-											<option value="3" id="3">Menor Precio</option>
-											<option value="4" id="4">Descuento</option>
-										</select>
+		<div class="col-md-9 col-xs-12">
+			<div class="row margin-bottom-5">
+				<div class="col-sm-4 col-xs-12 result-category">
+					<h2>{%if q%}{{q}}{%else%}...{%endif%}</h2>
+					<small class="shop-bg-red badge-results">{{cantidad}} Resultados</small>
+				</div>
+				<div class="col-sm-8 col-xs-12">
+					<ul class="list-inline clear-both">
+						<li class="sort-list-btn">
+							<h3>Ordenar Por :</h3>
+							<div class="btn-group">
+								<select name="orden_select" id="id_orden_select" class="form-control">
+									<option value="1" id="1">Popularidad</option>
+									<option value="2" id="2">Mayor Precio</option>
+									<option value="3" id="3">Menor Precio</option>
+									<option value="4" id="4">Descuento</option>
+								</select>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div><!--/end result category-->
+
+			<div class="filter-results">
+				<div class="row illustration-v2 margin-bottom-30">
+					{% if not productos%}
+					<h3 class="text-center">No se han encontrado resultados</h3>
+					{%endif%}
+					{%for producto in productos%}
+					{% ifequal forloop.counter 4 %}
+						<div class="row illustration-v2 margin-bottom-30">
+						{%endifequal%}
+						{% ifequal forloop.counter 7 %}
+							<div class="row illustration-v2 margin-bottom-30">
+                            {%endifequal%}
+                            	<div class="col-md-4 col-xs-12">
+ 									<div class="product-img product-img-brd">
+ 										<a href="#"><img class="full-width img-responsive" src="{% static 'unify-ecommerce/img/blog/14.jpg'%}" alt="{{producto.get_nombre}}"></a>
+ 										<a class="product-review" href="{% url 'producto_ver_mas' producto_id=producto.id %}">Ver mas</a>
+ 										<a class="add-to-cart" href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}?next={%url 'tienda_productos_busqueda'%}?q={{q}}.-.tipo={{tipo_q}}.-.categoria={{categoria_q}}.-.comienzo={{comienzo}}.-.orden={{orden}}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
+ 										{% if not producto.hay_stock_s %}
+                                    	<div class="shop-rgba-red rgba-banner">Sin stock</div>
+                                    	{%elif producto.subido_este_mes %}
+										<div class="shop-rgba-dark-green rgba-banner">Nuevo</div>
+                                    		{%endif%}
  									</div>
- 								</li>
- 							</ul>
- 						</div>
- 					</div><!--/end result category-->
-
- 					<div class="filter-results">
- 						<div class="row illustration-v2 margin-bottom-30">
-							{% if not productos%}
-							<h3 class="text-center">No se han encontrado resultados</h3>
-							{%endif%}
- 							{%for producto in productos%}
-                            {% ifequal forloop.counter 1 %}
-                                <div class="row illustration-v2 margin-bottom-30">
-                            {%endifequal%}
-                            {% ifequal forloop.counter 4 %}
-                                <div class="row illustration-v2 margin-bottom-30">
-                            {%endifequal%}
-                            {% ifequal forloop.counter 7 %}
-                                <div class="row illustration-v2 margin-bottom-30">
-                            {%endifequal%}
-
-                            <div class="col-md-4">
- 								<div class="product-img product-img-brd">
- 									<a href="#"><img class="full-width img-responsive" src="{% static 'unify-ecommerce/img/blog/14.jpg'%}" alt=""></a>
- 									<a class="product-review" href="{% url 'producto_ver_mas' producto_id=producto.id %}">Ver mas</a>
- 									<a class="add-to-cart" href="{% url 'tienda_agregar_carrito' producto_id=producto.id%}?next={%url 'tienda_productos_busqueda'%}?q={{q}}.-.tipo={{tipo_q}}.-.categoria={{categoria_q}}.-.comienzo={{comienzo}}.-.orden={{orden}}"><i class="fa fa-shopping-cart"></i>Agregar al carrito</a>
- 									{% if not producto.hay_stock_s %}
-                                    <div class="shop-rgba-red rgba-banner">Sin stock</div>
-                                    {%elif producto.subido_este_mes %}
-                                    <div class="shop-rgba-dark-green rgba-banner">Nuevo</div>
-                                    {%endif%}
- 								</div>
- 								<div class="product-description product-description-brd margin-bottom-30">
- 									<div class="overflow-h margin-bottom-5">
- 										<div class="pull-left" style="max-width:171px;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;">
- 											<h4 class="title-price"><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
- 											<span class="gender text-uppercase">{{producto.get_tipo}}</span>
- 											<span class="gender">{{producto.get_categoria}}</span>
- 										</div>
- 										<div class="product-price">
-                                            {% if producto.get_descuento %}
-                                            <span class="title-price">${{producto.get_precio_descuento}}</span>
-                                            <span class="title-price line-through">${{producto.get_precio}}</span>
-                                            {%else%}
+ 									<div class="product-description product-description-brd margin-bottom-30">
+ 										<div class="overflow-h margin-bottom-5">
+ 											<div class="pull-left" style="max-width:171px;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;">
+ 												<h4 class="title-price"><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
+ 												<span class="gender text-uppercase">{{producto.get_tipo}}</span>
+ 												<span class="gender">{{producto.get_categoria}}</span>
+ 											</div>
+											<div class="product-price">
+												{% if producto.get_descuento %}
+												<span class="title-price">${{producto.get_precio_descuento}}</span>
+												<span class="title-price line-through">${{producto.get_precio}}</span>
+												{%else%}
                                                 <span class="title-price">${{producto.get_precio}}</span>
-                                            {%endif%}
+                                            	{%endif%}
+ 											</div>
  										</div>
  									</div>
  								</div>
- 							</div>
                             {% ifequal forloop.counter 3 %}
-                                </div>
+							</div>
                             {%endifequal%}
                             {% ifequal forloop.counter 6 %}
-                                </div>
-                            {%endifequal%}
-                            {% ifequal forloop.counter 9 %}
-                                </div>
-                            {%endifequal%}
+						</div>
+						{%endifequal%}
+						{% ifequal forloop.counter 9 %}
+					</div>
+					{%endifequal%}
 
-                            {%endfor%}
-                            {% ifequal productos|length 1%}</div>{%endifequal%}
-                            {% ifequal productos|length 2%}</div>{%endifequal%}
-                            {% ifequal productos|length 4%}</div>{%endifequal%}
-                            {% ifequal productos|length 5%}</div>{%endifequal%}
-                            {% ifequal productos|length 7%}</div>{%endifequal%}
-                            {% ifequal productos|length 8%}</div>{%endifequal%}
-                    {%if productos%}
-					<div class="text-center">
- 						<ul class="pagination pagination-v2">
- 							<li><a href="#" {%if comienzo%}class="btn-atras"{%endif%}><i class="fa fa-angle-left"></i></a></li>
- 							<li class="active"><a href="">{{pagina}}</a></li>
- 							<li><a href="#" class="btn-sig"><i class="fa fa-angle-right"></i></a></li>
- 						</ul>
- 					</div><!--/end pagination-->
-					{%endif%}
- 				</div>
- 			</div><!--/end row-->
- 		</div><!--/end container-->
-            </div>
-        </div>
- 		<!--=== End Content Part ===-->
+				{%endfor%}
+				{% ifequal productos|length 1%}</div>{%endifequal%}
+				{% ifequal productos|length 2%}</div>{%endifequal%}
+				{% ifequal productos|length 4%}</div>{%endifequal%}
+				{% ifequal productos|length 5%}</div>{%endifequal%}
+				{% ifequal productos|length 7%}</div>{%endifequal%}
+				{% ifequal productos|length 8%}</div>{%endifequal%}
+				{%if productos%}
+				<div class="text-center">
+					<ul class="pagination pagination-v2">
+						<li><a href="#" {%if comienzo%}class="btn-atras"{%endif%}><i class="fa fa-angle-left"></i></a></li>
+						<li class="active"><a href="">{{pagina}}</a></li>
+						<li><a href="#" class="btn-sig"><i class="fa fa-angle-right"></i></a></li>
+					</ul>
+				</div><!--/end pagination-->
+				{%endif%}
+			</div>
+		</div><!--/end row-->
+	</div><!--/end container-->
+</div>
+<!--=== End Content Part ===-->
 
 {%endblock%}
 

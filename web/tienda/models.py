@@ -73,6 +73,11 @@ class Producto(models.Model):
     def get_imagen2(self):
         return self.imagen2
 
+    def get_nombre_corto(self):
+        if len(self.nombre)>15:
+            return self.nombre[:15]+"..."
+        else:
+            return self.nombre[:15]
 
     def get_imagen2_url(self):
         if self.imagen2:

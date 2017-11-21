@@ -2,7 +2,7 @@
 <div class="thumb-product">
     <img class="thumb-product-img" src="{{producto.get_imagen2_url}}" alt="{{producto.get_nombre}}" width="180" height="180">
     <div class="thumb-product-in">
-        <h4><a href="{% url 'producto_ver_mas' producto_id=producto.id %}">{{producto.get_nombre}}</a></h4>
+        <h4><a href="{% url 'producto_ver_mas' producto_id=producto.id %}" style="max-width:150px;overflow:hidden;white-space:nowrap;text-overflow: ellipsis;">{{producto.get_nombre}}</a></h4>
         <span class="thumb-product-type">{{producto.get_tipo}} - {{producto.get_tipo}}</span>
     </div>
     <ul class="list-inline overflow-h">

@@ -9,16 +9,13 @@
 {% block name_google %}Registrate con Google{% endblock %}
 {% block name_twitter %}Registrate con Twitter{% endblock %}
 {% block name_facebook %}Registrate con Facebook{% endblock %}
-{% block error_form %}
-	{% if form.errors %}
-	    {% include "home_form_errors.html" %}
-	{% endif %}
-{% endblock %}
 
 {% block form %}
 	
 	<form method="post" action="{% block form_action %}{% url 'signup_page' %}{% endblock %}">
 		{% csrf_token %}
+		{% include "home_form_errors.html" %}
+
 
 		<div class="form-group">
 	        {{form.email}}

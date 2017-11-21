@@ -52,9 +52,7 @@ def BuscarProductos(request):
             )
         elif query:
             qset = (
-                Q(nombre__icontains=query) |
-                Q(tipo__nombre__icontains=tipo) |
-                Q(categoria__nombre__icontains=categoria)
+                Q(nombre__icontains=query)
             )
         elif tipo:
             qset = (
@@ -71,7 +69,7 @@ def BuscarProductos(request):
         1:"-cantidad_vendidos",
         2:"-precio",
         3:"precio",
-        4:"-descuento",
+        4:"descuento",
     }
     productos = Producto.objects.order_by(orden_dic[orden]).filter(qset).distinct()
     results = productos[comienzo:comienzo+9]
@@ -226,7 +224,10 @@ def ProductoVerMas(request,producto_id):
 def AgregarCarrito(request,producto_id):
     producto = get_object_or_404(Producto,id=producto_id)
     cantidad = int(request.GET.get("cantidad","1"))
-    next = request.GET.get("next").replace(".-.", "&")
+    if request.GET.get("next"):
+        next = request.GET.get("next").replace(".-.", "&")
+    else:
+        next= reverse('producto_ver_mas',kwargs={'producto_id':producto.id})
 
     if not producto.hay_stock(cantidad):
         return HttpResponseRedirect(reverse("producto_ver_mas",kwargs={"producto_id":producto_id})+"?sin_stock=True")
@@ -344,7 +345,7 @@ def MenosDetalle(request,detalle_id):
 
 def MasDetalle(request,detalle_id):
     detalle = DetalleCompra.objects.get(id=detalle_id)
-    if detalle.get_compra().get_estado().es_incompleta():
+    if detalle.get_compra().get_estado().es_incompleta() and detalle.get_producto().hay_stock(detalle.get_cantidad()+1):
         detalle.agregar()
         detalle.save()
     return HttpResponseRedirect(reverse('tienda_carrito'))

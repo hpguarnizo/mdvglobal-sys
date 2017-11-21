@@ -25,12 +25,8 @@ def IndexView(request):
     cant_eventos = Evento.objects.filter(estado=3).__len__
     cant_productos = Producto.objects.all().__len__
     cant_contenido = Contenido.objects.all().__len__
-    evento = Evento.objects.filter(estado_id=1).order_by("-fecha").first()
-    donacion = Pagina.objects.all().first()
-    contenido=Contenido.objects.all().order_by("-fecha").first()
     return render(request,'index.html',{'cant_eventos':cant_eventos,'cant_productos':cant_productos,
-                                        'cant_contenido':cant_contenido,"evento":evento, "donacion":donacion,
-                                        "contenido":contenido})
+                                        'cant_contenido':cant_contenido})
 
 
 def JuanBallistreri(request):
@@ -45,7 +41,7 @@ def PanelUsuario(request):
     request.user.finalizo_suscripcion()
     exito=request.GET.get("exito","")
     return render(request,'home_panel.html',{'entradas':Entrada.objects.filter(user=user,evento__estado__in=[1,2]),
-                                             'productos':Compra.objects.filter(user=user).order_by("-fecha"),"exito":exito})
+                                             'producthttp://example.comos':Compra.objects.filter(user=user).order_by("-fecha"),"exito":exito})
 
 def SignupView(request):
     template_name = 'home_signup.html'

@@ -71,7 +71,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
                                     help_text=_(
                                         'Designates whether this user should be treated as active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-    receive_newsletter = models.BooleanField(_('receive newsletter'), default=False)
+    receive_newsletter = models.BooleanField(_('receive newsletter'), default=True)
     photo = S3DirectField(dest=os.environ.get('AWS_STORAGE_BUCKET_NAME'), blank=True,null=True)
     verify_email = models.NullBooleanField(default=True,blank=True,null=True)
     customer = models.OneToOneField(Customer,blank=True,null=True)

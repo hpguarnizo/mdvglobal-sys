@@ -12,7 +12,7 @@
                 {% if contenido.get_tipo.es_audio%}
                     <audio controls><source type="audio/mpeg" src="{{contenido.get_archivo}}">Tu navegador no soporta este elemento</audio>
                 {% elif contenido.get_tipo.es_documento%}
-                    <a href="{{contenido.get_archivo}}" target="_blank">Ver Documento</a>
+                    <a href="{{contenido.get_archivo}}" class="btn btn-u rounded-4x" target="_blank">Ver Documento</a>
                 {%else%}
                     <video controls><source type="video/mp4" src="{{contenido.get_archivo}}"></video>
                 {%endif%}
@@ -26,7 +26,7 @@
                     <img width="400" height="440" class="img-responsive center-block" src="{{contenido.get_imagen}}" alt="">
                 </a>
             {%endif%}
-            <small>{{contenido.get_acceso}},{{contenido.get_categoria}},{{contenido.get_tipo}}</small>
+            <p><small>{{contenido.get_acceso}},{{contenido.get_categoria}},{{contenido.get_tipo}}</small></p>
 </div>
     </div>
 </div>

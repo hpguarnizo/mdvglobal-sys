@@ -1,4 +1,4 @@
-Si tiene algún inconveniente o deseas darnos tu opinión sobre como podemos mejorar nuestros servicios, puede enviarnos un correo a <a href="malito:#">soporte@mdvglobal.com</a>, y responderemos tan pronto nos sea posible.
+Si tiene algún inconveniente o deseas darnos tu opinión sobre como podemos mejorar nuestros servicios, puede enviarnos un correo a <a href="malito:contactomdvglobal@gmail.com">contactomdvglobal@gmail.com</a>, y responderemos tan pronto nos sea posible.
 
-Si prefiere no recibir comunicaciones por correo electrónico de MDV Global, haga <a style="text-decoration: none; color: #4765a0;" href="{{site_root}}{% url 'unsubscribe' %}">click aquí</a>
+Si prefiere no recibir comunicaciones por correo electrónico de MDV Global, haga <a style="text-decoration: none; color: #4765a0;" href="https://www.mdvglobal.org{% url 'unsubscribe' %}">click aquí</a>
 Copyright © {{company}} 2017 Suipacha 2357 Córdoba Capital, Argentina.

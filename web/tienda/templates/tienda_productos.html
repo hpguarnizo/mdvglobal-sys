@@ -138,7 +138,7 @@
 									<span>Total</span>
 									<span class="pull-right subtotal-cost">${{compra.get_total}}</span>
 								</div>
-								{% if compra %}
+								{% if compra.get_detalle %}
 								<div class="row">
 									<div class="col-xs-6">
 										<a href="{% url 'tienda_carrito' %}" class="btn-u btn-brd btn-brd-hover btn-u-sea-shop btn-block">Ver Carrito</a>
@@ -344,7 +344,7 @@
 					</div>
 					<div class="col-md-6">
 						<ul class="list-inline sponsors-icons pull-right">
-							<li><i class="fa fa-cc-paypal"></i></li>
+							<!--<li><i class="fa fa-cc-paypal"></i></li>-->
 							<li><i class="fa fa-cc-visa"></i></li>
 							<li><i class="fa fa-cc-mastercard"></i></li>
 						</ul>
