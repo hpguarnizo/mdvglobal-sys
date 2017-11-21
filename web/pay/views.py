@@ -252,7 +252,7 @@ def buy_my_productos(request,compra_id):
         else:
             code = payment['response']['cause'][0]['code']
             description = payment['response']['cause'][0]['description']
-    return render(request,'pay_tienda.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
+    return render(request,'pay_tienda_2.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
                                               "compra":compra})
 
 def buy_my_donacion(request):

@@ -1,0 +1,27 @@
+{%extends 'pay_payment.html'%}
+
+{%block title %}COMPRA{%endblock%}
+{%block subtitle %}Aqui puedes abonar tu compra de ${{cantidad}}ARS, solo debes escoger la forma de pago que mas
+te parezca.{%endblock%}
+
+
+{%block producto %}
+{%block producto_pay %}
+Abona tu/s {{compra.get_detalle|length}} producto/s
+{%endblock%}
+{%endblock%}
+
+{%block precio %}
+{%block precio_pay %}
+${{cantidad}} ARS
+{%endblock%}
+{%endblock%}
+
+{%block descripcion%}
+{%block descripcion_pay%}
+{{donacion.get_descripcion}}
+{%endblock%}
+{%endblock%}
+
+{%block btn_paypal%}Donar via Paypal{%endblock%}
+{%block btn_tar%} COMPRAR{%endblock%}
