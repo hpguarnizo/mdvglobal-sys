@@ -126,6 +126,8 @@ class Producto(models.Model):
 
     def quitar_stock(self,cantidad):
         self.stock = self.stock-cantidad
+        self.cantidad_vendidos+=cantidad
+        self.save()
 
     def hay_stock_s(self):
         if self.tipo.es_libro_fisico and self.stock==0:
@@ -290,8 +292,10 @@ class Compra(models.Model):
 
     def verificar_libros(self):
         for detalle in self.get_detalle():
-            if not detalle.hay_stock():
+            if not detalle.get_producto().hay_stock(detalle.get_cantidad()):
                 detalle.delete()
+                return False
+        return True
 
     def get_url_envio(self):
         return self.url_envio
@@ -417,7 +421,7 @@ class DetalleCompra(models.Model):
 
     def quitar_stock(self):
         if self.producto.get_tipo().es_libro_fisico():
-            if self.producto.get_stock()-self.cantidad>0:
+            if self.producto.get_stock()-self.cantidad>=0:
                 self.producto.quitar_stock(self.cantidad)
             return False
         return True
