@@ -71,7 +71,7 @@ def BuscarProductos(request):
         3:"precio",
         4:"descuento",
     }
-    productos = Producto.objects.order_by(orden_dic[orden]).filter(qset).distinct()
+    productos = Producto.objects.order_by(orden_dic[orden]).filter(qset).filter(eliminado=False).distinct()
     results = productos[comienzo:comienzo+9]
     if len(results)==0 and comienzo>8:
         comienzo = comienzo - 9
@@ -85,16 +85,16 @@ def BuscarProductos(request):
 def TodosProductos(request):
     comienzo = request.GET.get("comienzo","")
     if comienzo:
-        productos = Producto.objects.all().order_by("-fecha")[comienzo:8]
+        productos = Producto.objects.filter(eliminado=False).order_by("-fecha")[comienzo:8]
     else:
-        productos = Producto.objects.all().order_by("-fecha")[:8]
+        productos = Producto.objects.filter(eliminado=False).order_by("-fecha")[:8]
 
 
     return render(request,'tienda_productos.html',{'tipos':TipoProducto.objects.all().order_by("nombre"),'categorias':CategoriaProducto.objects.all(),
                                                   'productos': productos,
-                                                   'mayores_ofertas':Producto.objects.all().order_by("-descuento")[:3],
-                                                   'mas_buscados':Producto.objects.all().order_by("-precio")[:3],
-                                                   'mas_vendidos':Producto.objects.all().order_by("-cantidad_vendidos")[:3]})
+                                                   'mayores_ofertas':Producto.objects.filter(eliminado=False).order_by("-descuento")[:3],
+                                                   'mas_buscados':Producto.objects.filter(eliminado=False).order_by("-precio")[:3],
+                                                   'mas_vendidos':Producto.objects.filter(eliminado=False).order_by("-cantidad_vendidos")[:3]})
 
 
 def ListaProductos(request):

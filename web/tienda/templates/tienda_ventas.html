@@ -80,10 +80,10 @@ Ventas
                                 <tr>
                                     <td><a href="{% url 'tienda_detalle' compra_id=compra.id%}">{{compra.get_nombre}}</a></td>
                                     <td>{{compra.get_email}}</td>
-                                    <td>{{compra.get_direccion}}</td>
-                                    <td>{{compra.get_provincia.country}}</td>
-                                    <td>{{compra.get_provincia}}</td>
-                                    <td>{{compra.get_ciudad}}</td>
+                                    <td>{% if compra.get_direccion%}{{compra.get_direccion}}{%else%}S/D{%endif%}</td>
+                                    <td>{% if compra.get_provincia.country%}{{compra.get_provincia.country}}{%else%}S/D{%endif%}</td>
+                                    <td>{% if compra.compra.get_provincia%}{{compra.get_provincia}}{%else%}S/D{%endif%}</td>
+                                    <td>{% if compra.get_ciudad%}{{compra.get_ciudad}}{%else%}S/D{%endif%}</td>
                                     <td>{{compra.get_estado}}</td>
                                     <th>{{compra.get_detalle|length}}</th>
                                     <td>{{compra.get_total}}</td>

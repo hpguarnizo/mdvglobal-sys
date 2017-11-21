@@ -26,7 +26,7 @@ class CategoriaProducto(models.Model):
         lista = []
         cant_total=0
         for tipo in TipoProducto.objects.all():
-            cant_tipo=len(Producto.objects.filter(tipo=tipo,categoria=self))
+            cant_tipo=len(Producto.objects.filter(tipo=tipo,categoria=self,eliminado=False))
             cant_total+= cant_tipo
             lista.append(cant_tipo)
         lista.append(cant_total)
