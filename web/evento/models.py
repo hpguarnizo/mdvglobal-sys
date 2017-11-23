@@ -55,6 +55,9 @@ class EstadoEvento(models.Model):
     def finalizar_transmision(self,estado):
         pass
 
+    def se_termino(self, evento):
+        pass
+
 class Disponible(EstadoEvento):
 
     def es_disponible(self):
@@ -67,6 +70,7 @@ class Disponible(EstadoEvento):
         return False
 
     def se_lleno(self,evento):
+        cupo= evento.get_cupo()
         if evento.get_asistentes()>=evento.get_cupo() and evento.get_categoria().es_presencial():
             evento.set_estado(Lleno.objects.all().first())
             evento.save()
@@ -90,6 +94,13 @@ class Disponible(EstadoEvento):
 
     def finalizar_transmision(self,estado):
         pass
+
+    def se_termino(self,evento):
+        days_now = (now().date() - evento.fecha).days
+        if(days_now >= 0):
+            evento.set_estado(Terminado.objects.all().first())
+            evento.save()
+
 
 class Lleno(EstadoEvento):
 
@@ -123,6 +134,12 @@ class Lleno(EstadoEvento):
     def finalizar_transmision(self,evento):
         pass
 
+    def se_termino(self,evento):
+        days_now = (now().date() - evento.fecha).days
+        if(days_now >= 0):
+            evento.set_estado(Terminado.objects.all().first())
+            evento.save()
+
 class Terminado(EstadoEvento):
 
     def es_disponible(self):
@@ -153,6 +170,9 @@ class Terminado(EstadoEvento):
         pass
 
     def finalizar_transmision(self,evento):
+        pass
+
+    def se_termino(self,evento):
         pass
 
 
@@ -189,6 +209,9 @@ class EnVivo(EstadoEvento):
         evento.set_estado(Terminado.objects.all().first())
         evento.save()
 
+    def se_termino(self,evento):
+        pass
+
 
 # Create your models here.
 class Evento(models.Model):
@@ -206,6 +229,17 @@ class Evento(models.Model):
     tipo_evento = models.ForeignKey(TipoEvento)
     estado = models.ForeignKey(EstadoEvento,default=1)
     url = models.TextField(null=True,blank=True)
+    email_enviado = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.nombre
+
+    def get_email_enviado(self):
+        return self.email_enviado
+
+    def set_email_enviado(self,enviado):
+        self.email_enviado = enviado
+        self.save()
 
     def finalizar_transmision(self):
         self.get_estado().finalizar_transmision(self)
@@ -214,9 +248,6 @@ class Evento(models.Model):
         self.url = url
         self.get_estado().transmitir(self)
 
-    def __str__(self):
-        return self.nombre
-
     def get_imagen_url(self):
         if self.imagen:
             return self.imagen
@@ -224,13 +255,16 @@ class Evento(models.Model):
             return "/static/unify-ecommerce/img/blog/14.jpg"
 
     def get_cupo(self):
-        return self.cupo
+        if self.cupo!=None:
+            return self.cupo
+        else:
+            return 0
 
     def get_fecha(self):
         return "%i/%i/%i" % (self.fecha.day,self.fecha.month,self.fecha.year)
 
     def get_asistentes(self):
-        return self.asistentes
+        return len(self.get_entradas())
 
     def set_estado(self,estado):
         self.estado = estado
@@ -245,7 +279,10 @@ class Evento(models.Model):
         return self.nombre
 
     def get_cupo(self):
-        return self.cupo
+        if not self.cupo:
+            return 0
+        else:
+            return self.cupo
 
     def get_precio(self):
         return self.precio
@@ -280,17 +317,20 @@ class Evento(models.Model):
             return True
 
     def set_data(self,nombre,descripcion,cupo,precio,direccion,imagen,fecha):
-        self.nombre = nombre
-        self.descripcion = descripcion
-        self.get_estado().set_cupo(self,cupo)
-        self.fecha=fecha
-
+        if nombre:
+            self.nombre = nombre
+        if descripcion:
+            self.descripcion = descripcion
+        if cupo:
+            self.get_estado().set_cupo(self,cupo)
+        if fecha:
+            self.fecha=fecha
         aux_precio = self.precio
         self.precio = precio
         if not self.es_precio_valido():
             self.precio = aux_precio
-
-        self.direccion = direccion
+        if direccion:
+            self.direccion = direccion
         self.imagen = imagen
 
     def set_cupo(self,cupo):
@@ -391,7 +431,7 @@ class Entrada(models.Model):
     evento = models.ForeignKey(Evento,null=True,blank=True)
 
     def __str__(self):
-        return self.estado
+        return self.get_nombre()
 
     def set_codigo(self):
         self.codigo = hex((self.id * 2) + random.randrange(start=1, stop=100) + 1439)[2:]

@@ -1,20 +1,20 @@
 {% extends 'index.html' %}
 {% load staticfiles %}
-    {% block contenido %}
-    <div class="promo-bg-pattern-v1-dark promo-bg-fixed content-xlg parallaxBg">
-<div class="row">
-				<div class="col-md-12 text-center">
-					<div class="" >
-						<h1 >¡Felicitaciones!</h1>
-						<p >Ya tienes tu entrada para {{entrada.get_evento.get_nombre}} tu codigo es <strong>{{entrada.get_codigo|upper}}</strong>.<br>
-Tambien hemos enviado un email a {{entrada.get_email}}<br> con tu codigo y te recordaremos 24hs antes del evento.</p>
-						<a href="{% url 'index' %}" style="margin-top: 30px; ">
-							<button class="btn btn-skype-inversed rounded-4x btn-normal" >
-								Volver
-							</button>
-						</a>
-					</div>
-				</div>
+{% block contenido %}
+<div class="promo-bg-pattern-v1-dark promo-bg-fixed content-xlg parallaxBg">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h1 >¡Felicitaciones!</h1>
+				<p >Ya tienes tu entrada para {{entrada.get_evento.get_nombre}} tu codigo es <strong>{{entrada.get_codigo|upper}}</strong>.<br>
+					Tambien hemos enviado un email a {{entrada.get_email}}<br> con tu codigo.</p>
+				<a href="{% url 'index' %}" style="margin-top: 30px; ">
+					<button class="btn btn-skype-inversed rounded-4x btn-normal" >
+						Volver
+					</button>
+				</a>
 			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}

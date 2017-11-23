@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from django.contrib.admin.views.decorators import staff_member_required
-
-from evento.ajax import get_regions, get_cities, borrar_evento, asistir_entrada
+from evento.ajax import get_regions, get_cities, borrar_evento, asistir_entrada, enviar_emails
 from evento.views import *
 
 urlpatterns =[
@@ -22,5 +21,6 @@ urlpatterns =[
     url(r'get_cities/$',get_cities, name='get_cities'),
     url(r'asistir_entradas/$',staff_member_required(asistir_entrada), name='asistir_entrada'),
     url(r'borrar_evento/$',staff_member_required(borrar_evento), name='evento_borrar'),
+    url(r'enviar_emails/$',staff_member_required(enviar_emails), name='enviar_emails'),
 
 ]

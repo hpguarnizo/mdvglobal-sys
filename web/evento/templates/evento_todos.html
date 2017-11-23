@@ -226,7 +226,20 @@ active
                 }
 
             });
-
+        {% if evento_enviar %}
+        enviar_email();
+        function enviar_email(){
+             let request = $.ajax({
+                    type: "GET",
+                    url: "{% url 'enviar_emails' %}",
+                    data:{
+                        "id_evento" : {{evento_enviar}}
+                    },
+                });
+                request.done(function(response){
+                })
+        };
+        {%endif%}
 
         $("#edit").click(function(){
             id = getId();

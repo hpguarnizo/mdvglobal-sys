@@ -13,24 +13,34 @@ from home.forms import LoginForm
 def EventoEntradas(request):
     evento_id = request.GET.get("evento_id","")
     evento = get_object_or_404(Evento,id=evento_id)
+    evento.get_estado().se_termino(evento)
     return render(request,"evento_entradas.html",{"evento":evento})
 
 def ListaEventos(request):
     eventos = Evento.objects.filter(estado__in=[1,2]).order_by('-fecha')
+    for evento in eventos:
+        evento.get_estado().se_termino(evento)
     return render(request,'evento_lista.html',{'eventos':eventos})
 
 
 def EventoSeleccionado(request,evento_id):
-    return render(request,'evento_seleccionar.html',{'evento':Evento.objects.get(id=evento_id)})
+    evento = Evento.objects.get(id=evento_id)
+    evento.get_estado().se_termino(evento)
+    return render(request,'evento_seleccionar.html',{'evento':evento})
 
 
 def TodosEventos(request):
+    for evento in Evento.objects.filter(estado_id__in=[1,2]):
+        evento.get_estado().se_termino(evento)
     eventos = Evento.objects.all().order_by('-fecha')
-    return render(request,'evento_todos.html',{'eventos':eventos})
+    evento_enviar = request.GET.get("eventoenviar")
+    return render(request,'evento_todos.html',{'eventos':eventos,'evento_enviar':evento_enviar})
 
 
 def EventosSeleccionar(request):
     eventos = Evento.objects.filter(estado=Disponible.objects.all().first()).order_by('fecha')
+    for evento in eventos:
+        evento.get_estado().se_termino(evento)
     return render(request,'evento_seleccionar.html',{'eventos':eventos})
 
 
@@ -42,8 +52,7 @@ def NuevoEvento(request):
             if evento.es_fecha_valida():
                 if evento.es_precio_valido():
                     evento.save()
-                    email_evento_nuevo(request,evento)
-                    return HttpResponseRedirect(reverse('evento_todos'))
+                    return HttpResponseRedirect(reverse('evento_todos')+"?eventoenviar=%i"%evento.id)
                 else:
                     form.add_error("precio", "El precio debe ser positivo")
             else:
@@ -83,7 +92,7 @@ def EventoRegistro(request,evento_id):
             entrada.save()
             entrada.set_codigo()
             entrada.save()
-
+            evento.get_estado().se_lleno(evento)
             if evento.get_tipo().es_pago():
                 email_entrada_pago(request, entrada)
                 return HttpResponseRedirect(reverse('pay_entrada', kwargs={"entrada_id": entrada.id}))
@@ -138,6 +147,8 @@ def EntradaSinRegistro(request,evento_id):
             else :
                 entrada = Entrada.objects.get(email=form.cleaned_data["email"],evento=evento)
 
+            evento.get_estado().se_lleno(evento)
+
             if evento.get_tipo().es_pago() and entrada.get_estado().es_sin_pagar():
                 email_entrada_pago(request,entrada)
                 return HttpResponseRedirect(reverse('pay_entrada', kwargs={"entrada_id": entrada.id}))
@@ -183,6 +194,7 @@ def Transmitir(request,evento_id):
 
 def Convocatoria(request,evento_id):
     evento = get_object_or_404(Evento,id=evento_id)
+    evento.get_estado().se_termino(evento)
     return render(request,'evento_convocatoria.html',{"evento":evento})
 
 def TransmisionEnVivo(request):

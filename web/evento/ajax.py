@@ -1,6 +1,7 @@
 from cities_light.models import City, Region
 from django.http import JsonResponse
 
+from evento.emails import email_evento_nuevo
 from evento.models import Evento, Entrada
 
 
@@ -47,3 +48,12 @@ def asistir_entrada(request):
     response ={}
     response["asistio"] = "true"
     return JsonResponse(response)
+
+
+def enviar_emails(request):
+    id = request.GET.get('id_evento')
+    evento = Evento.objects.get(id=id)
+    if not evento.get_email_enviado():
+        evento.set_email_enviado(True)
+        email_evento_nuevo(request, evento)
+    return JsonResponse({})

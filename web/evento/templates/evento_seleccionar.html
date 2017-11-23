@@ -31,6 +31,7 @@
 				 {% if evento.get_tipo.es_pago %}
                  	<p>El precio de la entrada es de <strong>${{evento.get_precio}}ARS</strong></p>
 				{%endif%}
+				<p class="text-center">
 				{% if evento.get_estado.es_disponible %}
 					{% if evento.get_tipo.es_pago %}
 						<a href="{% url 'evento_registro' evento_id=evento.id %}">
@@ -39,8 +40,8 @@
 							</button>
 						</a>
 					{%else%}
-						<a href="{% url 'evento_registro' evento_id=evento.id %}">
-							<button class="btn btn-skype-inversed rounded-4x btn-normal" >
+						<a href="{% url 'evento_registro' evento_id=evento.id %}" >
+							<button class="btn btn-skype-inversed rounded-4x btn-normal">
 								Reservar Lugar
 							</button>
 						</a>
@@ -51,7 +52,7 @@
 								border-color:#e50914;">
 						Agotado</a>
 				{% endif %}
-
+				</p>
 			</div>
 		</div>
 	</div>
