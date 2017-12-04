@@ -4,6 +4,8 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 import mercadopago
 import json
+
+from accounts.models import MyUser
 from donacion.models import Donacion, Pagina
 from evento.emails import email_entrada_nueva
 from evento.models import Entrada
@@ -11,6 +13,7 @@ from pay.forms import PlanesConfigForm
 from pay.models import Customer, Premium, Gratis, Ministerial
 import os
 from tienda.models import Compra
+from django.http import HttpResponse
 
 
 def HomePayView(request):
@@ -137,38 +140,60 @@ def buy_my_premium(request):
     premium=Premium.objects.all().first()
     if request.POST.get('token',''):
         mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
+        dic = {
+            "transaction_amount": 1,
+            "token": "%s" % request.POST.get('token', ''),
+            "installments": 1,
+            "description": "Prueba de tarjeta",
+            "payment_method_id": request.POST.get('paymentMethodId', ''),
+            "payer": {
+                "email": request.POST.get("email")
+            },
+            "capture": False
+        }
+        payment = mp.post("/v1/payments", dic)
+        json.dumps(payment, indent=4)
 
-        if user.get_customer_id():
-            customer_id= user.get_customer_id()
-        else:
-            customer = mp.get("/v1/customers/search", {"email": user.get_email()})
-            json.dumps(customer, indent=4)
-            if customer["response"]["results"][0]["id"]:
-                customer_id = customer["response"]["results"][0]["id"]
-                user.set_customer_id(customer_id)
-                user.save()
-            else:
-                customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
-                json.dumps(customer, indent=4)
-                customer_id = customer["response"]["results"][0]["id"]
-                user.set_customer_id(customer_id)
-                user.save()
+        if payment['status'] == 201:
+            if payment['response']['status'] == 'authorized':
 
-        mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
-        suscription= mp.post("/v1/subscriptions/",{"plan_id":premium.get_id_mp(),
-                                                   "payer":{
-                                                       "id":customer_id
-                                                   }})
-        if suscription['status'] == 201:
-            if suscription['response']['status'] == 'authorized':
-                user.premium()
-                return HttpResponseRedirect(reverse('home_panel'))
+                if user.get_customer_id():
+                    customer_id= user.get_customer_id()
+                else:
+                    customer = mp.get("/v1/customers/search", {"email": user.get_email()})
+                    json.dumps(customer, indent=4)
+                    if customer["response"]["results"][0]["id"]:
+                        customer_id = customer["response"]["results"][0]["id"]
+                        user.set_customer_id(customer_id)
+                        user.save()
+                    else:
+                        customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
+                        json.dumps(customer, indent=4)
+                        customer_id = customer["response"]["results"][0]["id"]
+                        user.set_customer_id(customer_id)
+                        user.save()
+
+                mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
+                suscription= mp.post("/v1/subscriptions/",{"plan_id":premium.get_id_mp(),
+                                                           "payer":{
+                                                               "id":customer_id
+                                                           }})
+                if suscription['status'] == 201:
+                    if suscription['response']['status'] == 'authorized':
+                        user.premium()
+                        return HttpResponseRedirect(reverse('home_panel'))
+                    else:
+                        description = suscription['response']['status']
+                        code = 201
+                else:
+                    code = suscription['response']['cause'][0]['code']
+                    description = suscription['response']['cause'][0]['description']
             else:
-                description = suscription['response']['status']
-                code = 201
+                code = payment['response']['status']
+                description = "Tarjeta no autorizada"
         else:
-            code = suscription['response']['cause'][0]['code']
-            description = suscription['response']['cause'][0]['description']
+            code = payment['response']['status']
+            description = "Tarjeta no autorizada"
 
     return render(request,'pay_premium.html',{'code':code,'description':description,
                                               'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),"premium":premium})
@@ -180,56 +205,90 @@ def buy_my_ministerial(request):
     ministerial=Ministerial.objects.all().first()
     if request.POST.get('token',''):
         mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
-        
-        if user.get_customer_id():
-            customer_id= user.get_customer_id()
-            customer = mp.get("/v1/customers/search", {"email": user.get_email()})
-            json.dumps(customer, indent=4)
-        else:
-            customer = mp.get("/v1/customers/search", {"email": user.get_email()})
-            json.dumps(customer, indent=4)
-            if customer["response"]["results"][0]["id"]:
-                customer_id = customer["response"]["results"][0]["id"]
-                user.set_customer_id(customer_id)
-                user.save()
-            else:
-                customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
-                json.dumps(customer, indent=4)
-                customer_id = customer["response"]["results"][0]["id"]
-                user.set_customer_id(customer_id)
-                user.save()
+        #mp.sandbox_mode(True)
+        dic = {
+            "transaction_amount": 1,
+            "token": "%s" % request.POST.get('token', ''),
+            "installments": 1,
+            "description": "Prueba de tarjeta",
+            "payment_method_id": request.POST.get('paymentMethodId', ''),
+            "payer": {
+                "email": request.POST.get("email")
+            },
+             "capture": False
+        }
+        payment = mp.post("/v1/payments", dic)
+        json.dumps(payment, indent=4)
 
-        mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
-        suscription= mp.post("/v1/subscriptions/",{"plan_id":ministerial.get_id_mp(),
+        if payment['status'] == 201:
+            if payment['response']['status'] == 'authorized':
+                if user.get_customer_id():
+                    customer_id= user.get_customer_id()
+                    customer = mp.get("/v1/customers/search", {"email": user.get_email()})
+                    json.dumps(customer, indent=4)
+                else:
+                    customer = mp.get("/v1/customers/search", {"email": user.get_email()})
+                    json.dumps(customer, indent=4)
+                    if customer["response"]["results"][0]["id"]:
+                        customer_id = customer["response"]["results"][0]["id"]
+                        user.set_customer_id(customer_id)
+                        user.save()
+                    else:
+                        customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
+                        json.dumps(customer, indent=4)
+                        customer_id = customer["response"]["results"][0]["id"]
+                        user.set_customer_id(customer_id)
+                        user.save()
+
+                mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
+                suscription= mp.post("/v1/subscriptions/",{"plan_id":ministerial.get_id_mp(),
                                                    "payer":{
                                                        "id":customer_id
                                                    }})
-        if suscription['status'] == 201:
-            if suscription['response']['status'] == 'authorized':
-                user.ministerial()
-                return HttpResponseRedirect(reverse('home_panel'))
+                if suscription['status'] == 201:
+                    if suscription['response']['status'] == 'authorized':
+                        user.ministerial()
+                        return HttpResponseRedirect(reverse('home_panel'))
+                    else:
+                        description = suscription['response']['status']
+                        code = 201
+                else:
+                    code = suscription['response']['cause'][0]['code']
+                    description = suscription['response']['cause'][0]['description']
             else:
-                description = suscription['response']['status']
-                code = 201
+                code = payment['response']['status']
+                description = "Tarjeta no autorizada"
         else:
-            code = suscription['response']['cause'][0]['code']
-            description = suscription['response']['cause'][0]['description']
-
+            code = payment['response']['status']
+            description = "Tarjeta no autorizada"
     return render(request,'pay_ministerial.html',{'code':code,'description':description,
                                                   'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
                                                   "ministerial":ministerial})
+
+
+def notifications(request,**kwargs):
+    if request.method=="POST":
+        mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
+        paymentInfo = mp.get_payment_info(kwargs["id"])
+        if paymentInfo["response"]["status"] == "unpaid" or paymentInfo["response"]["status"] == "cancelled":
+            user = MyUser.objects.get(customer_id_mp=paymentInfo["response"]["payer"]["id"])
+            user.finalizo_suscripcion()
+        elif paymentInfo["response"]["status"] == "paid":
+            user = MyUser.objects.get(customer_id_mp=paymentInfo["response"]["payer"]["id"])
+            user.renovar_suscripcion()
+    return HttpResponse(status=200)
 
 def buy_my_productos(request,compra_id):
     compra = get_object_or_404(Compra,id=compra_id)
     if not compra.verificar_libros():
         return HttpResponseRedirect(reverse('tienda_carrito'))
-
+    
     code = None
     description = None
     if request.POST.get('token',''):
         mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
         dic = {
-            "transaction_amount": compra.total(),
+            "transaction_amount": compra.get_total(),
             "token": "%s" %request.POST.get('token',''),
             "installments": 1,
             "description": "Compra en "+os.environ.get("COMPANY"),

@@ -98,9 +98,13 @@ class Customer(models.Model):
     plan = models.ForeignKey(Plan,blank=True,null=True)
     suscripto=models.BooleanField(default=True)
 
+    def renovar_suscripcion(self):
+        self.days+=31
+        self.save()
+
     def finalizo_suscripcion(self):
         if self.is_finish():
-            self.delete()
+            self.desuscribir()
 
     def get_suscripto(self):
         return self.suscripto

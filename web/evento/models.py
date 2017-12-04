@@ -71,7 +71,7 @@ class Disponible(EstadoEvento):
 
     def se_lleno(self,evento):
         cupo= evento.get_cupo()
-        if evento.get_asistentes()>=evento.get_cupo() and evento.get_categoria().es_presencial():
+        if evento.get_asistentes_pagado()>=evento.get_cupo() and evento.get_categoria().es_presencial():
             evento.set_estado(Lleno.objects.all().first())
             evento.save()
 
@@ -79,9 +79,9 @@ class Disponible(EstadoEvento):
         evento.set_estado(Terminado.objects.all().first())
 
     def set_cupo(self,evento,cupo):
-        if cupo > evento.get_asistentes():
+        if cupo > evento.get_asistentes_pagado():
             evento.set_cupo(cupo)
-        elif cupo== evento.get_asistentes():
+        elif cupo== evento.get_asistentes_pagado():
             evento.set_cupo(cupo)
             evento.set_estado(Lleno.objects.all().first())
 
@@ -265,6 +265,9 @@ class Evento(models.Model):
 
     def get_asistentes(self):
         return len(self.get_entradas())
+
+    def get_asistentes_pagado(self):
+        return len(Entrada.objects.filter(evento=self.id,estado_id=2))
 
     def set_estado(self,estado):
         self.estado = estado

@@ -90,6 +90,10 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         if self.customer:
             self.customer.finalizo_suscripcion()
 
+    def renovar_suscripcion(self):
+        if self.customer:
+            self.customer.renovar_suscripcion()
+
     def desuscribir(self):
         self.customer.desuscribir()
 

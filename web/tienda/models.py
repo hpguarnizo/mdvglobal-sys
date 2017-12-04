@@ -214,8 +214,11 @@ class Incompleta(EstadoCompra):
         pass
 
     def pagar(self,compra):
-        compra.set_estado(Pagado.objects.all().first())
-        compra.quitar_stock()
+        if compra.tiene_libro_fisico():
+            compra.set_estado(Pagado.objects.all().first())
+            compra.quitar_stock()
+        else:
+            compra.set_estado(Enviado.objects.all().first())
         compra.save()
 
     def envio(self,compra,codigo,url):
@@ -314,6 +317,12 @@ class Compra(models.Model):
             return self.user.get_full_name()
         else:
            return self.nombre
+    
+    def tiene_libro_fisico(self):
+        for detalle in self.get_detalle():
+            if detalle.get_producto().get_tipo().es_libro_fisico():
+                return True
+        return False
 
     def get_email(self):
         if self.user:

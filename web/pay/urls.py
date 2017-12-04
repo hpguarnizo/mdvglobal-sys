@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^cancel/$', login_required(cancel_return_premium), name='pay_cancel_return_premium'),
     url(r'^plans/$', HomePayView, name='pay_plans'),
     url(r'^desuscribir/$', cancel_suscription, name='pay_desuscribir'),
+    url(r'notifications/$', notifications, name='notifications'),
 
 ]
 
