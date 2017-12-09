@@ -45,7 +45,74 @@ def PanelUsuario(request):
 
 def SignupView(request):
     template_name = 'home_signup.html'
-    form_class = SignupForm
+
+    if request.method=="POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            user = MyUser.objects.filter(email=email)
+            if len(user)==0:
+                user = MyUser.objects.create_user(email=email,password=password,first_name=first_name,username=email,
+                                                  verify_email= False)
+
+            else:
+                user=user[0]
+                if user.verify_email:
+                    form.add_error("email","El email ya se encuentra registrado")
+                    return render(request, template_name, {'form': form})
+                else:
+                    code = CodeValidator.objects.filter(user=user)
+                    code.delete()
+
+            code = CodeValidator(code=_generate_code(), user=user)
+            code.save()
+
+            email_verify_password(code,user)
+
+            return HttpResponseRedirect(reverse('signup_email_sent_page',kwargs={"email":email}))
+    else:
+        form = SignupForm()
+    return render(request,template_name,{'form':form})
+
+def SignupViewMinisterial(request):
+    template_name = 'home_signup_ministerial.html'
+
+    if request.method=="POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            user = MyUser.objects.filter(email=email)
+            if len(user)==0:
+                user = MyUser.objects.create_user(email=email,password=password,first_name=first_name,username=email,
+                                                  verify_email= False)
+
+            else:
+                user=user[0]
+                if user.verify_email:
+                    form.add_error("email","El email ya se encuentra registrado")
+                    return render(request, template_name, {'form': form})
+                else:
+                    code = CodeValidator.objects.filter(user=user)
+                    code.delete()
+
+            code = CodeValidator(code=_generate_code(), user=user)
+            code.save()
+
+            email_verify_password(code,user)
+
+            return HttpResponseRedirect(reverse('signup_email_sent_page',kwargs={"email":email}))
+    else:
+        form = SignupForm()
+    return render(request,template_name,{'form':form})
+
+def SignupViewPremium(request):
+    template_name = 'home_signup_premium.html'
 
     if request.method=="POST":
         form = SignupForm(request.POST)

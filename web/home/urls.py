@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^support/$', staff_member_required(Support),  name="support"),
     url(r'^logout/$', logout, {'next_page': '/'}, name="logout_page"),
     url(r'^signup/$', SignupView, name='signup_page'),
+    url(r'^signup/premium/$', SignupViewPremium, name='signup_page_premium'),
+    url(r'^signup/ministerial/$', SignupViewMinisterial, name='signup_page_ministerial'),
     url(r'^signup/email_sent/(?P<email>.{1,254})$', SignupEmailSentView.as_view(), name='signup_email_sent_page'),
     url(r'^signup/verify/yes/$', SignupVerified.as_view(), name='signup_verified_page'),
     url(r'^signup/verify/not/$', SignupNotVerified.as_view(), name='signup_not_verified_page'),
@@ -37,4 +39,5 @@ urlpatterns = [
     url(r'panel/$',login_required(PanelUsuario),name='home_panel'),
     url(r'usuarios/$',staff_member_required(Usuarios),name='home_usuarios'),
     url(r'blog/$',TemplateView.as_view(template_name='en_construccion.html'),name='home_blog')
+
 ]
