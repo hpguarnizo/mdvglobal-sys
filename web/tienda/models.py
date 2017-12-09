@@ -155,6 +155,7 @@ class Producto(models.Model):
         self.imagen2 = producto.imagen2
         self.imagen3 = producto.imagen3
         self.descuento = producto.descuento
+        self.archivo=producto.archivo
 
     def eliminar(self):
         self.eliminado=True

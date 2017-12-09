@@ -124,7 +124,7 @@ def ProductoEditar(request):
         form = EditarProducto({'nombre':producto.get_nombre(),'descripcion':producto.get_descripcion(),
                                'categoria':producto.get_categoria().id,'precio':producto.get_precio(),'stock':producto.get_stock(),
                                'imagen':producto.get_imagen(),'imagen2':producto.get_imagen2(),'imagen3':producto.get_imagen3(),
-                               'descuento':producto.get_descuento()})
+                               'descuento':producto.get_descuento(),'archivo':producto.get_archivo()})
     return render(request,'tienda_productos_editar.html',{'form':form,'producto':producto})
 
 

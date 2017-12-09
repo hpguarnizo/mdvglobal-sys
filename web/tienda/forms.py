@@ -21,7 +21,7 @@ class NuevoProducto(forms.ModelForm):
 class EditarProducto(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ['nombre','descripcion','precio','categoria','stock','imagen',"descuento",'imagen2','imagen3']
+        fields = ['nombre','descripcion','precio','categoria','stock','imagen',"descuento",'imagen2','imagen3','archivo']
         widgets ={
             'nombre':forms.TextInput(attrs={'class':'form-control b-r-xl','maxlength':'256','required':True}),
             'descripcion': forms.Textarea(attrs={'class':'form-control b-r-xl','required':True}),
