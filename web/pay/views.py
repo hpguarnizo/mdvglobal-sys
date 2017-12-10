@@ -205,7 +205,6 @@ def buy_my_ministerial(request):
     ministerial=Ministerial.objects.all().first()
     if request.POST.get('token',''):
         mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
-        mp.sandbox_mode(True)
         dic = {
             "transaction_amount": 1,
             "token": "%s" % request.POST.get('token', ''),
@@ -219,45 +218,40 @@ def buy_my_ministerial(request):
         }
         payment = mp.post("/v1/payments", dic)
         json.dumps(payment, indent=4)
-
-        if payment['status'] == 201:
-            if payment['response']['status'] == 'authorized':
-                if user.get_customer_id():
-                    customer_id= user.get_customer_id()
-                    customer = mp.get("/v1/customers/search", {"email": user.get_email()})
-                    json.dumps(customer, indent=4)
-                else:
-                    customer = mp.get("/v1/customers/search", {"email": user.get_email()})
-                    json.dumps(customer, indent=4)
-                    if customer["response"]["results"][0]["id"]:
-                        customer_id = customer["response"]["results"][0]["id"]
-                        user.set_customer_id(customer_id)
-                        user.save()
-                    else:
-                        customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
-                        json.dumps(customer, indent=4)
-                        customer_id = customer["response"]["results"][0]["id"]
-                        user.set_customer_id(customer_id)
-                        user.save()
-
-                mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
-                suscription= mp.post("/v1/subscriptions/",{"plan_id":ministerial.get_id_mp(),
-                                                   "payer":{
-                                                       "id":customer_id
-                                                   }})
-                if suscription['status'] == 201:
-                    if suscription['response']['status'] == 'authorized':
-                        user.ministerial()
-                        return HttpResponseRedirect(reverse('home_panel'))
-                    else:
-                        description = suscription['response']['status']
-                        code = 201
-                else:
-                    code = suscription['response']['cause'][0]['code']
-                    description = suscription['response']['cause'][0]['description']
+        if payment['status'] == 201 and payment['response']['status'] == 'authorized':
+            if user.get_customer_id():
+                customer_id= user.get_customer_id()
+                customer = mp.get("/v1/customers/search", {"email": user.get_email()})
+                json.dumps(customer, indent=4)
             else:
-                code = payment['response']['status']
-                description = "Tarjeta no autorizada"
+                customer = mp.get("/v1/customers/search", {"email": user.get_email()})
+                json.dumps(customer, indent=4)
+                if customer["response"]["results"][0]["id"]:
+                    customer_id = customer["response"]["results"][0]["id"]
+                    user.set_customer_id(customer_id)
+                    user.save()
+                else:
+                    customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
+                    json.dumps(customer, indent=4)
+                    customer_id = customer["response"]["results"][0]["id"]
+                    user.set_customer_id(customer_id)
+                    user.save()
+
+            mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
+            suscription= mp.post("/v1/subscriptions/",{"plan_id":ministerial.get_id_mp(),
+                                               "payer":{
+                                                   "id":customer_id
+                                               }})
+            if suscription['status'] == 201:
+                if suscription['response']['status'] == 'authorized':
+                    user.ministerial()
+                    return HttpResponseRedirect(reverse('home_panel'))
+                else:
+                    description = suscription['response']['status']
+                    code = 201
+            else:
+                code = suscription['response']['cause'][0]['code']
+                description = suscription['response']['cause'][0]['description']
         else:
             code = payment['response']['status']
             description = "Tarjeta no autorizada"
