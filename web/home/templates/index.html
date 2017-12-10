@@ -774,7 +774,7 @@
 							<img class="rounded-x img-width-80" src="{% static 'unify/img/testimonials/img5.jpg' %}" alt="Juan Ballistreri">
 						</div>
 						<div class="margin-bottom-10">&nbsp;</div>
-						<h3><b>"Lo mas costoso de la ignorancia se llama perdida de Tiempo."</b></h3>
+						<h3><b>"Lo mas costoso de la ignorancia se llama pérdida de Tiempo."</b></h3>
 						<h5>Juan Ballistreri</h5>
 					</div>
 				</div>
@@ -1011,6 +1011,11 @@
 				<li><a class="color-menu" href="{% url 'login_page' %}"><button class="btn-u  btn-brd btn-brd-width-2 btn-brd-hover btn-u-light btn-u-block rounded-4x">Iniciar Sesion</button></a></li>
 				{%endif%}
 			</ul>
+			{% if user.is_authenticated%}
+			<ul class="sliding-navigation">
+				<li>Bienvenido/a {{user.get_first_name}}</li>
+			</ul>
+			{%endif%}
 			<ul class="sliding-navigation">
 				<li><a class="color-menu" href="{% url 'index'%}">Inicio</a></li>
 				<li><a class="color-menu" href="{% url 'home_panel'%}">Mi cuenta</a></li>

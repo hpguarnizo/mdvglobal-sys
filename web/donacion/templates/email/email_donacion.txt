@@ -1,0 +1,4 @@
+¡Muchas gracias por tu donacion!
+Tu contribucion ayudara en la causa de {{pagina.get_titulo}}. Podras ver las novedades sobre esta causa ingresando a nuestro blog.
+Puedes acceder a nuestro blog haciendo click en el siguiente boton
+<a href="http://www.blog.mdvglobal.org">IR AL BLOG</a>

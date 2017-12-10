@@ -205,7 +205,7 @@ def buy_my_ministerial(request):
     ministerial=Ministerial.objects.all().first()
     if request.POST.get('token',''):
         mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
-        #mp.sandbox_mode(True)
+        mp.sandbox_mode(True)
         dic = {
             "transaction_amount": 1,
             "token": "%s" % request.POST.get('token', ''),

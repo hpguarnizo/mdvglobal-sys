@@ -46,6 +46,9 @@ def PanelUsuario(request):
 def SignupView(request):
     template_name = 'home_signup.html'
 
+    if not request.user.is_anonymous() and request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('home_panel'))
+
     if request.method=="POST":
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -80,6 +83,9 @@ def SignupView(request):
 def SignupViewMinisterial(request):
     template_name = 'home_signup_ministerial.html'
 
+    if not request.user.is_anonymous() and request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('pay_ministerial'))
+
     if request.method=="POST":
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -113,6 +119,9 @@ def SignupViewMinisterial(request):
 
 def SignupViewPremium(request):
     template_name = 'home_signup_premium.html'
+
+    if not request.user.is_anonymous() and request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('pay_premium'))
 
     if request.method=="POST":
         form = SignupForm(request.POST)
