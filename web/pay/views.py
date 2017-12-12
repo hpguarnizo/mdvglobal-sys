@@ -220,7 +220,7 @@ def buy_my_ministerial(request):
         }
         payment = mp.post("/v1/payments", dic)
         json.dumps(payment, indent=4)
-        if payment['status'] == 201 and payment['response']['status'] == 'authorized':
+        if payment['status'] == 201 and payment['status'] == 'authorized':
             if user.get_customer_id():
                 customer_id= user.get_customer_id()
                 customer = mp.get("/v1/customers/search", {"email": user.get_email()})
@@ -228,7 +228,7 @@ def buy_my_ministerial(request):
             else:
                 customer = mp.get("/v1/customers/search", {"email": user.get_email()})
                 json.dumps(customer, indent=4)
-                if customer["response"]["results"][0]["id"]:
+                if len(customer["response"]["results"])!=0:
                     customer_id = customer["response"]["results"][0]["id"]
                     user.set_customer_id(customer_id)
                     user.save()
