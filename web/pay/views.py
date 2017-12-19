@@ -344,8 +344,9 @@ def buy_my_donacion(request):
 def cancel_suscription(request):
     user = request.user
     mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
-    cancel = mp.cancel_preapproval_payment(user.get_customer_id())
+    cancel = mp.delete("/v1/customers/:%s/" %user.get_customer_id())
     json.dumps(cancel, indent=4)
+    assert False
     if cancel['status']==201:
         user.desuscribir()
         return HttpResponseRedirect(reverse('home_panel')+"?exito=true")
