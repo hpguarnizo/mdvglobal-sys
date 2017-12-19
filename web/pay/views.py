@@ -340,7 +340,6 @@ def buy_my_donacion(request):
                                               "cantidad":cantidad,"donacion":config})
 
 
-
 def cancel_suscription(request):
     user = request.user
     mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
@@ -352,6 +351,7 @@ def cancel_suscription(request):
         return HttpResponseRedirect(reverse('home_panel')+"?exito=true")
     else:
         return HttpResponseRedirect(reverse('home_panel')+"?exito=true")
+
 
 @csrf_exempt
 def return_url_premium(request):
