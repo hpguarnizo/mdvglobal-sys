@@ -128,7 +128,7 @@ def buy_my_entrada(request,entrada_id):
                 code = 201
         else:
             code = payment['response']['cause'][0]['code']
-            description = payment['response']['cause'][0]['description']
+            description = notificacion_pago(code)
 
     return render(request,'pay_entrada.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
                                               "entrada":entrada})
@@ -140,6 +140,8 @@ def buy_my_premium(request):
     premium=Premium.objects.all().first()
     if request.POST.get('token',''):
         mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
+        mp.sandbox_mode(True)
+
         dic = {
             "transaction_amount": 1,
             "token": "%s" % request.POST.get('token', ''),
@@ -153,50 +155,43 @@ def buy_my_premium(request):
         }
         payment = mp.post("/v1/payments", dic)
         json.dumps(payment, indent=4)
-
-        if payment['status'] == 201:
-            if payment['response']['status'] == 'authorized':
-
-                if user.get_customer_id():
-                    customer_id= user.get_customer_id()
-                else:
-                    customer = mp.get("/v1/customers/search", {"email": user.get_email()})
-                    json.dumps(customer, indent=4)
-                    if customer["response"]["results"][0]["id"]:
-                        customer_id = customer["response"]["results"][0]["id"]
-                        user.set_customer_id(customer_id)
-                        user.save()
-                    else:
-                        customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
-                        json.dumps(customer, indent=4)
-                        customer_id = customer["response"]["results"][0]["id"]
-                        user.set_customer_id(customer_id)
-                        user.save()
-
-                mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
-                suscription= mp.post("/v1/subscriptions/",{"plan_id":premium.get_id_mp(),
-                                                           "payer":{
-                                                               "id":customer_id
-                                                           }})
-                if suscription['status'] == 201:
-                    if suscription['response']['status'] == 'authorized':
-                        user.premium()
-                        return HttpResponseRedirect(reverse('home_panel'))
-                    else:
-                        description = suscription['response']['status']
-                        code = 201
-                else:
-                    code = suscription['response']['cause'][0]['code']
-                    description = suscription['response']['cause'][0]['description']
+        if payment['status'] == 201 and payment['response']['status'] == 'authorized':
+            if user.get_customer_id():
+                customer_id= user.get_customer_id()
             else:
-                code = payment['response']['status']
-                description = "Tarjeta no autorizada"
+                customer = mp.get("/v1/customers/search/", {"email": user.get_email()})
+                json.dumps(customer, indent=4)
+                if len(customer["response"]["results"])!=0:
+                    customer_id = customer["response"]["results"][0]["id"]
+                    user.set_customer_id(customer_id)
+                    user.save()
+                else:
+                    customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
+                    json.dumps(customer, indent=4)
+                    customer_id = customer["response"]["id"]
+                    user.set_customer_id(customer_id)
+                    user.save()
+
+            mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
+            suscription = mp.post("/v1/subscriptions/", {"plan_id": premium.get_id_mp(),
+                                                         "payer": {
+                                                             "id": customer_id
+                                                         }})
+            if suscription['status'] == 201:
+                if suscription['response']['status'] == 'authorized':
+                    user.premium()
+                    return HttpResponseRedirect(reverse('home_panel'))
+                else:
+                    description = suscription['response']['status']
+                    code = 201
+            else:
+                code = suscription['response']['cause'][0]['code']
+                description = notificacion_suscripcion(code)
         else:
             code = payment['response']['status']
-            description = "Tarjeta no autorizada"
-
+            description = "Tarjeta no valida"
     return render(request,'pay_premium.html',{'code':code,'description':description,
-                                              'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),"premium":premium})
+                                          'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),"premium":premium})
 
 def buy_my_ministerial(request):
     code = None
@@ -220,13 +215,11 @@ def buy_my_ministerial(request):
         }
         payment = mp.post("/v1/payments", dic)
         json.dumps(payment, indent=4)
-        if payment['status'] == 201 and payment['status'] == 'authorized':
+        if payment['status'] == 201 and payment['response']['status'] == 'authorized':
             if user.get_customer_id():
                 customer_id= user.get_customer_id()
-                customer = mp.get("/v1/customers/search", {"email": user.get_email()})
-                json.dumps(customer, indent=4)
             else:
-                customer = mp.get("/v1/customers/search", {"email": user.get_email()})
+                customer = mp.get("/v1/customers/search/", {"email": user.get_email()})
                 json.dumps(customer, indent=4)
                 if len(customer["response"]["results"])!=0:
                     customer_id = customer["response"]["results"][0]["id"]
@@ -235,7 +228,7 @@ def buy_my_ministerial(request):
                 else:
                     customer = mp.post("/v1/customers", {"email": request.POST.get('email','')})
                     json.dumps(customer, indent=4)
-                    customer_id = customer["response"]["results"][0]["id"]
+                    customer_id = customer["response"]["id"]
                     user.set_customer_id(customer_id)
                     user.save()
 
@@ -253,10 +246,10 @@ def buy_my_ministerial(request):
                     code = 201
             else:
                 code = suscription['response']['cause'][0]['code']
-                description = suscription['response']['cause'][0]['description']
+                description = notificacion_suscripcion(code)
         else:
             code = payment['response']['status']
-            description = "Tarjeta no autorizada"
+            description = "Tarjeta no valida"
     return render(request,'pay_ministerial.html',{'code':code,'description':description,
                                                   'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
                                                   "ministerial":ministerial})
@@ -306,7 +299,7 @@ def buy_my_productos(request,compra_id):
                 code = 201
         else:
             code = payment['response']['cause'][0]['code']
-            description = payment['response']['cause'][0]['description']
+            description = notificacion_pago(code)
     return render(request,'pay_tienda_2.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
                                               "compra":compra})
 
@@ -341,7 +334,7 @@ def buy_my_donacion(request):
                 code = 201
         else:
             code = payment['response']['cause'][0]['code']
-            description = payment['response']['cause'][0]['description']
+            description = notificacion_pago(code)
 
     return render(request,'pay_donacion.html',{'code':code,'description':description,'PUBLIC_KEY_MP': os.environ.get('PUBLIC_KEY_MP'),
                                               "cantidad":cantidad,"donacion":config})
@@ -368,3 +361,60 @@ def return_url_premium(request):
 def cancel_return_premium(request):
     return render(request,'pay_plans.html',{})
 
+
+def notificacion_pago(id):
+    opciones ={
+        1:"Campos incorrectos.",
+        2001:"Ya se publicó la misma solicitud en el último minuto.",
+        2004:"Mercado Pago no se encuentra disponible.",
+        2010:"Tarjeta no encontrada.",
+        2017:"Cantidad de transaccion no valida.",
+        2018:"La acción solicitada no es válida para el estado de pago actual.",
+        2022:"Ha excedido el número máximo de reembolsos por este pago.",
+        2024:"Pago demasiado viejo para ser reembolsado.",
+        2025:"Tipo de operación no permitida ser reembolsada.",
+        2027:"La acción solicitada no es válida para el tipo de método de pago actual.",
+        2029:"Pago sin movimientos.",
+        2030:"No dispone de suficiente dinero.",
+        2031:"No dispone de suficiente dinero disponible.",
+        2035:"Campos no validos.",
+        2040:"El correo electrónico no existe.",
+        3000:"Debe proporcionar el nombre que figura en la tarjeta.",
+        3006:"Numero de tarjeta invalido.",
+        3009:"Pago no autorizado.",
+        3010:"Tarjeta no encontrada en la lista blanca.",
+        3012:"Codigo de seguridad invalido.",
+        3013:"Debe ingresar un codigo de seguridad.",
+        3015:"Numero de tarjeta invalido, demasiado corto.",
+        3016:"Numero de tarjeta invalido.",
+        3018:"Debe ingresar un mes de vencimiento.",
+        3019:"Debe ingresar un año de vencimiento valido.",
+        3020:"Debe ingresar el nombre que figura en la tarjeta.",
+        3021:"Debe ingresar un numero de documento.",
+        3022:"Debe ingresar un numero de documento.",
+        3029:"Mes de vencimiento no valido.",
+        3030:"Año de vencimiento no valido.",
+        4002:"Monto no valido.",
+        4023:"Monto no valido.",
+        4037:"Monto no valido.",
+        4050:"Debe ingresar un email valido.",
+        4051:"El email no puede superar los 254 caracteres."
+    }
+    return opciones.get(id,"No se pudo realizar el pago, tarjeta no valida.")
+
+
+def notificacion_suscripcion(id):
+    opciones={
+        12:"Error al crear la suscripción: el plan se canceló.",
+        13:"Error al actualizar la suscripción: el plan se canceló.",
+        14:"Error al crear la suscripción: el plan se inactivó.",
+        15:"Error al actualizar la suscripción: la suscripción se finalizó.",
+        2007:"Cliente no encontrado.",
+        2009:"No tiene una tarjeta por defecto.",
+        2010:"Esta tarjeta no permite pagos recurrentes.",
+        2012:"El monto de transaccion esta por debajo del minimo de la tarjeta.",
+        2013:"El monto de transaccion excede el maximo de la tarjeta.",
+        9002:"La tarjeta ya ha caducado.",
+        9003:"La tarjeta caducará pronto: la tarjeta caducará antes de la fecha de débito de la primera factura."
+    }
+    return opciones.get(id,"No se pudo realizar la suscripcion, tarjeta no valida")
