@@ -140,7 +140,7 @@ def buy_my_premium(request):
     premium=Premium.objects.all().first()
     if request.POST.get('token',''):
         mp = mercadopago.MP(os.environ.get('ACCESS_TOKEN_MP'))
-        #mp.sandbox_mode(True)
+        mp.sandbox_mode(True)
 
         dic = {
             "transaction_amount": 1,
@@ -172,7 +172,9 @@ def buy_my_premium(request):
                     user.set_customer_id(customer_id)
                     user.save()
 
-            mp.post("/v1/customers/" + customer_id + "/cards", {"token": request.POST.get('token','')})
+            tarjeta = mp.post("/v1/customers/" + customer_id + "/cards/", {"token": request.POST.get('token','')})
+            json.dumps(tarjeta, indent=4)
+            assert False
             suscription = mp.post("/v1/subscriptions/", {"plan_id": premium.get_id_mp(),
                                                          "payer": {
                                                              "id": customer_id
