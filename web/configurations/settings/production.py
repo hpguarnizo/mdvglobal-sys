@@ -21,7 +21,7 @@ SECURE_SSL_REDIRECT=True
 SESSION_COOKIE_SECURE=True
 CSRF_COOKIE_SECURE=True
 
-ADMINS=[('Support', EMAIL_HOST_USER_SOPORTE)]
+ADMINS=[('Support', "gaston.z195@gmail.com")]
 
 ALLOWED_HOSTS = ['mdvglobal.herokuapp.com','www.mdvglobal.org']
 

@@ -1,6 +1,5 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-
 from accounts.models import _generate_code
 from blog.emails import email_verify_suscriptor
 from blog.models import Subscriber, CodeValidatorBlog
